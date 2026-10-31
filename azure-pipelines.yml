@@ -1,0 +1,37 @@
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+      - feature/*
+      - release/*
+      - hotfix/*
+
+pool:
+  vmImage: windows-latest
+
+steps:
+  - checkout: self
+    clean: true
+
+  - task: UseDotNet@2
+    displayName: Install SDK from global.json
+    inputs:
+      packageType: sdk
+      useGlobalJson: true
+      workingDirectory: $(Build.SourcesDirectory)
+
+  - task: PowerShell@2
+    displayName: Verify application
+    inputs:
+      targetType: filePath
+      filePath: scripts/verify.ps1
+      workingDirectory: $(Build.SourcesDirectory)
+      pwsh: true
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish API artifact
+    inputs:
+      targetPath: $(Build.SourcesDirectory)/artifacts/publish/api
+      artifact: recovery-backoffice-api
+      publishLocation: pipeline
