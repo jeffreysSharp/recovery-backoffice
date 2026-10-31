@@ -16,8 +16,20 @@ No modelo completo, a resolução HTTP pertence ao módulo Multitenancy e usa cl
 
 TenantIsolationExtensions.ApplyTenantIsolationByDefault foi adaptado do BuildingBlocks.Persistence do FullStackHero, usando Finbuckle.MultiTenant.EntityFrameworkCore 10.1.0. Depois das configurações das entidades, a extensão marca entidades com chave como multitenant e inclui TenantId nos índices únicos. Entidades IGlobalEntity, tipos owned, tipos sem chave e entidades já marcadas explicitamente são preservados, como no modelo de referência.
 
-A extensão deve ser chamada por um contexto derivado de MultiTenantDbContext, depois das configurações do modelo. Este incremento prepara essa regra; o host ainda não usa um contexto multitenant. O BaseDbContext, a resolução HTTP, o catálogo de tenants e a aplicação da regra aos módulos serão integrados nas próximas etapas.
+A extensão deve ser chamada por um contexto derivado de MultiTenantDbContext, depois das configurações do modelo. O BaseDbContext agora centraliza essa chamada; o host ainda não usa um contexto multitenant. A resolução HTTP, o catálogo de tenants e a aplicação da regra aos módulos serão integrados nas próximas etapas.
 
 Os testes verificam o SQL gerado pelo provider SQL Server para dois tenants com o mesmo modelo em cache, a ausência do filtro nas entidades globais, os índices únicos por tenant e as exceções de mapeamento. Não abrem conexão nem comprovam isolamento de dados gravados em um SQL Server real. IgnoreQueryFilters pode remover os filtros; resolver um tenant também não substitui autorização.
 
 O host continua sem exigir conexão de banco. Nenhuma tabela, senha inicial ou recurso Azure foi criado.
+
+## Contexto base dos módulos
+
+Context/BaseDbContext, ModelBuilderExtensions e QueryFilters foram adaptados dos arquivos correspondentes do FullStackHero, preservando a licença em licenses/fullstackhero.txt. O BaseDbContext deriva de MultiTenantDbContext e combina o filtro nomeado SoftDelete com o isolamento por tenant. Contextos derivados devem configurar suas entidades e índices antes de chamar base.OnModelCreating.
+
+Consultas comuns omitem ISoftDeletable.IsDeleted. IgnoreQueryFilters([QueryFilters.SoftDelete]) permite consultar registros excluídos mantendo o filtro de tenant; IgnoreQueryFilters() remove todos os filtros e exige cuidado nos futuros serviços. Entidades IGlobalEntity continuam sujeitas à exclusão lógica quando implementam ISoftDeletable.
+
+Sem ConnectionString específica no tenant, o contexto mantém a conexão configurada em AddRecoveryDbContext. Quando há uma conexão específica, OnConfiguring a obtém do IScopedDbConnectionProvider do escopo, mantendo o compartilhamento entre contextos e a propriedade da conexão no provider. Na construção manual sem provider, usa a string de conexão diretamente, como no modelo.
+
+A sobrecarga SaveChangesAsync(CancellationToken) preserva TenantNotSetMode.Overwrite do FullStackHero; o Finbuckle preenche o TenantId ausente e rejeita divergências com o tenant atual. A auditoria continua registrada por AddRecoveryDatabaseOptions/AddRecoveryDbContext e não foi duplicada no contexto base.
+
+Os testes verificam composição dos filtros no SQL gerado, remoção seletiva de SoftDelete, escolha da conexão, compartilhamento por escopo, descarte e validação de TenantId no fluxo de SaveChangesAsync. As gravações são suprimidas por um interceptor de teste: não há servidor SQL, migrations ou teste de persistência real neste incremento.
