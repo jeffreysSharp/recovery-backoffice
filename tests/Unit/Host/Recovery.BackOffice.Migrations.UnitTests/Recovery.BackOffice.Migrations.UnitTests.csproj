@@ -1,5 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="../../../../src/Host/Recovery.BackOffice.Api/Recovery.BackOffice.Api.csproj" />
-  </ItemGroup>
-</Project>
