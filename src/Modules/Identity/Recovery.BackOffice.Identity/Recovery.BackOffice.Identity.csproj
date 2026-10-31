@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\Recovery.BackOffice.BuildingBlocks.Web\Recovery.BackOffice.BuildingBlocks.Web.csproj" />
     <ProjectReference Include="..\Recovery.BackOffice.Identity.Contracts\Recovery.BackOffice.Identity.Contracts.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Shared/Recovery.BackOffice.BuildingBlocks.Shared.csproj" />
   </ItemGroup>
 
 </Project>
