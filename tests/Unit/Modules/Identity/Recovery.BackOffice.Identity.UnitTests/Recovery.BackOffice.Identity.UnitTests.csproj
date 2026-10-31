@@ -1,5 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="../../../../../src/Modules/Identity/Recovery.BackOffice.Identity/Recovery.BackOffice.Identity.csproj" />
-  </ItemGroup>
-</Project>

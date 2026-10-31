@@ -13,14 +13,18 @@ steps:
     fetchDepth: 0
 
   - task: UseDotNet@2
-    displayName: Install SDK from global.json
+    displayName: Install .NET 10 SDK
     inputs:
       packageType: sdk
-      useGlobalJson: true
-      workingDirectory: $(Build.SourcesDirectory)
+      version: '10.x'
+
+  - task: NodeTool@0
+    displayName: Install Node.js
+    inputs:
+      versionSpec: '24.x'
 
   - task: SonarCloudPrepare@4
-    displayName: Prepare SonarQube Cloud analysis
+    displayName: Prepare existing Sonar project
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
     inputs:
       SonarCloud: sc-recovery-backoffice-sonar
@@ -28,103 +32,52 @@ steps:
       scannerMode: dotnet
       projectKey: gauss-platform_recovery-backoffice
       projectName: Recovery BackOffice
-      projectVersion: 0.2.0
+      projectVersion: '$(Build.BuildNumber)'
       extraProperties: |
         sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/artifacts/test-results/**/coverage.opencover.xml
         sonar.cs.vstest.reportsPaths=$(Build.SourcesDirectory)/artifacts/test-results/**/*.trx
+        sonar.exclusions=**/node_modules/**,**/dist/**,**/bin/**,**/obj/**,.evaluation/**
         sonar.qualitygate.wait=true
         sonar.qualitygate.timeout=300
 
   - task: PowerShell@2
-    displayName: Verify application
+    displayName: Build and test template evaluation
     inputs:
       targetType: filePath
-      filePath: scripts/verify.ps1
+      filePath: scripts/verify-template.ps1
       workingDirectory: $(Build.SourcesDirectory)
       pwsh: true
 
   - task: PublishTestResults@2
-    displayName: Publish test results
     condition: succeededOrFailed()
     inputs:
       testResultsFormat: VSTest
-      testResultsFiles: artifacts/test-results/**/*.trx
+      testResultsFiles: 'artifacts/test-results/**/*.trx'
       searchFolder: $(Build.SourcesDirectory)
       mergeTestResults: true
       failTaskOnFailedTests: true
       failTaskOnMissingResultsFile: true
-      testRunTitle: Recovery BackOffice tests
 
   - task: PublishCodeCoverageResults@2
-    displayName: Publish code coverage
     condition: succeededOrFailed()
     inputs:
-      summaryFileLocation: $(Build.SourcesDirectory)/artifacts/test-results/**/coverage.cobertura.xml
-      pathToSources: $(Build.SourcesDirectory)
+      summaryFileLocation: '$(Build.SourcesDirectory)/artifacts/test-results/**/coverage.cobertura.xml'
       failIfCoverageEmpty: true
 
   - task: SonarCloudAnalyze@4
-    displayName: Analyze code and enforce quality gate
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
 
   - task: SonarCloudPublish@4
-    displayName: Publish SonarQube Cloud quality gate
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
     inputs:
       pollingTimeoutSec: '300'
 
   - task: PublishPipelineArtifact@1
-    displayName: Publish API artifact
+    displayName: Publish evaluation artifacts
     inputs:
-      targetPath: $(Build.SourcesDirectory)/artifacts/publish/api
-      artifact: recovery-backoffice-api
+      targetPath: '$(Build.SourcesDirectory)/artifacts/publish'
+      artifact: recovery-template-evaluation
       publishLocation: pipeline
 
-  - task: AzureWebApp@1
-    displayName: Deploy API to production
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
-    inputs:
-      azureSubscription: sc-recovery-backoffice-prod
-      appType: webApp
-      appName: recovery-backoffice-api
-      package: $(Build.SourcesDirectory)/artifacts/publish/api
-      deploymentMethod: zipDeploy
-
-  - task: PowerShell@2
-    displayName: Verify production over HTTPS
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
-    inputs:
-      targetType: inline
-      pwsh: true
-      script: |
-        $ErrorActionPreference = "Stop"
-
-        $uri = "https://recovery-backoffice-api-fnahgecpepdvften.westus3-01.azurewebsites.net/"
-        $verified = $false
-
-        for ($attempt = 1; $attempt -le 12; $attempt++) {
-            try {
-                $response = Invoke-WebRequest -Uri $uri -TimeoutSec 15
-
-                if ($response.StatusCode -eq 200 -and
-                    $response.Content -ceq "Hello World!") {
-                    $verified = $true
-                    break
-                }
-
-                Write-Host "Attempt ${attempt}: unexpected response."
-            }
-            catch {
-                Write-Host "Attempt ${attempt}: $($_.Exception.Message)"
-            }
-
-            if ($attempt -lt 12) {
-                Start-Sleep -Seconds 5
-            }
-        }
-
-        if (-not $verified) {
-            throw "Production HTTPS verification failed."
-        }
-
-        Write-Host "Production HTTPS verification passed."
+# Deployment is specified separately after validating target services and settings.
+# Do not reuse the old Hello World deployment/smoke check for this application.
