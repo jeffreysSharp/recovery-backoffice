@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using Serilog.Core;
 
-namespace FSH.Framework.Web.Observability.Logging.Serilog;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Observability.Logging.Serilog;
 
 public static class StaticLogger
 {

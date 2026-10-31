@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.RateLimiting;
-using FSH.Framework.Shared.Constants;
+using Recovery.BackOffice.BuildingBlocks.Shared.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Web.RateLimiting;
+namespace Recovery.BackOffice.BuildingBlocks.Web.RateLimiting;
 
 public static class Extensions
 {
@@ -19,7 +19,7 @@ public static class Extensions
     private const string UnknownIpPartitionKey = "ip:unknown";
     private const string TooManyRequestsType = "https://datatracker.ietf.org/doc/html/rfc6585#section-4";
 
-    public static IServiceCollection AddHeroRateLimiting(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRecoveryRateLimiting(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
@@ -46,7 +46,7 @@ public static class Extensions
         return services;
     }
 
-    public static IApplicationBuilder UseHeroRateLimiting(this IApplicationBuilder app)
+    public static IApplicationBuilder UseRecoveryRateLimiting(this IApplicationBuilder app)
     {
         ArgumentNullException.ThrowIfNull(app);
 

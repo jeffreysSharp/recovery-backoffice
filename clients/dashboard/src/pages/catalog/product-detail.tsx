@@ -63,7 +63,7 @@ import {
   Combobox,
   EntityDetailAvatar,
   EntityDetailBack,
-  EntityDetailHero,
+  EntityDetailRecovery,
   EntityDetailMeta,
   EntityDetailSection,
   EntityDetailStat,
@@ -138,7 +138,7 @@ export function ProductDetailPage() {
         <DetailSkeleton />
       ) : product ? (
         <>
-          <ProductHero
+          <ProductRecovery
             product={product}
             brand={brand}
             category={category}
@@ -243,10 +243,10 @@ export function ProductDetailPage() {
 }
 
 // ───────────────────────────────────────────────────────────────────────
-//  Hero
+//  Recovery
 // ───────────────────────────────────────────────────────────────────────
 
-function ProductHero({
+function ProductRecovery({
   product,
   brand,
   category,
@@ -293,7 +293,7 @@ function ProductHero({
   );
 
   return (
-    <EntityDetailHero
+    <EntityDetailRecovery
       avatar={
         <EntityDetailAvatar
           src={product.thumbnailUrl}

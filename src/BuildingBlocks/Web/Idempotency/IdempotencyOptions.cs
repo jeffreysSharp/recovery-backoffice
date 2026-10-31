@@ -1,4 +1,4 @@
-namespace FSH.Framework.Web.Idempotency;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Idempotency;
 
 /// <summary>
 /// Configuration options for HTTP request idempotency.

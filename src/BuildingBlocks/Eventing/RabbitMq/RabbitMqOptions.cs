@@ -1,4 +1,4 @@
-namespace FSH.Framework.Eventing.RabbitMq;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing.RabbitMq;
 
 /// <summary>
 /// Configuration options for RabbitMQ event bus.
@@ -31,14 +31,14 @@ public sealed class RabbitMqOptions
     public string VirtualHost { get; set; } = "/";
 
     /// <summary>
-    /// Exchange name for publishing events. Default is "fsh.events".
+    /// Exchange name for publishing events. Default is "recovery.events".
     /// </summary>
-    public string ExchangeName { get; set; } = "fsh.events";
+    public string ExchangeName { get; set; } = "recovery.events";
 
     /// <summary>
-    /// Queue name prefix for consuming events. Default is "fsh".
+    /// Queue name prefix for consuming events. Default is "recovery".
     /// </summary>
-    public string QueuePrefix { get; set; } = "fsh";
+    public string QueuePrefix { get; set; } = "recovery";
 
     /// <summary>
     /// Enable SSL/TLS connection. Default is false.

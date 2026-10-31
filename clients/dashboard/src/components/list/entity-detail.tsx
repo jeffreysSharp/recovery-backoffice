@@ -28,13 +28,13 @@ export function EntityDetailBack({
 }
 
 // ───────────────────────────────────────────────────────────────────────
-//  EntityDetailHero — warm-paper card with a rose→saffron gradient strip
+//  EntityDetailRecovery — warm-paper card with a rose→saffron gradient strip
 //  on top, then an identity row (avatar slot + title + badges + actions),
 //  an optional stats row, and an optional contact/meta row.
 //  Matches the dentalOS patient-detail-page hero shape.
 // ───────────────────────────────────────────────────────────────────────
 
-export function EntityDetailHero({
+export function EntityDetailRecovery({
   avatar,
   title,
   badges,
@@ -62,7 +62,7 @@ export function EntityDetailHero({
   return (
     <div
       className={cn(
-        "fsh-enter overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]",
+        "recovery-enter overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]",
         "shadow-xs",
         "mb-5",
         className,

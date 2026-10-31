@@ -68,7 +68,7 @@ export function SecuritySettings() {
   const twoFactorEnabled = profile.data?.twoFactorEnabled ?? false;
 
   return (
-    <div className="space-y-5 fsh-enter">
+    <div className="space-y-5 recovery-enter">
       <PasswordSection />
       <TwoFactorSection enabled={twoFactorEnabled} />
     </div>

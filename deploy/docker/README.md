@@ -1,17 +1,17 @@
-# Deploy fullstackhero with Docker Compose
+# Deploy recovery-backoffice with Docker Compose
 
 This brings up the full stack on a single host:
 
 | Service | Image | Host port | What it is |
 |---|---|---|---|
-| `api` | `fsh/api:local` (built locally) | `FSH_API_PORT` (default 8080) | ASP.NET Core API |
-| `admin` | `fsh/admin:local` | `FSH_ADMIN_PORT` (default 8081) | Operator console (nginx + React) |
-| `dashboard` | `fsh/dashboard:local` | `FSH_DASHBOARD_PORT` (default 8082) | Tenant dashboard (nginx + React) |
-| `migrator` | `fsh/dbmigrator:local` | — | One-shot: applies EF migrations + seeds the root tenant + creates the default admin user |
+| `api` | `recovery/api:local` (built locally) | `Recovery_API_PORT` (default 8080) | ASP.NET Core API |
+| `admin` | `recovery/admin:local` | `Recovery_ADMIN_PORT` (default 8081) | Operator console (nginx + React) |
+| `dashboard` | `recovery/dashboard:local` | `Recovery_DASHBOARD_PORT` (default 8082) | Tenant dashboard (nginx + React) |
+| `migrator` | `recovery/dbmigrator:local` | — | One-shot: applies EF migrations + seeds the root tenant + creates the default admin user |
 | `postgres` | `postgres:18-alpine` | (internal) | Identity, tenant catalog, module schemas |
 | `redis` | `valkey/valkey:9.1.0-alpine` | (internal) | HybridCache L2, Data Protection keys, idempotency store |
-| `rustfs` | `rustfs/rustfs:1.0.0` | `FSH_S3_PORT` (default 9000), S3 API only | S3-compatible blob store for the Files module ([RustFS](https://rustfs.com)); published because browsers upload to it through presigned URLs |
-| `mailpit` | `axllent/mailpit:v1.31.3` | `127.0.0.1:FSH_MAILPIT_PORT` (default 8025), SMTP 1025 internal | Local mail catcher ([Mailpit](https://mailpit.axllent.org)), only with the `mail-catcher` profile, which `.env.example` enables |
+| `rustfs` | `rustfs/rustfs:1.0.0` | `Recovery_S3_PORT` (default 9000), S3 API only | S3-compatible blob store for the Files module ([RustFS](https://rustfs.com)); published because browsers upload to it through presigned URLs |
+| `mailpit` | `axllent/mailpit:v1.31.3` | `127.0.0.1:Recovery_MAILPIT_PORT` (default 8025), SMTP 1025 internal | Local mail catcher ([Mailpit](https://mailpit.axllent.org)), only with the `mail-catcher` profile, which `.env.example` enables |
 
 The compose file does **not** include a reverse proxy or TLS terminator. You bring your own edge — Cloudflare Tunnel, AWS ALB, Tailscale Funnel, your existing nginx, anything that can route a TLS subdomain to a host:port on this machine.
 
@@ -45,18 +45,18 @@ Wait until you see something like `[migrator] DbMigrator completed` and the `mig
 ```bash
 curl -fsS http://localhost:8080/health/live   # API liveness
 curl -fsSI http://localhost:8081/ | head -1   # admin SPA — HTTP/1.1 200 OK
-curl -fsS  http://localhost:8081/config.json  # admin runtime config — shows FSH_API_URL
+curl -fsS  http://localhost:8081/config.json  # admin runtime config — shows Recovery_API_URL
 curl -fsSI http://localhost:8082/ | head -1   # dashboard SPA
 curl -fsS  http://localhost:9000/health       # RustFS S3 API
 ```
 
 ## Reading e-mail
 
-By default (`COMPOSE_PROFILES=mail-catcher` and `FSH_SMTP_HOST=mailpit` in `.env`) the API sends every e-mail (confirmation, password reset, welcome) to the bundled `mailpit` service, so nothing leaves the host and no SMTP account is needed. Open **http://localhost:8025** on the Docker host to read them and follow the links. A user an operator registers must confirm the e-mail before signing in, and the confirmation link is in that inbox.
+By default (`COMPOSE_PROFILES=mail-catcher` and `Recovery_SMTP_HOST=mailpit` in `.env`) the API sends every e-mail (confirmation, password reset, welcome) to the bundled `mailpit` service, so nothing leaves the host and no SMTP account is needed. Open **http://localhost:8025** on the Docker host to read them and follow the links. A user an operator registers must confirm the e-mail before signing in, and the confirmation link is in that inbox.
 
 The inbox UI is published on the host loopback only, because it holds live password-reset and confirmation links. From another machine, use an SSH tunnel (`ssh -L 8025:127.0.0.1:8025 <host>`).
 
-To deliver real mail, edit `.env` only: set `FSH_SMTP_HOST`, `FSH_SMTP_PORT`, `FSH_SMTP_USERNAME`, `FSH_SMTP_PASSWORD` and `FSH_SMTP_SECURITY` to your provider's values (`StartTls` for port 587, `SslOnConnect` for 465), set `FSH_MAIL_FROM` to a sender your provider accepts, delete the `COMPOSE_PROFILES=mail-catcher` line, then `docker compose up -d` and `docker compose rm -sf mailpit` to drop the running catcher.
+To deliver real mail, edit `.env` only: set `Recovery_SMTP_HOST`, `Recovery_SMTP_PORT`, `Recovery_SMTP_USERNAME`, `Recovery_SMTP_PASSWORD` and `Recovery_SMTP_SECURITY` to your provider's values (`StartTls` for port 587, `SslOnConnect` for 465), set `Recovery_MAIL_FROM` to a sender your provider accepts, delete the `COMPOSE_PROFILES=mail-catcher` line, then `docker compose up -d` and `docker compose rm -sf mailpit` to drop the running catcher.
 
 ## Wire up your external proxy
 
@@ -69,13 +69,13 @@ Point four TLS subdomains at the published ports:
 | `app.example.com` | `8082` |
 | `s3.example.com` | `9000` |
 
-Make sure the URLs you serve match the `FSH_API_URL` / `FSH_ADMIN_URL` / `FSH_DASHBOARD_URL` you set in `.env` — those values are baked into the frontends' runtime `/config.json` (CORS will fail loudly otherwise). They also drive the origins the API is allowed to put inside password-reset and e-mail-confirmation links, with `FSH_DASHBOARD_URL` as the default target for links the API sends on an operator's behalf.
+Make sure the URLs you serve match the `Recovery_API_URL` / `Recovery_ADMIN_URL` / `Recovery_DASHBOARD_URL` you set in `.env` — those values are baked into the frontends' runtime `/config.json` (CORS will fail loudly otherwise). They also drive the origins the API is allowed to put inside password-reset and e-mail-confirmation links, with `Recovery_DASHBOARD_URL` as the default target for links the API sends on an operator's behalf.
 
-Presigned uploads and downloads skip the API: the browser talks to RustFS through presigned URLs, which the API signs for `FSH_S3_PUBLIC_URL` (it reaches RustFS itself on the internal `http://rustfs:9000`). Set `FSH_S3_PUBLIC_URL` to the URL your proxy serves the S3 port on, and make the proxy forward the original `Host` header: the signature covers it, so a rewritten host fails with `SignatureDoesNotMatch`. RustFS only grants CORS to `FSH_ADMIN_URL` and `FSH_DASHBOARD_URL`, so a browser on any other origin blocks the PUT.
+Presigned uploads and downloads skip the API: the browser talks to RustFS through presigned URLs, which the API signs for `Recovery_S3_PUBLIC_URL` (it reaches RustFS itself on the internal `http://rustfs:9000`). Set `Recovery_S3_PUBLIC_URL` to the URL your proxy serves the S3 port on, and make the proxy forward the original `Host` header: the signature covers it, so a rewritten host fails with `SignatureDoesNotMatch`. RustFS only grants CORS to `Recovery_ADMIN_URL` and `Recovery_DASHBOARD_URL`, so a browser on any other origin blocks the PUT.
 
-Public files (avatars, product images) are served without a signature: the API keeps them under the `public/` prefix, hands out `FSH_S3_PUBLIC_URL/fsh/public/...` URLs, and `rustfs-init` grants anonymous read on `public/*` of the `fsh` bucket only. Private files live under `private/` and are only reachable through presigned URLs.
+Public files (avatars, product images) are served without a signature: the API keeps them under the `public/` prefix, hands out `Recovery_S3_PUBLIC_URL/recovery/public/...` URLs, and `rustfs-init` grants anonymous read on `public/*` of the `recovery` bucket only. Private files live under `private/` and are only reachable through presigned URLs.
 
-**Lock down the S3 port.** Compose publishes `FSH_S3_PORT` on all interfaces. Firewall it so only your proxy can reach it, or, when the proxy runs on the same host, bind it to loopback by changing the `rustfs` port mapping to `"127.0.0.1:${FSH_S3_PORT:-9000}:9000"`.
+**Lock down the S3 port.** Compose publishes `Recovery_S3_PORT` on all interfaces. Firewall it so only your proxy can reach it, or, when the proxy runs on the same host, bind it to loopback by changing the `rustfs` port mapping to `"127.0.0.1:${Recovery_S3_PORT:-9000}:9000"`.
 
 ## Sign in for the first time
 
@@ -104,11 +104,11 @@ The three named volumes hold all state:
 
 ```bash
 docker run --rm \
-  -v fsh_pg_data:/source:ro \
+  -v recovery_pg_data:/source:ro \
   -v "$PWD":/backup \
   alpine \
   tar czf /backup/pg_data-$(date +%Y%m%d).tar.gz -C /source .
-# Repeat for fsh_redis_data and fsh_rustfs_data.
+# Repeat for recovery_redis_data and recovery_rustfs_data.
 ```
 
 ## Swapping in managed services
@@ -129,12 +129,12 @@ The data-plane volumes (`pg_data`, `redis_data`, `rustfs_data`) can be deleted o
 | Symptom | Likely cause |
 |---|---|
 | `xxx_PASSWORD is required` at `docker compose up` | A required env var is empty in `.env`. The error names the var. |
-| Migrator exits non-zero with `Failed to fetch dynamically imported module` | A frontend bundle baked the wrong API URL. Check `FSH_API_URL` in `.env` and re-run with `--build`. |
+| Migrator exits non-zero with `Failed to fetch dynamically imported module` | A frontend bundle baked the wrong API URL. Check `Recovery_API_URL` in `.env` and re-run with `--build`. |
 | `OptionsValidationException: SigningKey looks like a sample placeholder` | `JWT_SIGNING_KEY` contains `replace-with` (the framework's placeholder detector). Generate a real key: `openssl rand -base64 48`. |
-| API up but admin shows a CORS error | `FSH_ADMIN_URL` / `FSH_DASHBOARD_URL` in `.env` doesn't match what your external proxy serves. Both go on the CORS allow-list. |
-| A reset or confirmation e-mail links to the API instead of the app | Same cause: `FSH_ADMIN_URL` / `FSH_DASHBOARD_URL` don't match the origins the browser actually uses. Both also feed `FrontendOptions__AllowedOrigins`, and `FSH_DASHBOARD_URL` feeds `FrontendOptions__DefaultOrigin`. |
+| API up but admin shows a CORS error | `Recovery_ADMIN_URL` / `Recovery_DASHBOARD_URL` in `.env` doesn't match what your external proxy serves. Both go on the CORS allow-list. |
+| A reset or confirmation e-mail links to the API instead of the app | Same cause: `Recovery_ADMIN_URL` / `Recovery_DASHBOARD_URL` don't match the origins the browser actually uses. Both also feed `FrontendOptions__AllowedOrigins`, and `Recovery_DASHBOARD_URL` feeds `FrontendOptions__DefaultOrigin`. |
 | An avatar or product image doesn't render (`403 AccessDenied` on the image URL) | The URL's key doesn't start with `public/`, or the bucket policy is missing. Check `docker compose logs rustfs-init` (it must exit 0) and the API log for the legacy-file migration. |
-| File upload fails in the browser (network error, CORS error, or `403 SignatureDoesNotMatch`) | `FSH_S3_PUBLIC_URL` doesn't match what your proxy serves on the S3 port, the proxy rewrites the `Host` header, or the page's origin isn't `FSH_ADMIN_URL` / `FSH_DASHBOARD_URL` (the RustFS CORS allow-list). |
-| No e-mail arrives, or the API logs `The SMTP server does not support the STARTTLS extension` | `FSH_SMTP_SECURITY` does not match the server. The bundled Mailpit needs `None`; a provider on port 587 needs `StartTls`, on 465 `SslOnConnect`. |
+| File upload fails in the browser (network error, CORS error, or `403 SignatureDoesNotMatch`) | `Recovery_S3_PUBLIC_URL` doesn't match what your proxy serves on the S3 port, the proxy rewrites the `Host` header, or the page's origin isn't `Recovery_ADMIN_URL` / `Recovery_DASHBOARD_URL` (the RustFS CORS allow-list). |
+| No e-mail arrives, or the API logs `The SMTP server does not support the STARTTLS extension` | `Recovery_SMTP_SECURITY` does not match the server. The bundled Mailpit needs `None`; a provider on port 587 needs `StartTls`, on 465 `SslOnConnect`. |
 | `Cannot load library libgssapi_krb5.so.2` in the API or migrator log | A connection string without `GSS Encryption Mode=Disable`. Npgsql tries GSS encryption by default and the chiseled images do not ship the Kerberos library. Harmless, but append the setting to silence it. |
 | `migrator` retries Postgres for 2 minutes then fails | Postgres didn't come up — check `docker compose logs postgres`. Most often a `POSTGRES_PASSWORD` change against an existing `pg_data` volume; delete the volume with `docker compose down -v` (destructive) and start over. |

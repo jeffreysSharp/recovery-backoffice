@@ -50,7 +50,7 @@ import {
 import {
   EntityDetailAvatar,
   EntityDetailBack,
-  EntityDetailHero,
+  EntityDetailRecovery,
   EntityDetailSection,
   EntityDetailStat,
   ErrorBand,
@@ -215,7 +215,7 @@ export function GroupDetailPage() {
     <div className="space-y-5 pb-12">
       <EntityDetailBack to="/identity/groups" label="Back to groups" />
 
-      <EntityDetailHero
+      <EntityDetailRecovery
         avatar={<EntityDetailAvatar name={group.name} icon={UsersIcon} />}
         title={group.name}
         badges={

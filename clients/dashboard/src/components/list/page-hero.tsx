@@ -4,7 +4,7 @@ import { cn } from "@/lib/cn";
 /**
  * Calm page hero used across non-list surfaces (health, audit trail,
  * sessions, trash, settings). Shares the same calm warm-paper chrome as
- * `ListHero` but omits the built-in search input and CTA button.
+ * `ListRecovery` but omits the built-in search input and CTA button.
  * Callers slot in their own actions on the right.
  *
  * Composition:
@@ -12,7 +12,7 @@ import { cn } from "@/lib/cn";
  *   title row    — display heading + optional badge + actions slot
  *   subtitle     — muted body line below
  */
-export function PageHero({
+export function PageRecovery({
   eyebrow,
   tenant,
   subEyebrow,
@@ -37,7 +37,7 @@ export function PageHero({
   return (
     <section
       className={cn(
-        "fsh-enter fsh-enter-1 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-xs",
+        "recovery-enter recovery-enter-1 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-xs",
         className,
       )}
     >

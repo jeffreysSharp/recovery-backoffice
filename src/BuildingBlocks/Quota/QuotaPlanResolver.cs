@@ -1,7 +1,7 @@
-using FSH.Framework.Shared.Multitenancy;
-using FSH.Framework.Shared.Quota;
+using Recovery.BackOffice.BuildingBlocks.Shared.Multitenancy;
+using Recovery.BackOffice.BuildingBlocks.Shared.Quota;
 
-namespace FSH.Framework.Quota;
+namespace Recovery.BackOffice.BuildingBlocks.Quota;
 
 /// <summary>
 /// Resolves the effective limit for a given tenant + resource. Tenant-local overrides on

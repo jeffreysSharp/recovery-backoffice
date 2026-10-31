@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.Modules.Auditing</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.Modules.Auditing</AssemblyName>
+		<NoWarn>$(NoWarn);CA1031;CA1308;CA1812;CA1859;S3267</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Persistence\Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Web\Recovery.BackOffice.BuildingBlocks.Web.csproj" />
+	  <ProjectReference Include="..\Recovery.BackOffice.Modules.Auditing.Contracts\Recovery.BackOffice.Modules.Auditing.Contracts.csproj" />
+	  <ProjectReference Include="..\..\Identity\Recovery.BackOffice.Modules.Identity.Contracts\Recovery.BackOffice.Modules.Identity.Contracts.csproj" />
+	</ItemGroup>
+
+</Project>

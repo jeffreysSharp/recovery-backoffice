@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.Modules.Tickets</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.Modules.Tickets</AssemblyName>
+		<NoWarn>$(NoWarn);CA1031;CA1812;CA1859;S3267</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\Persistence\Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Web\Recovery.BackOffice.BuildingBlocks.Web.csproj" />
+		<ProjectReference Include="..\Recovery.BackOffice.Modules.Tickets.Contracts\Recovery.BackOffice.Modules.Tickets.Contracts.csproj" />
+	</ItemGroup>
+
+</Project>

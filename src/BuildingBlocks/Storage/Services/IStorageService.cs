@@ -1,7 +1,7 @@
-using FSH.Framework.Shared.Storage;
-using FSH.Framework.Storage.DTOs;
+using Recovery.BackOffice.BuildingBlocks.Shared.Storage;
+using Recovery.BackOffice.BuildingBlocks.Storage.DTOs;
 
-namespace FSH.Framework.Storage.Services;
+namespace Recovery.BackOffice.BuildingBlocks.Storage.Services;
 
 public interface IStorageService
 {

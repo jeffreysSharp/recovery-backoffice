@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   EntityStatusBadge,
-  PageHero,
+  PageRecovery,
   ToneIconTile,
   type EntityStatusTone,
   type ToneIconTileTone,
@@ -190,7 +190,7 @@ export function HealthPage() {
 
   return (
     <div className="space-y-7 pb-12">
-      <PageHero
+      <PageRecovery
         eyebrow="System · Health"
         title="Health"
         subtitle={
@@ -229,9 +229,9 @@ export function HealthPage() {
         }
       />
 
-      <section className="fsh-enter fsh-enter-2">
+      <section className="recovery-enter recovery-enter-2">
         {snapshot ? (
-          <HeroPanel
+          <RecoveryPanel
             snapshot={snapshot}
             history={history}
             slowestMs={computed?.slowest?.durationMs ?? 0}
@@ -241,12 +241,12 @@ export function HealthPage() {
         ) : query.isError ? (
           <ErrorPanel message={(query.error as Error)?.message} />
         ) : (
-          <HeroSkeleton />
+          <RecoverySkeleton />
         )}
       </section>
 
       {/* ── Dependencies list ───────────────────────────────────────────── */}
-      <section aria-label="Dependencies" className="fsh-enter fsh-enter-3">
+      <section aria-label="Dependencies" className="recovery-enter recovery-enter-3">
         <div className="mb-3 flex items-baseline justify-between gap-3">
           <h2 className="font-display text-[16px] font-semibold tracking-tight text-[var(--color-foreground)]">
             Dependencies
@@ -276,14 +276,14 @@ export function HealthPage() {
 }
 
 // ────────────────────────────────────────────────────────────────────────
-// Hero panel — calm dentalOS surface. Outfit headline carries the
+// Recovery panel — calm dentalOS surface. Outfit headline carries the
 // overall status; a vitals row sits beneath it with stat values in mono
 // tabular numerals; a slim pip-bar history ribbon docks on the right
 // (lg+) or under the vitals row (sm). Background is a single soft tone-
 // tinted radial in the upper-left, low opacity, no second channel.
 // ────────────────────────────────────────────────────────────────────────
 
-function HeroPanel({
+function RecoveryPanel({
   snapshot,
   history,
   slowestMs,
@@ -660,7 +660,7 @@ function DependencyRow({
 // Skeletons + error / empty
 // ────────────────────────────────────────────────────────────────────────
 
-function HeroSkeleton() {
+function RecoverySkeleton() {
   return (
     <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] px-7 py-7">
       <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
@@ -713,7 +713,7 @@ function ErrorPanel({ message }: { message?: string }) {
     <div
       role="alert"
       className={cn(
-        "fsh-enter flex items-start gap-3 rounded-xl border px-5 py-4",
+        "recovery-enter flex items-start gap-3 rounded-xl border px-5 py-4",
         "border-[oklch(from_var(--color-destructive)_l_c_h_/_0.30)]",
         "bg-[oklch(from_var(--color-destructive)_l_c_h_/_0.04)]",
       )}

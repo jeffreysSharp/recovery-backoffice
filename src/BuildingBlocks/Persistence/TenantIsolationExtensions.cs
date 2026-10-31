@@ -1,8 +1,8 @@
 using Finbuckle.MultiTenant.EntityFrameworkCore.Extensions;
-using FSH.Framework.Core.Domain;
+using Recovery.BackOffice.BuildingBlocks.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace FSH.Framework.Persistence;
+namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
 /// <summary>
 /// Tenant-isolation defaults for <see cref="ModelBuilder"/>. Applied from

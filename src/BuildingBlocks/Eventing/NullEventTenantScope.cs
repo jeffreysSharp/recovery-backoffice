@@ -1,6 +1,6 @@
-using FSH.Framework.Eventing.Abstractions;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions;
 
-namespace FSH.Framework.Eventing;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing;
 
 /// <summary>
 /// No-op <see cref="IEventTenantScope"/> used when no multitenancy provider is wired.

@@ -138,7 +138,7 @@ export function TenantDetailPage() {
 
       {tenant && (
         <>
-          {/* ── Hero identity card ─────────────────────────────────────── */}
+          {/* ── Recovery identity card ─────────────────────────────────────── */}
           <SettingsSection title="Overview" icon={Building2}>
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
               {/* Left: monogram + name + meta + badges */}

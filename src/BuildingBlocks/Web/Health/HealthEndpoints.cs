@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace FSH.Framework.Web.Health;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Health;
 
 public static class HealthEndpoints
 {
     public sealed record HealthResult(string Status, IEnumerable<HealthEntry> Results);
     public sealed record HealthEntry(string Name, string Status, string? Description, double DurationMs, Dictionary<string, object>? Details = default);
-    public static IEndpointRouteBuilder MapHeroHealthEndpoints(this IEndpointRouteBuilder app)
+    public static IEndpointRouteBuilder MapRecoveryHealthEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/health")
                        .WithTags("Health")

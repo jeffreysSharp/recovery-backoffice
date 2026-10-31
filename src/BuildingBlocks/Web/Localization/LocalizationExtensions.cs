@@ -1,11 +1,11 @@
 using System.Globalization;
-using FSH.Framework.Core.Localization;
+using Recovery.BackOffice.BuildingBlocks.Core.Localization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FSH.Framework.Web.Localization;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Localization;
 
 public static class LocalizationExtensions
 {
@@ -18,7 +18,7 @@ public static class LocalizationExtensions
     /// <see cref="CultureInfo.CurrentCulture"/> stays invariant, so no request can shift numeric,
     /// date or string formatting anywhere in the pipeline.
     /// </summary>
-    public static IServiceCollection AddHeroLocalization(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRecoveryLocalization(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
@@ -67,7 +67,7 @@ public static class LocalizationExtensions
         return services;
     }
 
-    public static IApplicationBuilder UseHeroLocalization(this IApplicationBuilder app)
+    public static IApplicationBuilder UseRecoveryLocalization(this IApplicationBuilder app)
     {
         ArgumentNullException.ThrowIfNull(app);
         return app.UseRequestLocalization();

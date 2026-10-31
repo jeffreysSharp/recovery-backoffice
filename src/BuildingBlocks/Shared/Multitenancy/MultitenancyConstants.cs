@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Shared.Multitenancy;
+﻿namespace Recovery.BackOffice.BuildingBlocks.Shared.Multitenancy;
 
 public static class MultitenancyConstants
 {
@@ -8,7 +8,7 @@ public static class MultitenancyConstants
         public const string Name = "Root";
         public const string EmailAddress = "admin@root.com";
         public const string DefaultProfilePicture = "assets/defaults/profile-picture.webp";
-        public const string Issuer = "recovery-templateevaluation";
+        public const string Issuer = "recovery-backoffice";
     }
 
     public const string Identifier = "tenant";

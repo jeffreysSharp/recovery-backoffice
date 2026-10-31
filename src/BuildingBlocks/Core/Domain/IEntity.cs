@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Core.Domain;
+﻿namespace Recovery.BackOffice.BuildingBlocks.Core.Domain;
 
 /// <summary>
 /// Represents an entity with a strongly-typed identifier.

@@ -1,7 +1,7 @@
-using FSH.Framework.Persistence.Specifications;
+using Recovery.BackOffice.BuildingBlocks.Persistence.Specifications;
 using System.Linq.Expressions;
 
-namespace FSH.Framework.Persistence;
+namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
 /// <summary>
 /// Base specification that composes a query for <typeparamref name="T"/> and

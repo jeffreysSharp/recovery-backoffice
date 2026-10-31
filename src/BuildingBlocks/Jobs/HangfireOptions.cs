@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace FSH.Framework.Jobs;
+namespace Recovery.BackOffice.BuildingBlocks.Jobs;
 
 public sealed class HangfireOptions
 {

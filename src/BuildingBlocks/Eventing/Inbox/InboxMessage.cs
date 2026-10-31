@@ -1,8 +1,8 @@
-using FSH.Framework.Core.Domain;
+using Recovery.BackOffice.BuildingBlocks.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FSH.Framework.Eventing.Inbox;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing.Inbox;
 
 /// <summary>
 /// Inbox message to track processed integration events per handler for idempotent consumers.

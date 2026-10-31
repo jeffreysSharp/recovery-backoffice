@@ -1,0 +1,26 @@
+using Recovery.BackOffice.BuildingBlocks.Core.Context;
+using Recovery.BackOffice.BuildingBlocks.Core.Exceptions;
+using Recovery.BackOffice.Modules.Notifications.Contracts.v1.Queries;
+using Recovery.BackOffice.Modules.Notifications.Data;
+using Mediator;
+using Microsoft.EntityFrameworkCore;
+
+namespace Recovery.BackOffice.Modules.Notifications.Features.v1.GetUnreadCount;
+
+public sealed class GetUnreadCountQueryHandler(
+    NotificationsDbContext db,
+    ICurrentUser currentUser)
+    : IQueryHandler<GetUnreadCountQuery, int>
+{
+    public async ValueTask<int> Handle(GetUnreadCountQuery query, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(query);
+        var userId = currentUser.GetUserId();
+        if (userId == Guid.Empty) throw new UnauthorizedException("no current user");
+        var currentUserId = userId.ToString();
+
+        return await db.Notifications.AsNoTracking()
+            .CountAsync(n => n.UserId == currentUserId && n.ReadAtUtc == null, cancellationToken)
+            .ConfigureAwait(false);
+    }
+}

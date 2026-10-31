@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.Modules.Auditing.Contracts</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.Modules.Auditing.Contracts</AssemblyName>
+		<NoWarn>$(NoWarn);S2094</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Mediator.Abstractions" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Shared\Recovery.BackOffice.BuildingBlocks.Shared.csproj" />
+	</ItemGroup>
+</Project>

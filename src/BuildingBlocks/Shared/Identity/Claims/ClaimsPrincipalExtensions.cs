@@ -1,7 +1,7 @@
-﻿using FSH.Framework.Shared.Constants;
+﻿using Recovery.BackOffice.BuildingBlocks.Shared.Constants;
 using System.Security.Claims;
 
-namespace FSH.Framework.Shared.Identity.Claims;
+namespace Recovery.BackOffice.BuildingBlocks.Shared.Identity.Claims;
 
 public static class ClaimsPrincipalExtensions
 {

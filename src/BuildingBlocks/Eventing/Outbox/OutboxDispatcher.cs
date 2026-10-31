@@ -1,9 +1,9 @@
-using FSH.Framework.Eventing.Abstractions;
-using FSH.Framework.Eventing.Telemetry;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Telemetry;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Eventing.Outbox;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing.Outbox;
 
 /// <summary>
 /// Dispatches outbox messages via the configured event bus.

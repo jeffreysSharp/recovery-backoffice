@@ -1,6 +1,6 @@
 ﻿using MailKit.Security;
 
-namespace FSH.Framework.Mailing;
+namespace Recovery.BackOffice.BuildingBlocks.Mailing;
 
 public sealed class MailOptions
 {

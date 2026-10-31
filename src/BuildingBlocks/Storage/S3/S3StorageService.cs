@@ -1,19 +1,19 @@
 using Amazon.S3;
 using Amazon.S3.Model;
-using FSH.Framework.Shared.Storage;
-using FSH.Framework.Storage.DTOs;
-using FSH.Framework.Storage.Services;
+using Recovery.BackOffice.BuildingBlocks.Shared.Storage;
+using Recovery.BackOffice.BuildingBlocks.Storage.DTOs;
+using Recovery.BackOffice.BuildingBlocks.Storage.Services;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
 
-namespace FSH.Framework.Storage.S3;
+namespace Recovery.BackOffice.BuildingBlocks.Storage.S3;
 
 internal sealed partial class S3StorageService : IStorageService
 {
-    internal const string PresignClientKey = "FSH.Storage.S3.Presign";
+    internal const string PresignClientKey = "Recovery.BackOffice.Storage.S3.Presign";
 
     private readonly IAmazonS3 _s3;
     private readonly IAmazonS3 _presignS3;

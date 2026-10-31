@@ -1,6 +1,6 @@
-using FSH.Framework.Eventing.Abstractions;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions;
 
-namespace FSH.Framework.Eventing.Outbox;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing.Outbox;
 
 /// <summary>
 /// Abstraction for persisting and reading outbox messages. Modules only ever need the publish

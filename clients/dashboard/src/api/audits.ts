@@ -2,7 +2,7 @@ import { apiFetch } from "@/lib/api-client";
 
 // ────────────────────────────────────────────────────────────────────────
 // Enum mirrors of the API contracts. Keep in lockstep with
-// src/Modules/Auditing/Modules.Auditing.Contracts/AuditEnums.cs.
+// src/Modules/Auditing/Recovery.BackOffice.Modules.Auditing.Contracts/AuditEnums.cs.
 // ────────────────────────────────────────────────────────────────────────
 
 // The API serializes single-value enums as their string name

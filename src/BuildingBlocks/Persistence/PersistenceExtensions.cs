@@ -1,5 +1,5 @@
-using FSH.Framework.Persistence.Inteceptors;
-using FSH.Framework.Shared.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Persistence.Inteceptors;
+using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Persistence;
+namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
 /// <summary>
 /// Extension methods for configuring persistence services and database contexts.
@@ -22,7 +22,7 @@ public static class PersistenceExtensions
     /// <param name="configuration">The configuration instance containing database settings.</param>
     /// <returns>The service collection for method chaining.</returns>
     /// <exception cref="ArgumentNullException">Thrown when configuration is null.</exception>
-    public static IServiceCollection AddHeroDatabaseOptions(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRecoveryDatabaseOptions(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(configuration);
         services.AddOptions<DatabaseOptions>()
@@ -46,7 +46,7 @@ public static class PersistenceExtensions
     /// <param name="services">The service collection to add the context to.</param>
     /// <returns>The service collection for method chaining.</returns>
     /// <exception cref="ArgumentNullException">Thrown when services is null.</exception>
-    public static IServiceCollection AddHeroDbContext<TContext>(this IServiceCollection services)
+    public static IServiceCollection AddRecoveryDbContext<TContext>(this IServiceCollection services)
         where TContext : DbContext
     {
         ArgumentNullException.ThrowIfNull(services);
@@ -61,7 +61,7 @@ public static class PersistenceExtensions
             var connection = sp.GetRequiredService<IScopedDbConnectionProvider>()
                 .GetConnection(dbConfig.Provider, dbConfig.ConnectionString);
 
-            options.ConfigureHeroDatabase(dbConfig.Provider, connection, dbConfig.MigrationsAssembly, env.IsDevelopment());
+            options.ConfigureRecoveryDatabase(dbConfig.Provider, connection, dbConfig.MigrationsAssembly, env.IsDevelopment());
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.AddInterceptors(sp.GetRequiredService<AmbientDbTransactionRegistry>());
         });
