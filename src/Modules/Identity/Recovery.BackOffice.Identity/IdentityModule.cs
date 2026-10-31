@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
 using Recovery.BackOffice.BuildingBlocks.Web.Modules;
 
+[assembly: RecoveryModule(typeof(Recovery.BackOffice.Identity.IdentityModule), 1)]
+
 namespace Recovery.BackOffice.Identity;
 
 public sealed class IdentityModule : IModule
