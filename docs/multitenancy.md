@@ -12,4 +12,12 @@ Este incremento não registra o motor de resolução do Finbuckle, não lê head
 
 No modelo completo, a resolução HTTP pertence ao módulo Multitenancy e usa claims, header e query, além de stores de cache e EF Core. Essas dependências serão trazidas separadamente; não há uma classe genérica MultiTenancyOptions nessa base do modelo e não foi criada uma aqui.
 
-O próximo incremento de persistência avaliará os filtros e o BaseDbContext do modelo, incluindo Finbuckle.MultiTenant.EntityFrameworkCore. O host continua sem exigir conexão de banco. Nenhuma tabela, senha inicial ou recurso Azure foi criado.
+## Isolamento padrão no modelo EF Core
+
+TenantIsolationExtensions.ApplyTenantIsolationByDefault foi adaptado do BuildingBlocks.Persistence do FullStackHero, usando Finbuckle.MultiTenant.EntityFrameworkCore 10.1.0. Depois das configurações das entidades, a extensão marca entidades com chave como multitenant e inclui TenantId nos índices únicos. Entidades IGlobalEntity, tipos owned, tipos sem chave e entidades já marcadas explicitamente são preservados, como no modelo de referência.
+
+A extensão deve ser chamada por um contexto derivado de MultiTenantDbContext, depois das configurações do modelo. Este incremento prepara essa regra; o host ainda não usa um contexto multitenant. O BaseDbContext, a resolução HTTP, o catálogo de tenants e a aplicação da regra aos módulos serão integrados nas próximas etapas.
+
+Os testes verificam o SQL gerado pelo provider SQL Server para dois tenants com o mesmo modelo em cache, a ausência do filtro nas entidades globais, os índices únicos por tenant e as exceções de mapeamento. Não abrem conexão nem comprovam isolamento de dados gravados em um SQL Server real. IgnoreQueryFilters pode remover os filtros; resolver um tenant também não substitui autorização.
+
+O host continua sem exigir conexão de banco. Nenhuma tabela, senha inicial ou recurso Azure foi criado.
