@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../../BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Core/Recovery.BackOffice.BuildingBlocks.Core.csproj" />
+  </ItemGroup>
+
 </Project>
