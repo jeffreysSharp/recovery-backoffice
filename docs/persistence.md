@@ -18,8 +18,16 @@ Não foi copiada a redução de PendingModelChangesWarning para log: preservamos
 
 O host atual não referencia nem chama esses registros. A próxima integração exigirá uma connection string real em configuração externa; nunca versionar credenciais. Não foi criado banco ou recurso Azure.
 
+## Conexões por escopo
+
+AddRecoveryDatabaseOptions registra IScopedDbConnectionProvider com TryAddScoped, seguindo o modelo original. ScopedDbConnectionProvider mantém uma SqlConnection por connection string exata dentro do escopo, sem abrir conexão. Escopos diferentes possuem objetos independentes. A classe não é um cache global nem suporta uso concorrente do mesmo escopo.
+
+A sobrecarga ConfigureRecoveryDatabase que recebe DbConnection informa contextOwnsConnection: false. Descartar um DbContext não descarta a conexão compartilhada; o escopo é o proprietário e realiza o descarte síncrono ou assíncrono. O provider rejeita uso após descarte e provedores não suportados, inclusive quando a string já está em cache.
+
+O compartilhamento prepara transações entre contextos, mas não inicia nem coordena transações. SQL Server, esquema, credenciais e operações transacionais reais continuam fora deste incremento. O host ainda não ativa persistência.
+
 ## Partes posteriores do modelo
 
-AddRecoveryDbContext, conexões por escopo, interceptores de auditoria/eventos, BaseDbContext multitenant e migrações entram quando suas dependências forem trazidas e testadas. Não substituir Finbuckle por um modelo de tenants próprio neste incremento.
+AddRecoveryDbContext, interceptores de auditoria/eventos, BaseDbContext multitenant e migrações entram quando suas dependências forem trazidas e testadas. Não substituir Finbuckle por um modelo de tenants próprio neste incremento.
 
 Os testes atuais validam configuração; testes de SQL e isolamento exigirão SQL Server real em um incremento posterior. Executar scripts/verify.ps1 antes de qualquer commit.
