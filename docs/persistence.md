@@ -26,8 +26,18 @@ A sobrecarga ConfigureRecoveryDatabase que recebe DbConnection informa contextOw
 
 O compartilhamento prepara transações entre contextos, mas não inicia nem coordena transações. SQL Server, esquema, credenciais e operações transacionais reais continuam fora deste incremento. O host ainda não ativa persistência.
 
+## Registro dos contextos
+
+AddRecoveryDbContext<TContext> segue o registro genérico do modelo: obtém IHostEnvironment, DatabaseOptions e IScopedDbConnectionProvider pelo container e configura o contexto com a conexão do escopo. O contexto e suas opções têm lifetime Scoped, padrão de AddDbContext.
+
+Registrar AddRecoveryDatabaseOptions antes de resolver os contextos. Contextos devem receber DbContextOptions<TContext> no construtor. A configuração é aplicada ao resolver as opções; esse registro não abre conexão nem executa migrações.
+
+Esta etapa ainda não adiciona os interceptores e o registro de transações presentes no método completo do FullStackHero: suas dependências serão incorporadas nos próximos incrementos. O host continua sem registrar um contexto de negócio.
+
+Os testes verificam dois tipos de contexto compartilhando a conexão do mesmo escopo, separação entre escopos, diagnósticos por ambiente, falha de configuração e descarte da conexão no encerramento do escopo. São testes do registro e composição, sem SQL real.
+
 ## Partes posteriores do modelo
 
-AddRecoveryDbContext, interceptores de auditoria/eventos, BaseDbContext multitenant e migrações entram quando suas dependências forem trazidas e testadas. Não substituir Finbuckle por um modelo de tenants próprio neste incremento.
+Interceptores de auditoria/eventos, registro de transações, BaseDbContext multitenant e migrações entram quando suas dependências forem trazidas e testadas. Não substituir Finbuckle por um modelo de tenants próprio neste incremento.
 
 Os testes atuais validam configuração; testes de SQL e isolamento exigirão SQL Server real em um incremento posterior. Executar scripts/verify.ps1 antes de qualquer commit.
