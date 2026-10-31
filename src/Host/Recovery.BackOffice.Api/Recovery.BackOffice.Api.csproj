@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <ProjectReference Include="../Recovery.BackOffice.Migrations.SqlServer/Recovery.BackOffice.Migrations.SqlServer.csproj" />
     <ProjectReference Include="..\..\Modules\Identity\Recovery.BackOffice.Identity\Recovery.BackOffice.Identity.csproj" />
   </ItemGroup>
 

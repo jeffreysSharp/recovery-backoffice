@@ -8,6 +8,7 @@
   </Folder>
   <Folder Name="/src/Host/">
     <Project Path="src/Host/Recovery.BackOffice.Api/Recovery.BackOffice.Api.csproj" />
+    <Project Path="src/Host/Recovery.BackOffice.Migrations.SqlServer/Recovery.BackOffice.Migrations.SqlServer.csproj" />
   </Folder>
   <Folder Name="/src/Modules/" />
   <Folder Name="/src/Modules/Identity/">
@@ -32,6 +33,9 @@
   </Folder>
   <Folder Name="/tests/Unit/BuildingBlocks/Web/">
     <Project Path="tests/Unit/BuildingBlocks/Web/Recovery.BackOffice.BuildingBlocks.Web.UnitTests/Recovery.BackOffice.BuildingBlocks.Web.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Unit/Host/">
+    <Project Path="tests/Unit/Host/Recovery.BackOffice.Migrations.UnitTests/Recovery.BackOffice.Migrations.UnitTests.csproj" />
   </Folder>
   <Folder Name="/tests/Unit/Modules/" />
   <Folder Name="/tests/Unit/Modules/Identity/">
