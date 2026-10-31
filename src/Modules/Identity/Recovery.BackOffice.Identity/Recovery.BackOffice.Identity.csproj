@@ -11,6 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Finbuckle.MultiTenant.Identity.EntityFrameworkCore" Version="10.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.12" />
+    <ProjectReference Include="../../../BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Persistence/Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\Recovery.BackOffice.BuildingBlocks.Web\Recovery.BackOffice.BuildingBlocks.Web.csproj" />
     <ProjectReference Include="..\Recovery.BackOffice.Identity.Contracts\Recovery.BackOffice.Identity.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Shared/Recovery.BackOffice.BuildingBlocks.Shared.csproj" />
