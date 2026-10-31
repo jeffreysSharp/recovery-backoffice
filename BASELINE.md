@@ -4,6 +4,8 @@ Objetivo confirmado pelo solicitante: guardar uma versão do template funcional 
 
 ## Origem e alterações
 
+Aplicação promovida para a raiz por solicitação do usuário: `src`, `clients`, `deploy` e solução dentro de `src`. Documentação de geração movida para `docs/04-arquitetura/guia-fullstackhero.md`. Pipeline e script de verificação usam a raiz. Mudança de localização sem alteração adicional das regras de negócio.
+
 - Origem: `fullstackhero/dotnet-starter-kit`, commit `a967537526f3b769c7d268da3ed2a6920af65ce9`.
 - Cópia gerada: `Recovery.TemplateEvaluation`, com backend, Aspire e dois clientes React.
 - Geração renomeia projetos da aplicação; namespaces FSH de módulos e BuildingBlocks permanecem conforme template.

@@ -3,7 +3,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $workspaceRoot = Split-Path -Parent $PSScriptRoot
-$projectRoot = Join-Path $workspaceRoot 'evaluation/Recovery.TemplateEvaluation'
+$projectRoot = $workspaceRoot
 $artifactRoot = Join-Path $workspaceRoot 'artifacts'
 
 function Invoke-Checked {

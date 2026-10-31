@@ -7,9 +7,6 @@ trigger:
 pool:
   vmImage: windows-latest
 
-variables:
-  evaluationRoot: '$(Build.SourcesDirectory)/evaluation/Recovery.TemplateEvaluation'
-
 steps:
   - checkout: self
     clean: true

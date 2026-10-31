@@ -8,7 +8,7 @@ Atualização de execução local: AppHost, migração/seeder e API iniciados; a
 
 Bom candidato para reaproveitar infraestrutura modular e acelerar uma prova de conceito. Não é implementação pronta das regras Recovery. A maior decisão é adaptar identidade/tenancy sem transformar escritório em tenant por conveniência: conta única entre escritórios e carteiras compartilhadas exigem modelo próprio.
 
-Projeto: `evaluation/Recovery.TemplateEvaluation`. Upstream preservado em download local ignorado `.evaluation/fullstackhero-upstream`, commit `a967537526f3b769c7d268da3ed2a6920af65ce9`. Gerado por `dotnet new fsh`, não apenas renomeado manualmente, com Aspire e dois clientes React, sem guias de agentes. Licença MIT original copiada para a raiz gerada, pois o template a exclui na geração. Instruções em [evaluation/README.md](../../evaluation/README.md).
+Projeto: raiz do repositório. Upstream preservado em download local ignorado `.evaluation/fullstackhero-upstream`, commit `a967537526f3b769c7d268da3ed2a6920af65ce9`. Gerado por `dotnet new fsh`, não apenas renomeado manualmente, com Aspire e dois clientes React, sem guias de agentes. Licença MIT original copiada para a raiz gerada, pois o template a exclui na geração. Instruções em [guia de execução](guia-fullstackhero.md).
 
 ## Documentação e fonte consultadas
 

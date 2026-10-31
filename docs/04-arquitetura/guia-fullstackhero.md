@@ -1,16 +1,16 @@
 # Avaliação FullStackHero
 
-Projeto gerado em `Recovery.TemplateEvaluation`, separado da aplicação principal e sem adoção definitiva.
+Aplicação promovida para `C:\Projects\recovery-backoffice`: `src`, `clients` e `deploy` ficam diretamente na raiz. Nome dos projetos mantido como `Recovery.TemplateEvaluation`, sem renomeação adicional de namespaces nesta mudança.
 
 Origem: https://github.com/fullstackhero/dotnet-starter-kit
 
 Commit upstream: `a967537526f3b769c7d268da3ed2a6920af65ce9`.
 
-Geração a partir do template local dessa revisão, com Aspire e frontends, sem guias de agentes e sem restore automático. Namespace de aplicação: `Recovery.TemplateEvaluation`; bibliotecas FSH mantêm os namespaces originais, conforme o template. Licença MIT preservada em `Recovery.TemplateEvaluation/LICENSE` (o gerador exclui o arquivo LICENSE por padrão).
+Geração a partir do template local dessa revisão, com Aspire e frontends, sem guias de agentes e sem restore automático. Namespace de aplicação: `Recovery.TemplateEvaluation`; bibliotecas FSH mantêm os namespaces originais, conforme o template. Licença MIT preservada em `LICENSE` (o gerador exclui o arquivo LICENSE por padrão).
 
 ## Reprodução da geração
 
-Os comandos abaixo foram executados a partir da raiz do repositório. `.evaluation/` está ignorado no Git e contém download upstream e registro isolado de templates.
+Os comandos abaixo são o histórico da geração inicial em subpasta, antes da promoção para a raiz. Não executá-los sobre a aplicação atual. `.evaluation/` está ignorado no Git e contém download upstream e registro isolado de templates.
 
 ```powershell
 git clone --depth 1 https://github.com/fullstackhero/dotnet-starter-kit.git .evaluation/fullstackhero-upstream
@@ -28,7 +28,7 @@ O build original falhou em NuGetAudit (NU1902/NU1903). Na cópia gerada, `src/Di
 ## Comandos locais de avaliação
 
 ```powershell
-Set-Location C:\Projects\recovery-backoffice\evaluation\Recovery.TemplateEvaluation
+Set-Location C:\Projects\recovery-backoffice
 dotnet build src/Recovery.TemplateEvaluation.slnx
 dotnet test src/Tests/Architecture.Tests --no-build
 dotnet test src/Tests/Identity.Tests --no-build
@@ -41,7 +41,7 @@ npm.cmd run build
 Para a pilha completa, requer Docker ativo, portas livres, dependências dos dois frontends e certificados de desenvolvimento configurados. O AppHost provisiona dados e contas de demonstração, usa serviços locais e imagens de terceiros; não é configuração aprovada para produção Recovery.
 
 ```powershell
-Set-Location C:\Projects\recovery-backoffice\evaluation\Recovery.TemplateEvaluation\clients\dashboard
+Set-Location C:\Projects\recovery-backoffice\clients\dashboard
 npm.cmd ci
 Set-Location ..\..
 dotnet run --project src/Host/Recovery.TemplateEvaluation.AppHost

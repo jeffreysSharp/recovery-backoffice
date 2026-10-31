@@ -1,5 +1,7 @@
 # Recovery.TemplateEvaluation
 
+Aplicação localizada diretamente em `C:\Projects\recovery-backoffice`. Veja a [documentação Recovery](docs/README.md), a [baseline preservada](BASELINE.md) e o [guia local](docs/04-arquitetura/guia-fullstackhero.md). Dados e credenciais de demonstração não são configuração de produção.
+
 Your application, generated from the **FSH .NET Starter Kit** — a production-ready modular
 .NET 10 monolith with two React 19 apps, multitenancy, identity, background jobs, and
 cloud-native deploy.

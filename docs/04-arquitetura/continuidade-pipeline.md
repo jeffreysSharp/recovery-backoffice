@@ -1,6 +1,6 @@
 # Continuidade do pipeline e Sonar
 
-Configuração anterior consultada em `91f101a:azure-pipelines.yml`; pipeline adaptado nesta etapa para a cópia em `evaluation/Recovery.TemplateEvaluation`.
+Configuração anterior consultada em `91f101a:azure-pipelines.yml`; pipeline adaptado nesta etapa para a cópia em raiz do repositório.
 
 Preservados como referências (existência atual e autorização não verificadas no serviço): conexão Sonar `sc-recovery-backoffice-sonar`, organização `gauss-platform`, projeto `gauss-platform_recovery-backoffice`. A execução continua em main/develop; Sonar somente em main fora de PR, como antes. Branch policies de PR continuam configuradas no Azure DevOps, fora do YAML.
 
