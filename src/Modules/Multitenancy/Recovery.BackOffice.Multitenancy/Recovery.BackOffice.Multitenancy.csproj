@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="10.1.0" />
+    <ProjectReference Include="../../../BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Web/Recovery.BackOffice.BuildingBlocks.Web.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Persistence/Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Shared/Recovery.BackOffice.BuildingBlocks.Shared.csproj" />
   </ItemGroup>

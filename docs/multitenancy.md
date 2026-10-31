@@ -43,3 +43,13 @@ Data/Configurations/AppTenantInfoConfiguration mapeia tenant.Tenants e limita Pl
 Os testes geram o script de criação e o SQL de consulta com o provider SQL Server, verificam a unicidade no mapeamento e o round-trip das quotas. Também verificam que alterações no dicionário são detectadas pelo EF sem trocar sua instância, com snapshot independente do valor original.
 
 Este incremento não registra o módulo no host nem o store de resolução. Não adiciona endpoints, contratos vazios, migrations, criação de empresas ou credenciais. A geração do script não executa DDL; a unicidade ainda precisa ser comprovada em um SQL Server real na etapa de integração com banco.
+
+## Registro da resolução HTTP
+
+MultitenancyModule agora implementa IModule com RecoveryModule de ordem 200, como o módulo correspondente no FullStackHero. ConfigureServices registra TenantDbContext por AddRecoveryDbContext e o Finbuckle 10.1.0 com as estratégias na ordem claim tenant, header tenant e query string tenant. O store de produção é EFCoreStore<TenantDbContext, AppTenantInfo>, com lifetime Scoped. Não há tenant root automático quando nenhuma estratégia resolve uma empresa conhecida.
+
+UseRecoveryMultiTenantDatabases adapta a extensão de middleware do modelo. Na futura composição do host, deve ser chamada antes de UseAuthentication; ClaimStrategy usa o handler do esquema de autenticação padrão para verificar a claim mesmo nessa ordem. UseModuleMiddlewares permanece depois da autenticação para inicializar o usuário. Antes da ativação, o host também precisará configurar DatabaseOptions, disponibilizar um esquema real de autenticação e ter um catálogo acessível.
+
+O módulo ainda não está incluído nas assemblies do host. Este passo não adiciona cache distribuído, endpoints, override de root, bloqueios de empresas inativas ou vencidas, nem autorização de acesso. Esses comportamentos do módulo completo do FullStackHero serão integrados nas etapas correspondentes; resolver um identificador não autoriza acesso aos dados de uma empresa.
+
+Os testes executam o resolver real com o registro de estratégias do módulo. Apenas nos testes, o store SQL é substituído pelo InMemoryStore do Finbuckle e a autenticação por um handler sintético. Eles verificam a precedência da claim autenticada sobre header/query, o header sobre query, tenants desconhecidos e requisições com empresas diferentes. Um teste separado mantém o registro de produção e verifica o store EF com escopos independentes e conexão fechada, sem executar consultas no banco.
