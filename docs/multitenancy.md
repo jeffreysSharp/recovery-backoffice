@@ -33,3 +33,13 @@ Sem ConnectionString específica no tenant, o contexto mantém a conexão config
 A sobrecarga SaveChangesAsync(CancellationToken) preserva TenantNotSetMode.Overwrite do FullStackHero; o Finbuckle preenche o TenantId ausente e rejeita divergências com o tenant atual. A auditoria continua registrada por AddRecoveryDatabaseOptions/AddRecoveryDbContext e não foi duplicada no contexto base.
 
 Os testes verificam composição dos filtros no SQL gerado, remoção seletiva de SoftDelete, escolha da conexão, compartilhamento por escopo, descarte e validação de TenantId no fluxo de SaveChangesAsync. As gravações são suprimidas por um interceptor de teste: não há servidor SQL, migrations ou teste de persistência real neste incremento.
+
+## Catálogo de tenants
+
+O projeto Recovery.BackOffice.Multitenancy inicia a persistência do módulo Multitenancy. Data/TenantDbContext deriva de EFCoreStoreDbContext<AppTenantInfo>, como no FullStackHero, e aplica as configurações do próprio assembly. Ele não deriva do BaseDbContext: o catálogo precisa localizar empresas antes de existir um tenant resolvido. O modelo atual contém apenas AppTenantInfo; provisionamento, temas e avisos de expiração serão adicionados quando necessários.
+
+Data/Configurations/AppTenantInfoConfiguration mapeia tenant.Tenants e limita Plan a 64 caracteres. Id e o índice único de Identifier vêm do contexto de store do Finbuckle. A conversão JSON e o ValueComparer de QuotaLimits preservam o padrão do modelo. A adaptação para SQL Server troca jsonb por nvarchar(max), permitindo usar o conversor sem depender de um tipo JSON nativo do servidor.
+
+Os testes geram o script de criação e o SQL de consulta com o provider SQL Server, verificam a unicidade no mapeamento e o round-trip das quotas. Também verificam que alterações no dicionário são detectadas pelo EF sem trocar sua instância, com snapshot independente do valor original.
+
+Este incremento não registra o módulo no host nem o store de resolução. Não adiciona endpoints, contratos vazios, migrations, criação de empresas ou credenciais. A geração do script não executa DDL; a unicidade ainda precisa ser comprovada em um SQL Server real na etapa de integração com banco.

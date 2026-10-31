@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../../../../src/Modules/Multitenancy/Recovery.BackOffice.Multitenancy/Recovery.BackOffice.Multitenancy.csproj" />
+  </ItemGroup>
+</Project>
