@@ -3,9 +3,6 @@ trigger:
     include:
       - main
       - develop
-      - feature/*
-      - release/*
-      - hotfix/*
 
 pool:
   vmImage: windows-latest
