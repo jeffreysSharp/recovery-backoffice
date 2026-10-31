@@ -13,6 +13,7 @@ pool:
 steps:
   - checkout: self
     clean: true
+    fetchDepth: 0
 
   - task: UseDotNet@2
     displayName: Install SDK from global.json
@@ -21,6 +22,22 @@ steps:
       useGlobalJson: true
       workingDirectory: $(Build.SourcesDirectory)
 
+  - task: SonarCloudPrepare@4
+    displayName: Prepare SonarQube Cloud analysis
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
+    inputs:
+      SonarCloud: sc-recovery-backoffice-sonar
+      organization: gauss-platform
+      scannerMode: dotnet
+      projectKey: gauss-platform_recovery-backoffice
+      projectName: Recovery BackOffice
+      projectVersion: 0.2.0
+      extraProperties: |
+        sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/artifacts/test-results/**/coverage.opencover.xml
+        sonar.cs.vstest.reportsPaths=$(Build.SourcesDirectory)/artifacts/test-results/**/*.trx
+        sonar.qualitygate.wait=true
+        sonar.qualitygate.timeout=300
+
   - task: PowerShell@2
     displayName: Verify application
     inputs:
@@ -28,6 +45,36 @@ steps:
       filePath: scripts/verify.ps1
       workingDirectory: $(Build.SourcesDirectory)
       pwsh: true
+
+  - task: PublishTestResults@2
+    displayName: Publish test results
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: VSTest
+      testResultsFiles: artifacts/test-results/**/*.trx
+      searchFolder: $(Build.SourcesDirectory)
+      mergeTestResults: true
+      failTaskOnFailedTests: true
+      failTaskOnMissingResultsFile: true
+      testRunTitle: Recovery BackOffice tests
+
+  - task: PublishCodeCoverageResults@2
+    displayName: Publish code coverage
+    condition: succeededOrFailed()
+    inputs:
+      summaryFileLocation: $(Build.SourcesDirectory)/artifacts/test-results/**/coverage.cobertura.xml
+      pathToSources: $(Build.SourcesDirectory)
+      failIfCoverageEmpty: true
+
+  - task: SonarCloudAnalyze@4
+    displayName: Analyze code and enforce quality gate
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
+
+  - task: SonarCloudPublish@4
+    displayName: Publish SonarQube Cloud quality gate
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
+    inputs:
+      pollingTimeoutSec: '300'
 
   - task: PublishPipelineArtifact@1
     displayName: Publish API artifact
