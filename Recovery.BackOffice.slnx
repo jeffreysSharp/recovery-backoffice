@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/" />
+  <Folder Name="/src/Host/">
+    <Project Path="src/Host/Recovery.BackOffice.Api/Recovery.BackOffice.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Identity/" />
+  <Folder Name="/src/Modules/MasterData/" />
+  <Folder Name="/tests/" />
+</Solution>
