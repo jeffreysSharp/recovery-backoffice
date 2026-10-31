@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../../../../src/BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Persistence/Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+  </ItemGroup>
+</Project>
