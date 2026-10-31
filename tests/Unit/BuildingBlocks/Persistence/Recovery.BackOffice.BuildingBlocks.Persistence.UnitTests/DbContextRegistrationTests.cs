@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Recovery.BackOffice.BuildingBlocks.Core.Context;
 using Xunit;
 
 namespace Recovery.BackOffice.BuildingBlocks.Persistence.UnitTests;
@@ -110,6 +111,7 @@ public sealed class DbContextRegistrationTests
             ["DatabaseOptions:MigrationsAssembly"] = typeof(DbContextRegistrationTests).Assembly.GetName().Name
         });
         builder.Services.AddRecoveryDatabaseOptions(builder.Configuration);
+        builder.Services.AddSingleton<ICurrentUser>(new TestCurrentUser());
         builder.Services.AddRecoveryDbContext<FirstContext>();
         builder.Services.AddRecoveryDbContext<SecondContext>();
 

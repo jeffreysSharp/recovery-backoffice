@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Persistence.Interceptors;
 
 namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
@@ -25,6 +27,8 @@ public static class PersistenceExtensions
             .ValidateOnStart();
 
         services.TryAddScoped<IScopedDbConnectionProvider, ScopedDbConnectionProvider>();
+        services.TryAddSingleton(TimeProvider.System);
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntitySaveChangesInterceptor>();
 
         return services;
     }
@@ -43,6 +47,7 @@ public static class PersistenceExtensions
 
             options.ConfigureRecoveryDatabase(settings.Provider, connection,
                 settings.MigrationsAssembly, environment.IsDevelopment());
+            options.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
         });
 
         return services;

@@ -36,8 +36,18 @@ Esta etapa ainda não adiciona os interceptores e o registro de transações pre
 
 Os testes verificam dois tipos de contexto compartilhando a conexão do mesmo escopo, separação entre escopos, diagnósticos por ambiente, falha de configuração e descarte da conexão no encerramento do escopo. São testes do registro e composição, sem SQL real.
 
+## Auditoria de alterações
+
+AuditableEntitySaveChangesInterceptor foi adaptado de Persistence/Inteceptors no FullStackHero; o namespace local usa a grafia Interceptors. Sua licença de origem está em licenses/fullstackhero.txt. O interceptor é registrado como ISaveChangesInterceptor Scoped e AddRecoveryDbContext incorpora os interceptores registrados. TimeProvider.System é o relógio padrão, substituível pelo container.
+
+IAuditableEntity recebe CreatedOnUtc/CreatedBy ao adicionar e LastModifiedOnUtc/LastModifiedBy ao alterar, inclusive quando apenas uma referência owned mudou. ISoftDeletable converte Deleted em Modified, preenchendo os campos de exclusão e preservando referências owned que o EF marcou para exclusão em cascata.
+
+O usuário de auditoria só é preenchido quando ICurrentUser.IsAuthenticated é true; um ID de fallback sem autenticação não é usado, como no modelo. A aplicação consumidora deve registrar ICurrentUser antes de resolver um contexto com auditoria. Os testes de composição usam um usuário anônimo de teste; o host de produção já possui esse serviço pelo Identity, mas ainda não registra contextos de negócio.
+
+Os testes usam relógio fixo e o change tracker SQL Server, com um segundo interceptor suprimindo a gravação final. Não abrem conexão. Cobrem execução síncrona/assíncrona, criação, alteração, referências owned, soft delete e entidades sem o contrato. Não comprovam SQL ou persistência real. Filtros de consulta para ocultar itens excluídos serão implementados com BaseDbContext; o interceptor sozinho não oculta registros.
+
 ## Partes posteriores do modelo
 
-Interceptores de auditoria/eventos, registro de transações, BaseDbContext multitenant e migrações entram quando suas dependências forem trazidas e testadas. Não substituir Finbuckle por um modelo de tenants próprio neste incremento.
+Interceptor de eventos, registro de transações, BaseDbContext multitenant e migrações entram quando suas dependências forem trazidas e testadas. Não substituir Finbuckle por um modelo de tenants próprio neste incremento.
 
 Os testes atuais validam configuração; testes de SQL e isolamento exigirão SQL Server real em um incremento posterior. Executar scripts/verify.ps1 antes de qualquer commit.
