@@ -1,6 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 
 namespace Recovery.BackOffice.BuildingBlocks.Persistence;
@@ -22,6 +25,25 @@ public static class PersistenceExtensions
             .ValidateOnStart();
 
         services.TryAddScoped<IScopedDbConnectionProvider, ScopedDbConnectionProvider>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddRecoveryDbContext<TContext>(this IServiceCollection services)
+        where TContext : DbContext
+    {
+        ArgumentNullException.ThrowIfNull(services);
+
+        services.AddDbContext<TContext>((provider, options) =>
+        {
+            var environment = provider.GetRequiredService<IHostEnvironment>();
+            var settings = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+            var connection = provider.GetRequiredService<IScopedDbConnectionProvider>()
+                .GetConnection(settings.Provider, settings.ConnectionString);
+
+            options.ConfigureRecoveryDatabase(settings.Provider, connection,
+                settings.MigrationsAssembly, environment.IsDevelopment());
+        });
 
         return services;
     }

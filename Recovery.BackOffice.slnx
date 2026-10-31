@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/" />
   <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Core/Recovery.BackOffice.BuildingBlocks.Core.csproj" />
     <Project Path="src/BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Shared/Recovery.BackOffice.BuildingBlocks.Shared.csproj" />
     <Project Path="src/BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Persistence/Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
     <Project Path="src/BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Web/Recovery.BackOffice.BuildingBlocks.Web.csproj" />
@@ -15,6 +16,9 @@
   </Folder>
   <Folder Name="/src/Modules/MasterData/" />
   <Folder Name="/tests/" />
+  <Folder Name="/tests/Unit/BuildingBlocks/Core/">
+    <Project Path="tests/Unit/BuildingBlocks/Core/Recovery.BackOffice.BuildingBlocks.Core.UnitTests/Recovery.BackOffice.BuildingBlocks.Core.UnitTests.csproj" />
+  </Folder>
   <Folder Name="/tests/Unit/BuildingBlocks/Persistence/">
     <Project Path="tests/Unit/BuildingBlocks/Persistence/Recovery.BackOffice.BuildingBlocks.Persistence.UnitTests/Recovery.BackOffice.BuildingBlocks.Persistence.UnitTests.csproj" />
   </Folder>
