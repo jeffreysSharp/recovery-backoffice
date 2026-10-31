@@ -35,3 +35,52 @@ steps:
       targetPath: $(Build.SourcesDirectory)/artifacts/publish/api
       artifact: recovery-backoffice-api
       publishLocation: pipeline
+
+  - task: AzureWebApp@1
+    displayName: Deploy API to production
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
+    inputs:
+      azureSubscription: sc-recovery-backoffice-prod
+      appType: webApp
+      appName: recovery-backoffice-api
+      package: $(Build.SourcesDirectory)/artifacts/publish/api
+      deploymentMethod: zipDeploy
+
+  - task: PowerShell@2
+    displayName: Verify production over HTTPS
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
+    inputs:
+      targetType: inline
+      pwsh: true
+      script: |
+        $ErrorActionPreference = "Stop"
+
+        $uri = "https://recovery-backoffice-api-fnahgecpepdvften.westus3-01.azurewebsites.net/"
+        $verified = $false
+
+        for ($attempt = 1; $attempt -le 12; $attempt++) {
+            try {
+                $response = Invoke-WebRequest -Uri $uri -TimeoutSec 15
+
+                if ($response.StatusCode -eq 200 -and
+                    $response.Content -ceq "Hello World!") {
+                    $verified = $true
+                    break
+                }
+
+                Write-Host "Attempt ${attempt}: unexpected response."
+            }
+            catch {
+                Write-Host "Attempt ${attempt}: $($_.Exception.Message)"
+            }
+
+            if ($attempt -lt 12) {
+                Start-Sleep -Seconds 5
+            }
+        }
+
+        if (-not $verified) {
+            throw "Production HTTPS verification failed."
+        }
+
+        Write-Host "Production HTTPS verification passed."
