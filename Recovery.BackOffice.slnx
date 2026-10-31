@@ -1,11 +1,22 @@
 <Solution>
   <Folder Name="/src/" />
-  <Folder Name="/src/BuildingBlocks/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Web/Recovery.BackOffice.BuildingBlocks.Web.csproj" />
+  </Folder>
   <Folder Name="/src/Host/">
     <Project Path="src/Host/Recovery.BackOffice.Api/Recovery.BackOffice.Api.csproj" />
   </Folder>
   <Folder Name="/src/Modules/" />
-  <Folder Name="/src/Modules/Identity/" />
+  <Folder Name="/src/Modules/Identity/">
+    <Project Path="src/Modules/Identity/Recovery.BackOffice.Identity/Recovery.BackOffice.Identity.csproj" />
+    <Project Path="src/Modules/Identity/Recovery.BackOffice.Identity.Contracts/Recovery.BackOffice.Identity.Contracts.csproj" />
+  </Folder>
   <Folder Name="/src/Modules/MasterData/" />
   <Folder Name="/tests/" />
+  <Folder Name="/tests/Unit/Modules/Identity/">
+    <Project Path="tests/Unit/Modules/Identity/Recovery.BackOffice.Identity.UnitTests/Recovery.BackOffice.Identity.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Integration/Host/">
+    <Project Path="tests/Integration/Host/Recovery.BackOffice.Api.IntegrationTests/Recovery.BackOffice.Api.IntegrationTests.csproj" />
+  </Folder>
 </Solution>
