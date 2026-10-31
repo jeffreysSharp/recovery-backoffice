@@ -22,6 +22,9 @@ public sealed class IdentityModule : IModule
         builder.Services.AddOptions<OriginOptions>().BindConfiguration(nameof(OriginOptions));
         builder.Services.AddScoped<IRequestContextService, RequestContextService>();
         builder.Services.AddScoped<IRequestContext>(provider => provider.GetRequiredService<IRequestContextService>());
+        builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+        builder.Services.AddScoped<ICurrentUser>(provider => provider.GetRequiredService<ICurrentUserService>());
+        builder.Services.AddScoped<ICurrentUserInitializer>(provider => provider.GetRequiredService<ICurrentUserService>());
     }
 
     public void ConfigureMiddleware(IApplicationBuilder app)
