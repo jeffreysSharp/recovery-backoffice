@@ -1,11 +1,30 @@
 <Solution>
   <Folder Name="/src/" />
-  <Folder Name="/src/BuildingBlocks/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Shared/Recovery.BackOffice.BuildingBlocks.Shared.csproj" />
+    <Project Path="src/BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Persistence/Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+    <Project Path="src/BuildingBlocks/Recovery.BackOffice.BuildingBlocks.Web/Recovery.BackOffice.BuildingBlocks.Web.csproj" />
+  </Folder>
   <Folder Name="/src/Host/">
     <Project Path="src/Host/Recovery.BackOffice.Api/Recovery.BackOffice.Api.csproj" />
   </Folder>
   <Folder Name="/src/Modules/" />
-  <Folder Name="/src/Modules/Identity/" />
+  <Folder Name="/src/Modules/Identity/">
+    <Project Path="src/Modules/Identity/Recovery.BackOffice.Identity/Recovery.BackOffice.Identity.csproj" />
+    <Project Path="src/Modules/Identity/Recovery.BackOffice.Identity.Contracts/Recovery.BackOffice.Identity.Contracts.csproj" />
+  </Folder>
   <Folder Name="/src/Modules/MasterData/" />
   <Folder Name="/tests/" />
+  <Folder Name="/tests/Unit/BuildingBlocks/Persistence/">
+    <Project Path="tests/Unit/BuildingBlocks/Persistence/Recovery.BackOffice.BuildingBlocks.Persistence.UnitTests/Recovery.BackOffice.BuildingBlocks.Persistence.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Unit/BuildingBlocks/Web/">
+    <Project Path="tests/Unit/BuildingBlocks/Web/Recovery.BackOffice.BuildingBlocks.Web.UnitTests/Recovery.BackOffice.BuildingBlocks.Web.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Unit/Modules/Identity/">
+    <Project Path="tests/Unit/Modules/Identity/Recovery.BackOffice.Identity.UnitTests/Recovery.BackOffice.Identity.UnitTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Integration/Host/">
+    <Project Path="tests/Integration/Host/Recovery.BackOffice.Api.IntegrationTests/Recovery.BackOffice.Api.IntegrationTests.csproj" />
+  </Folder>
 </Solution>

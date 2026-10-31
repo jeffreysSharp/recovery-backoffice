@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\Identity\Recovery.BackOffice.Identity\Recovery.BackOffice.Identity.csproj" />
+  </ItemGroup>
+
 </Project>
