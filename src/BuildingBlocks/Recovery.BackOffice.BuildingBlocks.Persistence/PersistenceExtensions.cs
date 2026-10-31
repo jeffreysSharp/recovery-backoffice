@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 
 namespace Recovery.BackOffice.BuildingBlocks.Persistence;
@@ -19,6 +20,8 @@ public static class PersistenceExtensions
             .Validate(options => !string.IsNullOrWhiteSpace(options.Provider),
                 "DatabaseOptions.Provider is required.")
             .ValidateOnStart();
+
+        services.TryAddScoped<IScopedDbConnectionProvider, ScopedDbConnectionProvider>();
 
         return services;
     }
