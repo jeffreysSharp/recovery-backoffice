@@ -2,6 +2,8 @@
 
 Este inventário inicia o refinamento. As descrições resumem o conteúdo disponível e não substituem os fluxos completos. **Nenhuma regra abaixo está aprovada para implementação nesta versão.** Referência E01: [inventário](../referencias/inventario-de-evidencias.md).
 
+Atualização E11: o inventário abaixo preserva a origem inicial. O detalhamento aprovado de cadastro está em [usuários](usuarios.md): nome completo, email, documento e tipo de usuário; país não exigido. Essas decisões substituem a hipótese de campos legados em USR-001. Estado, vínculo e primeiro acesso também foram refinados nesse documento.
+
 | ID novo | Conteúdo a refinar | Evidência | Decisão | Dependência |
 |---|---|---|---|---|
 | USR-001 | Cadastro com identificador, nome, sobrenome, documento, país e contato; obrigatoriedade e unicidade a validar | E01, USR003 | Proposta | P04 |

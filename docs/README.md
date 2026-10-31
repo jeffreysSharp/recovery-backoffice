@@ -1,6 +1,17 @@
 # Documentação do MVP Recovery Backoffice
 
-Início: 2026-10-31. Estado: refinamento inicial.
+Início: 2026-10-31. Estado: regras consolidadas após entrevista E02–E38; arquitetura a iniciar.
+
+## Referência atual
+
+- [Proposta arquitetural .NET/React](04-arquitetura/proposta-arquitetural.md): comparação, módulos, padrões, pastas e decisões abertas.
+
+- [Regras vigentes](regras-vigentes.md): estado consolidado aprovado/provisório, sem sequência de hipóteses substituídas.
+- [Pendências atuais](referencias/pendencias-atuais.md): questões efetivamente abertas.
+- [Roteiro de arquitetura](04-arquitetura/roteiro-de-decisoes.md): próxima etapa.
+- [Inventário de evidências](referencias/inventario-de-evidencias.md): histórico de confirmações e mudanças.
+
+Os documentos temáticos abaixo são cadernos de refinamento e contêm propostas e registros históricos. Em divergência com hipóteses antigas, prevalece a consolidação atual. `pendencias-do-legado.md` preserva a cronologia, não é a lista atual de questões abertas.
 
 Documentação de produto, negócio, segurança e engenharia para uma nova aplicação .NET e React da plataforma Grupo Recovery. A inclusão dos módulos no MVP foi acordada; regras detalhadas e escolhas técnicas continuam em refinamento.
 
@@ -18,6 +29,17 @@ Documentação de produto, negócio, segurança e engenharia para uma nova aplic
 10. [Identidade e ambiente de testes](04-arquitetura/identidade-e-ambiente-de-testes.md).
 11. [Jornadas do devedor](02-negocio/portal-do-devedor.md).
 12. [Administração do Portal e cadastros](01-produto/administracao-portal-e-cadastros.md).
+13. [Administração de identidade e delegação](02-negocio/administracao-de-identidade.md).
+14. [Usuários: cadastro e ciclo de vida](02-negocio/usuarios.md).
+15. [Sessões e logout](02-negocio/sessoes-e-logout.md).
+16. [Autenticação, senhas e MFA](02-negocio/autenticacao-e-senhas.md).
+17. [Grupos e hierarquias](02-negocio/grupos-e-hierarquias.md).
+18. [Restrições de IP](02-negocio/restricoes-ip-e-acesso-externo.md).
+19. [Perfis e permissões](02-negocio/perfis-e-permissoes.md).
+20. [Microfrontends](04-arquitetura/microfrontends.md).
+21. [Auditoria e revogação](03-seguranca/auditoria-e-revogacao.md).
+22. [Workflow: recorte em refinamento](02-negocio/workflow.md).
+23. [Cadastros: regras transversais](02-negocio/cadastros-regras-transversais.md).
 
 ## Convenções
 

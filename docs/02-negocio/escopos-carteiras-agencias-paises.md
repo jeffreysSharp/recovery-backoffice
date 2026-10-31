@@ -21,13 +21,15 @@ Separar vínculo de usuário com escritório, vínculo de escritório com cartei
 
 - SCP-007: todos os usuários de um escritório recebem o escopo de todas as carteiras vinculadas a esse escritório. Não há recorte individual de carteiras dentro do escritório nesta regra. Fonte E05, confirmação do solicitante em 2026-10-31; decisão aprovada. Ações disponíveis continuam limitadas pelas permissões do usuário.
 
+E07 confirma que essas permissões podem variar por escritório e que um usuário pode ter múltiplos grupos/perfis. E08 define escolha de escritório ativo: carteiras compartilhadas não unem permissões de escritórios diferentes. A composição de grupos/perfis dentro do mesmo contexto continua pendente.
+
 O alcance amplo deve ser explícito e auditável. Não inferir esse alcance a partir de ausência de vínculo ou de filtros vazios. Diretriz proposta, sujeita à validação do modelo de autorização.
 
 ## Questões abertas
 
 1. Quais estados dos vínculos tornam o escopo efetivo e como remover o acesso quando um vínculo é inativado?
 2. Quais ações sobre os casos são permitidas a cada perfil, além da visualização aprovada?
-3. Usuário vinculado a vários escritórios escolhe contexto ativo ou consulta o conjunto autorizado?
+3. Como selecionar e trocar contexto para usuários operacionais e administradores centrais? Escritório ativo já confirmado em E08.
 4. País e empresa são fronteiras obrigatórias? Qual é o alcance dos usuários amplos?
 5. Escritório é equivalente à agência do legado?
 

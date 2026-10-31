@@ -6,6 +6,8 @@ Direcionamento E05: priorizar Identidade, Administração do Portal, estrutura d
 
 Complemento E06: administrar ambos os portais. Inventário inicial de cadastros registrado; aprofundamento adiado pelo solicitante. Próximo refinamento: ciclo de vida do usuário, vínculos de acesso e administração dos módulos, sem depender dos campos desses cadastros.
 
+Atualização E35: execução de Workflow será nova, porém processo concreto e recorte foram adiados. Não tratar o levantamento como concluído nem escolher motor antes do refinamento; continuar demais entregas independentes.
+
 | Ordem | Trabalho | Resultado verificável | Dependências |
 |---|---|---|---|
 | 1 | Confirmar atores e fronteiras | Catálogo validado e respostas P01/P05 | Negócio |
