@@ -10,6 +10,14 @@ Usuário autenticado obtém ID da claim NameIdentifier. Sem autenticação, GetU
 
 CustomClaims mantém os nomes de claims originais. As extensões apenas leem os valores: não validam assinatura, expiração do token, vínculo com tenant ou autorização. IsInRole consulta o principal; não substitui a política de autorização do endpoint.
 
-Este incremento registra os serviços, mas não inclui CurrentUserMiddleware, autenticação HTTP ou publicação de tokens. O próximo passo será inicializar o serviço no pipeline HTTP na posição correta, após autenticação quando ela existir. Até lá, o host não preenche o contexto a partir de uma requisição automaticamente.
+## Inicialização HTTP
+
+CurrentUserMiddleware implementa IMiddleware e inicializa o serviço Scoped com HttpContext.User antes de chamar o próximo componente. IdentityModule registra o middleware e o adiciona em ConfigureMiddleware; o host executa esse ciclo por UseModuleMiddlewares. Cada requisição tem sua própria instância do contexto.
+
+O middleware segue o modelo original e enriquece Activity.Current, quando existe e o principal está autenticado, com recovery.user_id, recovery.tenant_id e recovery.correlation_id. Não configura exportadores nem cria uma atividade artificial.
+
+Ainda não há autenticação HTTP ou tokens. Na aplicação atual o principal normal é anônimo. Quando a autenticação for adicionada, UseAuthentication deve executar antes de UseModuleMiddlewares para que o principal correto seja capturado. O middleware não valida credenciais nem transforma headers em identidade.
+
+Os testes HTTP usam principais sintéticos injetados apenas no host de testes, verificando o registro real do middleware e a separação entre requisições autenticadas e anônimas. O header X-Test-User-Id não é lido pelo código de produção.
 
 CustomException mantém os detalhes e status do modelo, com contrato de localização. Isso não configura tratamento HTTP de exceções nem localização de mensagens. Os testes cobrem usuário autenticado/anônimo, inicialização, prioridade do principal, falhas de ID, alias Scoped, leitura das claims e preservação dos dados da exceção.

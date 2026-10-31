@@ -9,6 +9,7 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="../Recovery.BackOffice.BuildingBlocks.Core/Recovery.BackOffice.BuildingBlocks.Core.csproj" />
+    <ProjectReference Include="../Recovery.BackOffice.BuildingBlocks.Shared/Recovery.BackOffice.BuildingBlocks.Shared.csproj" />
   </ItemGroup>
 
 </Project>
