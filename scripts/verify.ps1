@@ -24,6 +24,40 @@ try {
         throw "Build failed."
     }
 
+    $testResultsDirectory = Join-Path $repositoryRoot (
+        "artifacts/test-results/" + [Guid]::NewGuid().ToString("N"))
+
+    dotnet test Recovery.BackOffice.slnx `
+        --configuration Release `
+        --no-build `
+        --no-restore `
+        --logger "trx" `
+        --results-directory $testResultsDirectory `
+        --collect "XPlat Code Coverage" `
+        --settings tests/coverage.runsettings
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Tests failed."
+    }
+
+    $testReports = @(Get-ChildItem -LiteralPath $testResultsDirectory -Filter *.trx -Recurse)
+    if ($testReports.Count -eq 0) {
+        throw "No test results were generated."
+    }
+
+    foreach ($testReport in $testReports) {
+        [xml]$testResult = Get-Content -LiteralPath $testReport.FullName -Raw
+        $counters = $testResult.TestRun.ResultSummary.Counters
+
+        if ($null -eq $counters -or [int]$counters.total -eq 0) {
+            throw "A test project did not execute any tests."
+        }
+
+        if ([int]$counters.passed -ne [int]$counters.total) {
+            throw "All discovered tests must pass; failed or skipped tests are not accepted."
+        }
+    }
+
     dotnet publish src/Host/Recovery.BackOffice.Api/Recovery.BackOffice.Api.csproj `
         --configuration Release `
         --no-build `
