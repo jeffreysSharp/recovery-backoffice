@@ -1,6 +1,6 @@
 # Starter App Stack
 
-Terraform root config for the Recovery TemplateEvaluation Starter Kit on AWS. Composes the
+Terraform root config for the Recovery BackOffice Starter Kit on AWS. Composes the
 shared modules in `../../modules`.
 
 What it provisions:

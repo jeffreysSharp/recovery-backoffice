@@ -55,7 +55,7 @@ import {
 import {
   EntityDetailAvatar,
   EntityDetailBack,
-  EntityDetailHero,
+  EntityDetailRecovery,
   EntityDetailMeta,
   EntityDetailSection,
   EntityDetailStat,
@@ -315,7 +315,7 @@ export function UserDetailPage() {
     <div className="space-y-5 pb-12">
       <EntityDetailBack to="/identity/users" label="Back to users" />
 
-      <EntityDetailHero
+      <EntityDetailRecovery
         avatar={
           <EntityDetailAvatar
             name={display}

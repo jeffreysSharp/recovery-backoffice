@@ -1,4 +1,4 @@
-namespace FSH.Framework.Core.Exceptions;
+namespace Recovery.BackOffice.BuildingBlocks.Core.Exceptions;
 
 /// <summary>
 /// <see cref="KeyNotFoundException"/> whose 404 response Detail is localized via <see cref="MessageKey"/>.

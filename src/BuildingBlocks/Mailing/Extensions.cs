@@ -1,13 +1,13 @@
-﻿using FSH.Framework.Mailing.Services;
+﻿using Recovery.BackOffice.BuildingBlocks.Mailing.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SendGrid;
 
-namespace FSH.Framework.Mailing;
+namespace Recovery.BackOffice.BuildingBlocks.Mailing;
 
 public static class Extensions
 {
-    public static IServiceCollection AddHeroMailing(this IServiceCollection services)
+    public static IServiceCollection AddRecoveryMailing(this IServiceCollection services)
     {
         services.AddOptions<MailOptions>()
             .BindConfiguration(nameof(MailOptions))

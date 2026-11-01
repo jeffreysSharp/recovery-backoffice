@@ -1,10 +1,10 @@
-﻿using FSH.Framework.Shared.Persistence;
+﻿using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Npgsql;
 
-namespace FSH.Framework.Persistence;
+namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
 /// <summary>
 /// Validates database connection strings for supported providers (PostgreSQL, SQL Server).

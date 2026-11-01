@@ -1,15 +1,15 @@
 ﻿using Finbuckle.MultiTenant.Abstractions;
 using Finbuckle.MultiTenant.EntityFrameworkCore;
-using FSH.Framework.Core.Domain;
-using FSH.Framework.Shared.Multitenancy;
-using FSH.Framework.Shared.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Core.Domain;
+using Recovery.BackOffice.BuildingBlocks.Shared.Multitenancy;
+using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Persistence.Context;
+namespace Recovery.BackOffice.BuildingBlocks.Persistence.Context;
 
 /// <summary>
 /// Base database context with multi-tenancy and soft delete support.
@@ -68,7 +68,7 @@ public class BaseDbContext(IMultiTenantContextAccessor<AppTenantInfo> multiTenan
 
         if (connectionProvider is null)
         {
-            optionsBuilder.ConfigureHeroDatabase(
+            optionsBuilder.ConfigureRecoveryDatabase(
                 _settings.Provider,
                 tenantConnectionString,
                 _settings.MigrationsAssembly,
@@ -76,7 +76,7 @@ public class BaseDbContext(IMultiTenantContextAccessor<AppTenantInfo> multiTenan
             return;
         }
 
-        optionsBuilder.ConfigureHeroDatabase(
+        optionsBuilder.ConfigureRecoveryDatabase(
             _settings.Provider,
             connectionProvider.GetConnection(_settings.Provider, tenantConnectionString),
             _settings.MigrationsAssembly,

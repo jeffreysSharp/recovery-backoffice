@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Web.Security;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Security;
 
 public sealed class SecurityHeadersMiddleware(RequestDelegate next, IOptions<SecurityHeadersOptions> options)
 {

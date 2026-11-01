@@ -5,7 +5,7 @@ using SendGrid.Helpers.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FSH.Framework.Mailing.Services;
+namespace Recovery.BackOffice.BuildingBlocks.Mailing.Services;
 
 public sealed class SendGridMailService : IMailService
 {

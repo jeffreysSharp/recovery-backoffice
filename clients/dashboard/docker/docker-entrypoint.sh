@@ -1,12 +1,12 @@
 #!/bin/sh
 set -e
 
-: "${FSH_API_URL:?FSH_API_URL is required (e.g. https://api.example.com)}"
-: "${FSH_DEFAULT_TENANT:=root}"
+: "${Recovery_API_URL:?Recovery_API_URL is required (e.g. https://api.example.com)}"
+: "${Recovery_DEFAULT_TENANT:=root}"
 
-export FSH_API_URL FSH_DEFAULT_TENANT
+export Recovery_API_URL Recovery_DEFAULT_TENANT
 
-envsubst < /etc/fsh/config.json.template \
+envsubst < /etc/recovery/config.json.template \
        > /usr/share/nginx/html/config.json
 
 exec nginx -g 'daemon off;'

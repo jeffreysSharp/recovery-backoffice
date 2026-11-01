@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Core.Domain;
+﻿namespace Recovery.BackOffice.BuildingBlocks.Core.Domain;
 
 /// <summary>
 /// Marks an entity as supporting soft deletion.

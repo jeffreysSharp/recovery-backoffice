@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Core.Domain;
+﻿namespace Recovery.BackOffice.BuildingBlocks.Core.Domain;
 
 /// <summary>
 /// Base domain event with correlation and tenant context.

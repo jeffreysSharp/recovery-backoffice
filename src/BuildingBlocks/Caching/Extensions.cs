@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
-namespace FSH.Framework.Caching;
+namespace Recovery.BackOffice.BuildingBlocks.Caching;
 
 /// <summary>
 /// DI extensions for the HybridCache-backed caching building block.
@@ -22,7 +22,7 @@ public static class Extensions
     /// + L2 (distributed) layering, and logical tag-based invalidation. Consumers inject
     /// <see cref="HybridCache"/> directly — the decorator is transparent.
     /// </remarks>
-    public static IServiceCollection AddHeroCaching(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRecoveryCaching(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
@@ -62,7 +62,7 @@ public static class Extensions
             // Redis so multi-instance hosts share a key ring and tokens survive rolling restarts.
             services.AddDataProtection()
                 .PersistKeysToStackExchangeRedis(sharedMultiplexer, "DataProtection-Keys")
-                .SetApplicationName("Recovery.TemplateEvaluation");
+                .SetApplicationName("Recovery.BackOffice");
         }
 
         // HybridCache auto-composes with whatever IDistributedCache is registered above.

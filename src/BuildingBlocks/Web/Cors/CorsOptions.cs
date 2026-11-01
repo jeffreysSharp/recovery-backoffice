@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Web.Cors;
+﻿namespace Recovery.BackOffice.BuildingBlocks.Web.Cors;
 
 public sealed class CorsOptions
 {

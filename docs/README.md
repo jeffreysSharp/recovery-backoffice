@@ -4,9 +4,11 @@ Início: 2026-10-31. Estado: regras consolidadas após entrevista E02–E38; arq
 
 ## Referência atual
 
+- [Personalização Recovery BackOffice](04-arquitetura/personalizacao-recovery.md): nomes atuais, compatibilidade e validação.
+
 - [Continuidade do pipeline/Sonar](04-arquitetura/continuidade-pipeline.md): CI adaptada e dependências da implantação.
 
-- [Avaliação FullStackHero](04-arquitetura/avaliacao-fullstackhero.md): projeto gerado, builds/testes e diferenças para Recovery.
+- [Avaliação](04-arquitetura/avaliacao-template.md): projeto gerado, builds/testes e diferenças para Recovery.
 
 - [Proposta arquitetural .NET/React](04-arquitetura/proposta-arquitetural.md): comparação, módulos, padrões, pastas e decisões abertas.
 

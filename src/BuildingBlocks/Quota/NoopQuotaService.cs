@@ -1,6 +1,6 @@
-using FSH.Framework.Shared.Quota;
+using Recovery.BackOffice.BuildingBlocks.Shared.Quota;
 
-namespace FSH.Framework.Quota;
+namespace Recovery.BackOffice.BuildingBlocks.Quota;
 
 /// <summary>
 /// Used when quota enforcement is disabled via configuration. Every check returns allowed with

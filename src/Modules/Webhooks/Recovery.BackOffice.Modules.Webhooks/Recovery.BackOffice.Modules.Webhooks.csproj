@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Recovery.BackOffice.Modules.Webhooks</RootNamespace>
+    <AssemblyName>Recovery.BackOffice.Modules.Webhooks</AssemblyName>
+    <NoWarn>$(NoWarn);CA1031;CA1054;CA1056;CA1308;CA1812;CA1859;S3267</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Persistence\Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Web\Recovery.BackOffice.BuildingBlocks.Web.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Jobs\Recovery.BackOffice.BuildingBlocks.Jobs.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Eventing.Abstractions\Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions.csproj" />
+    <ProjectReference Include="..\Recovery.BackOffice.Modules.Webhooks.Contracts\Recovery.BackOffice.Modules.Webhooks.Contracts.csproj" />
+  </ItemGroup>
+</Project>

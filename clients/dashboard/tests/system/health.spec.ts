@@ -43,7 +43,7 @@ test.describe("system/health", () => {
 
     await page.goto("/system/health");
 
-    // Hero status headline (Outfit h2) for the Healthy path.
+    // Recovery status headline (Outfit h2) for the Healthy path.
     await expect(
       page.getByRole("heading", { name: /all systems operational/i }),
     ).toBeVisible();

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.Modules.Chat</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.Modules.Chat</AssemblyName>
+		<NoWarn>$(NoWarn);CA1031;CA1812;CA1859;CA1002;CA2227;S3267</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Mediator.Abstractions" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\Persistence\Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Web\Recovery.BackOffice.BuildingBlocks.Web.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Eventing\Recovery.BackOffice.BuildingBlocks.Eventing.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Storage\Recovery.BackOffice.BuildingBlocks.Storage.csproj" />
+		<ProjectReference Include="..\Recovery.BackOffice.Modules.Chat.Contracts\Recovery.BackOffice.Modules.Chat.Contracts.csproj" />
+		<ProjectReference Include="..\..\Files\Recovery.BackOffice.Modules.Files.Contracts\Recovery.BackOffice.Modules.Files.Contracts.csproj" />
+		<ProjectReference Include="..\..\Identity\Recovery.BackOffice.Modules.Identity.Contracts\Recovery.BackOffice.Modules.Identity.Contracts.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Mailing.Services;
+﻿namespace Recovery.BackOffice.BuildingBlocks.Mailing.Services;
 
 public interface IMailService
 {

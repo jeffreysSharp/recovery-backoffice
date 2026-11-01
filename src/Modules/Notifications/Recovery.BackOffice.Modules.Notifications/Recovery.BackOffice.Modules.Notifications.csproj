@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.Modules.Notifications</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.Modules.Notifications</AssemblyName>
+		<NoWarn>$(NoWarn);CA1031;CA1711;CA1812;CA1859;CA1002;CA2227;S3267</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Mediator.Abstractions" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\Persistence\Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Web\Recovery.BackOffice.BuildingBlocks.Web.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Eventing\Recovery.BackOffice.BuildingBlocks.Eventing.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Mailing\Recovery.BackOffice.BuildingBlocks.Mailing.csproj" />
+		<ProjectReference Include="..\Recovery.BackOffice.Modules.Notifications.Contracts\Recovery.BackOffice.Modules.Notifications.Contracts.csproj" />
+		<ProjectReference Include="..\..\Chat\Recovery.BackOffice.Modules.Chat.Contracts\Recovery.BackOffice.Modules.Chat.Contracts.csproj" />
+		<ProjectReference Include="..\..\Multitenancy\Recovery.BackOffice.Modules.Multitenancy.Contracts\Recovery.BackOffice.Modules.Multitenancy.Contracts.csproj" />
+		<ProjectReference Include="..\..\Billing\Recovery.BackOffice.Modules.Billing.Contracts\Recovery.BackOffice.Modules.Billing.Contracts.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <InternalsVisibleTo Include="Recovery.BackOffice.Notifications.Tests" />
+	</ItemGroup>
+
+</Project>

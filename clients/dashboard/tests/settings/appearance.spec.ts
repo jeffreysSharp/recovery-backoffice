@@ -50,7 +50,7 @@ test.describe("settings/appearance — theme + accent (client-side)", () => {
     await page.goto("/settings/appearance");
 
     await page.getByRole("button", { name: "Dark theme" }).click();
-    const stored = await page.evaluate(() => window.localStorage.getItem("fsh.theme"));
+    const stored = await page.evaluate(() => window.localStorage.getItem("recovery.theme"));
     expect(stored).toBe("dark");
   });
 

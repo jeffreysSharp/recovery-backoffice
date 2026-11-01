@@ -6,11 +6,11 @@ using Serilog.Events;
 using Serilog.Filters;
 using Serilog.Sinks.OpenTelemetry;
 
-namespace FSH.Framework.Web.Observability.Logging.Serilog;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Observability.Logging.Serilog;
 
 public static class Extensions
 {
-    public static IHostApplicationBuilder AddHeroLogging(this IHostApplicationBuilder builder)
+    public static IHostApplicationBuilder AddRecoveryLogging(this IHostApplicationBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
         builder.Services.AddSingleton<HttpRequestContextEnricher>();
@@ -34,7 +34,7 @@ public static class Extensions
             // Ship structured logs over OTLP (e.g. the .NET Aspire dashboard / compose collector) when an endpoint is
             // available. Serilog owns the logging pipeline and does NOT forward to other ILogger providers, so the
             // OpenTelemetry SDK's log exporter can't see these events — we export from inside Serilog instead. Mirrors
-            // the traces/metrics auto-detect in AddHeroOpenTelemetry: an injected OTEL_EXPORTER_OTLP_ENDPOINT (Aspire)
+            // the traces/metrics auto-detect in AddRecoveryOpenTelemetry: an injected OTEL_EXPORTER_OTLP_ENDPOINT (Aspire)
             // wins, otherwise the configured exporter endpoint is used when Exporter.Otlp.Enabled is true.
             if (otlp is not null)
             {
@@ -42,10 +42,10 @@ public static class Extensions
                 {
                     sink.Endpoint = otlp.Endpoint;
                     sink.Protocol = otlp.Protocol;
-                    // service.name must match the traces/metrics resource (AddHeroOpenTelemetry resolves the same
+                    // service.name must match the traces/metrics resource (AddRecoveryOpenTelemetry resolves the same
                     // OTEL_SERVICE_NAME ?? ApplicationName) so the dashboard groups logs under the same resource as
                     // the spans they belong to — and adopts the orchestrator's resource name (e.g. Aspire's
-                    // "fsh-starter-api") rather than the entry-assembly name, which would list the process twice.
+                    // "recovery-starter-api") rather than the entry-assembly name, which would list the process twice.
                     sink.ResourceAttributes = new Dictionary<string, object>
                     {
                         ["service.name"] = Environment.GetEnvironmentVariable("OTEL_SERVICE_NAME")

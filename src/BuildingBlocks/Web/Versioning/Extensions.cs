@@ -1,11 +1,11 @@
 using Asp.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FSH.Framework.Web.Versioning;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Versioning;
 
 public static class Extensions
 {
-    public static IServiceCollection AddHeroVersioning(this IServiceCollection services)
+    public static IServiceCollection AddRecoveryVersioning(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
         services

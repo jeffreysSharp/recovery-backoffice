@@ -1,4 +1,4 @@
-namespace FSH.Framework.Web.Security;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Security;
 
 public sealed class SecurityHeadersOptions
 {

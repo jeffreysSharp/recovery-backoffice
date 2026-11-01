@@ -1,0 +1,49 @@
+using FluentValidation;
+using Recovery.BackOffice.BuildingBlocks.Core.Localization;
+using Recovery.BackOffice.BuildingBlocks.Storage;
+using Recovery.BackOffice.Modules.Identity.Contracts.v1.Users.UpdateUser;
+using Microsoft.Extensions.Localization;
+
+namespace Recovery.BackOffice.Modules.Identity.Features.v1.Users.UpdateUser;
+
+public sealed class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
+{
+    public UpdateUserCommandValidator(IStringLocalizer<SharedResources> localizer)
+    {
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage(_ => localizer["Validation.UserIdRequired"]);
+
+        RuleFor(x => x.FirstName)
+            .MaximumLength(50)
+            .When(x => !string.IsNullOrWhiteSpace(x.FirstName));
+
+        RuleFor(x => x.LastName)
+            .MaximumLength(50)
+            .When(x => !string.IsNullOrWhiteSpace(x.LastName));
+
+        RuleFor(x => x.PhoneNumber)
+            .MaximumLength(15)
+            .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber));
+
+        RuleFor(x => x.Email)
+            .EmailAddress()
+            .When(x => !string.IsNullOrWhiteSpace(x.Email));
+
+        When(x => x.Image is not null, () =>
+        {
+            RuleFor(x => x.Image!)
+                .SetValidator(new UserImageValidator(FileType.Image, localizer));
+        });
+
+        // Prevent deleting and uploading image at the same time
+        RuleFor(x => x)
+            .Must(x => !(x.DeleteCurrentImage && x.Image is not null))
+            .WithMessage(_ => localizer["Validation.ImageUploadDeleteConflict"]);
+
+        RuleFor(x => x.Locale)
+            .Must(l => SupportedCultures.Tags.Contains(l!))
+            .When(x => !string.IsNullOrWhiteSpace(x.Locale))
+            .WithMessage(_ => localizer["Validation.UnsupportedLocale"]);
+    }
+}

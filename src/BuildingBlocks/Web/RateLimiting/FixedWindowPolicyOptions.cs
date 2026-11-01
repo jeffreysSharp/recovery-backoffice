@@ -1,4 +1,4 @@
-namespace FSH.Framework.Web.RateLimiting;
+namespace Recovery.BackOffice.BuildingBlocks.Web.RateLimiting;
 
 public sealed class FixedWindowPolicyOptions
 {

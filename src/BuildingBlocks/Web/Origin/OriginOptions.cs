@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Web.Origin;
+﻿namespace Recovery.BackOffice.BuildingBlocks.Web.Origin;
 
 public sealed class OriginOptions
 {

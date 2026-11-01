@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace FSH.Framework.Storage.Local;
+namespace Recovery.BackOffice.BuildingBlocks.Storage.Local;
 
 /// <summary>
 /// In-memory store of short-lived upload tokens for the local-storage development fallback.

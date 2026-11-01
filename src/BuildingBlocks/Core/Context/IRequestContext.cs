@@ -1,4 +1,4 @@
-namespace FSH.Framework.Core.Context;
+namespace Recovery.BackOffice.BuildingBlocks.Core.Context;
 
 /// <summary>
 /// Provides access to HTTP request context information without direct dependency on ASP.NET Core.

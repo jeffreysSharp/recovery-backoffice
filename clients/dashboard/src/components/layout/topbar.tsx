@@ -47,7 +47,7 @@ import { cn } from "@/lib/cn";
 // ─────────────────────────────────────────────────────────────────────
 
 /** Up-to-2-char initials from a display name. Drops period-trailing
- *  abbreviations like "Dr." so "Dr. Recovery TemplateEvaluation" → "MM" not "DM". */
+ *  abbreviations like "Dr." so "Dr. Recovery BackOffice" → "MM" not "DM". */
 function initialsOf(name?: string | null): string {
   if (!name) return "U";
   const parts = name
@@ -367,7 +367,7 @@ export function Topbar() {
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Sign out of fullstackhero?</DialogTitle>
+            <DialogTitle>Sign out of recovery-backoffice?</DialogTitle>
             <DialogDescription>
               You'll need to sign in again to access this tenant. Any unsaved
               work in this session will be lost.

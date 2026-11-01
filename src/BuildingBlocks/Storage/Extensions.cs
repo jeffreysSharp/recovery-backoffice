@@ -2,27 +2,27 @@ using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
 using Finbuckle.MultiTenant.Abstractions;
-using FSH.Framework.Quota;
-using FSH.Framework.Shared.Multitenancy;
-using FSH.Framework.Storage.Local;
-using FSH.Framework.Storage.S3;
-using FSH.Framework.Storage.Services;
+using Recovery.BackOffice.BuildingBlocks.Quota;
+using Recovery.BackOffice.BuildingBlocks.Shared.Multitenancy;
+using Recovery.BackOffice.BuildingBlocks.Storage.Local;
+using Recovery.BackOffice.BuildingBlocks.Storage.S3;
+using Recovery.BackOffice.BuildingBlocks.Storage.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Storage;
+namespace Recovery.BackOffice.BuildingBlocks.Storage;
 
 public static class Extensions
 {
-    public static IServiceCollection AddHeroLocalFileStorage(this IServiceCollection services)
+    public static IServiceCollection AddRecoveryLocalFileStorage(this IServiceCollection services)
     {
         services.AddScoped<IStorageService, LocalStorageService>();
         return services;
     }
 
-    public static IServiceCollection AddHeroStorage(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRecoveryStorage(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);

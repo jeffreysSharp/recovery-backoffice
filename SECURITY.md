@@ -1,36 +1,7 @@
-# Security Policy
+# Segurança
 
-## Supported versions
+Comunicar vulnerabilidades aos responsáveis pelo repositório por canal privado. Não publicar segredos, dados pessoais, tokens ou detalhes exploráveis em issues públicas.
 
-This is a starter kit. Only the current `main` branch receives security fixes from upstream. Forks, downstream projects, and tagged releases are owned by their maintainers — pull fixes in on your own cadence.
+Contas e configurações de demonstração precisam de revisão antes de produção. Validar identidade, autorização, sessões, dados e auditoria conforme a documentação do projeto.
 
-## Reporting a vulnerability
-
-**Do not open a public issue.** Use GitHub's private vulnerability reporting:
-
-<https://github.com/fullstackhero/dotnet-starter-kit/security/advisories/new>
-
-Please include:
-
-- Affected component (module, file, endpoint)
-- Reproduction steps and any required configuration
-- Impact (what an attacker can achieve)
-- Proof-of-concept if you have one
-
-## What to expect
-
-- Acknowledgement within 72 hours.
-- Triage decision within 7 days.
-- Coordinated disclosure window of ~90 days from triage, longer for changes that need careful migration paths.
-
-Fixes ship as a patched commit on `main` plus a GitHub Security Advisory. Reporters are credited with permission.
-
-## Scope
-
-In scope: `src/` (BuildingBlocks, Modules, Host), default `appsettings.*.json`, the `Recovery TemplateEvaluation.CLI`, and the `clients/` apps.
-
-Out of scope: third-party NuGet/npm packages (report upstream), the docs site, and issues in downstream forks (contact that fork's maintainer).
-
-## Production hardening
-
-This kit ships with development-friendly defaults. Before deploying a fork, rotate JWT signing keys and seeded passwords, lock CORS, set strong Hangfire dashboard credentials, and persist DataProtection keys to a shared store for multi-instance hosting.
+Avisos legais de origem estão em LICENSE.

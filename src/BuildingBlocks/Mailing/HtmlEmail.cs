@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace FSH.Framework.Mailing;
+namespace Recovery.BackOffice.BuildingBlocks.Mailing;
 
 /// <summary>
 /// The shared HTML shell and the single encoder for outbound mail. Bodies are sent as

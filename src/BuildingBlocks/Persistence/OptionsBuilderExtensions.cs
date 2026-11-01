@@ -1,9 +1,9 @@
 ﻿using System.Data.Common;
-using FSH.Framework.Shared.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace FSH.Framework.Persistence;
+namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
 /// <summary>
 /// Extension methods for configuring Entity Framework DbContextOptionsBuilder.
@@ -11,7 +11,7 @@ namespace FSH.Framework.Persistence;
 public static class OptionsBuilderExtensions
 {
     /// <summary>
-    /// Configures the database provider and connection for the Hero framework.
+    /// Configures the database provider and connection for the Recovery framework.
     /// </summary>
     /// <param name="builder">The DbContextOptionsBuilder to configure.</param>
     /// <param name="dbProvider">The database provider (PostgreSQL, MSSQL).</param>
@@ -21,7 +21,7 @@ public static class OptionsBuilderExtensions
     /// <returns>The configured DbContextOptionsBuilder for method chaining.</returns>
     /// <exception cref="ArgumentNullException">Thrown when builder is null or dbProvider is null/whitespace.</exception>
     /// <exception cref="InvalidOperationException">Thrown when an unsupported database provider is specified.</exception>
-    public static DbContextOptionsBuilder ConfigureHeroDatabase(
+    public static DbContextOptionsBuilder ConfigureRecoveryDatabase(
         this DbContextOptionsBuilder builder,
         string dbProvider,
         string connectionString,
@@ -66,7 +66,7 @@ public static class OptionsBuilderExtensions
     /// join the business transaction — EF Core can only enlist a context in an existing transaction
     /// when both contexts sit on the same connection.
     /// </summary>
-    public static DbContextOptionsBuilder ConfigureHeroDatabase(
+    public static DbContextOptionsBuilder ConfigureRecoveryDatabase(
         this DbContextOptionsBuilder builder,
         string dbProvider,
         DbConnection connection,

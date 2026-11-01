@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Storage;
+﻿namespace Recovery.BackOffice.BuildingBlocks.Storage;
 
 public enum FileType
 {

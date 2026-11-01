@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http.Resilience;
 
-namespace FSH.Framework.Web.HttpResilience;
+namespace Recovery.BackOffice.BuildingBlocks.Web.HttpResilience;
 
 public static class Extensions
 {
@@ -10,7 +10,7 @@ public static class Extensions
     /// Adds a standard resilience handler (retry, circuit breaker, timeout) to the HTTP client builder.
     /// Configuration is read from the "HttpResilienceOptions" section.
     /// </summary>
-    public static IHttpClientBuilder AddHeroResilience(this IHttpClientBuilder builder, IConfiguration configuration)
+    public static IHttpClientBuilder AddRecoveryResilience(this IHttpClientBuilder builder, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(builder);
         ArgumentNullException.ThrowIfNull(configuration);

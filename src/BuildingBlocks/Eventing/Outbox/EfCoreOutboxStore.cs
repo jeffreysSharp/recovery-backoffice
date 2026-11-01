@@ -1,12 +1,12 @@
-using FSH.Framework.Eventing.Abstractions;
-using FSH.Framework.Eventing.Persistence;
-using FSH.Framework.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Eventing.Outbox;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing.Outbox;
 
 /// <summary>
 /// EF Core outbox store over the framework-owned <see cref="EventingDbContext"/>.

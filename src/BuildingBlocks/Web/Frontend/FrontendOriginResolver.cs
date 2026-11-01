@@ -1,10 +1,10 @@
 using System.Net;
-using FSH.Framework.Core.Exceptions;
+using Recovery.BackOffice.BuildingBlocks.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace FSH.Framework.Web.Frontend;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Frontend;
 
 internal sealed class FrontendOriginResolver(
     IHttpContextAccessor httpContextAccessor,

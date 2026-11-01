@@ -1,14 +1,14 @@
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace FSH.Framework.Persistence;
+namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
 /// <summary>
 /// Tracks the open transaction on each connection in the current DI scope.
 ///
 /// <see cref="DbConnection"/> exposes no way to ask "is a transaction open on you?", so a context
 /// that wants to join another context's transaction has no way to find it. This interceptor is
-/// attached to every Hero DbContext and records transactions as they start and end, which is what
+/// attached to every Recovery DbContext and records transactions as they start and end, which is what
 /// lets the outbox write enlist in the business transaction instead of committing separately.
 /// </summary>
 /// <remarks>

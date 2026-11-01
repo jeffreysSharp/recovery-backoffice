@@ -1,10 +1,10 @@
-using FSH.Framework.Eventing.Abstractions;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using System.Text;
 
-namespace FSH.Framework.Eventing.RabbitMq;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing.RabbitMq;
 
 /// <summary>
 /// RabbitMQ-based event bus implementation for distributed deployments.

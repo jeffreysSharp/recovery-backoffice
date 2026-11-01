@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 
-namespace FSH.Framework.Web.FeatureFlags;
+namespace Recovery.BackOffice.BuildingBlocks.Web.FeatureFlags;
 
 public static class Extensions
 {
@@ -10,7 +10,7 @@ public static class Extensions
     /// Adds feature management with tenant-aware feature filters.
     /// Reads feature flags from the "FeatureManagement" configuration section.
     /// </summary>
-    public static IServiceCollection AddHeroFeatureFlags(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRecoveryFeatureFlags(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
