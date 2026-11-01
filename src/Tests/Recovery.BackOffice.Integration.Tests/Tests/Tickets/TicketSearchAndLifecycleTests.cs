@@ -93,7 +93,7 @@ public sealed class TicketSearchAndLifecycleTests
     {
         #region Arrange
         using var client = await _auth.CreateRootAdminClientAsync();
-        // Embed a unique, unguessable token in the title so the ILIKE match
+        // Embed a unique, unguessable token in the title so the LIKE match
         // is isolated from every other ticket in the shared DB.
         var token = $"ztok{Guid.NewGuid().ToString("N")[..10]}";
         var matchId = await CreateAsync(client, $"Searchable {token} ticket");
@@ -121,7 +121,7 @@ public sealed class TicketSearchAndLifecycleTests
         #endregion
 
         #region Act
-        // Search by the full ticket number — exercises the Number ILIKE branch.
+        // Search by the full ticket number — exercises the Number LIKE branch.
         var page = await SearchAsync(client, $"search={created.Number}&pageSize=200");
         #endregion
 

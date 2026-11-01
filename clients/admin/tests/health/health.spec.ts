@@ -14,9 +14,9 @@ const READY_HEALTHY = {
   status: "Healthy",
   results: [
     {
-      name: "npgsql",
+      name: "sqlserver",
       status: "Healthy",
-      description: "PostgreSQL reachable",
+      description: "SQL Server reachable",
       durationMs: 4.2,
       details: { host: "localhost" },
     },
@@ -34,7 +34,7 @@ const READY_UNHEALTHY = {
   status: "Unhealthy",
   results: [
     {
-      name: "npgsql",
+      name: "sqlserver",
       status: "Unhealthy",
       description: "Connection refused",
       durationMs: 8000,
@@ -79,7 +79,7 @@ test.describe("health probes", () => {
     await expect(kpiLabel("Checks failing")).toBeVisible();
 
     // A check name from the readiness mock.
-    await expect(main.getByText("npgsql", { exact: true })).toBeVisible();
+    await expect(main.getByText("sqlserver", { exact: true })).toBeVisible();
     await expect(main.getByText("redis", { exact: true })).toBeVisible();
   });
 
@@ -97,7 +97,7 @@ test.describe("health probes", () => {
 
     // The Readiness probe section shows an Unhealthy badge + the failing check.
     await expect(main.getByText("Unhealthy", { exact: true }).first()).toBeVisible();
-    await expect(main.getByText("npgsql", { exact: true })).toBeVisible();
+    await expect(main.getByText("sqlserver", { exact: true })).toBeVisible();
     await expect(main.getByText("Connection refused", { exact: true })).toBeVisible();
   });
 });

@@ -39,7 +39,7 @@ public sealed class GetChannelByIdQueryHandler(
             unread = await db.Messages.AsNoTracking()
                 .Where(m => m.ChannelId == channel.Id
                     && m.DeletedAtUtc == null
-                    && (member.LastReadMessageId == null || m.Id.CompareTo(member.LastReadMessageId.Value) > 0))
+                    && (member.LastReadMessageId == null || m.Id.ToString().CompareTo(member.LastReadMessageId.Value.ToString()) > 0))
                 .CountAsync(cancellationToken)
                 .ConfigureAwait(false);
         }

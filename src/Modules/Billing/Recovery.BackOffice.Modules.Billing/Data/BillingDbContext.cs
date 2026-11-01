@@ -15,6 +15,14 @@ public sealed class BillingDbContext : DbContext
 
     public BillingDbContext(DbContextOptions<BillingDbContext> options) : base(options) { }
 
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        ArgumentNullException.ThrowIfNull(configurationBuilder);
+        base.ConfigureConventions(configurationBuilder);
+        configurationBuilder.Properties<DateTime>()
+            .HaveConversion<Recovery.BackOffice.BuildingBlocks.Persistence.UtcDateTimeConverter>();
+    }
+
     public DbSet<BillingPlan> Plans => Set<BillingPlan>();
     public DbSet<Subscription> Subscriptions => Set<Subscription>();
     public DbSet<Invoice> Invoices => Set<Invoice>();
@@ -27,6 +35,7 @@ public sealed class BillingDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
+
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BillingDbContext).Assembly);

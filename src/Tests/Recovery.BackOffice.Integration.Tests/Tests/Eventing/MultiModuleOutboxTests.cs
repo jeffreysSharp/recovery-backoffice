@@ -14,7 +14,7 @@ namespace Recovery.BackOffice.Integration.Tests.Tests.Eventing;
 /// Covers issue #1349: the outbox was registered once per module DbContext, non-keyed, so .NET DI
 /// resolved whichever module registered last for the whole application — and only IdentityDbContext
 /// mapped the tables, so every other module's publish hit a missing relation. These tests exercise
-/// the real store against Postgres, with no substitution, so they fail if the single framework-owned
+/// the real store against SqlServer, with no substitution, so they fail if the single framework-owned
 /// registration regresses.
 /// </summary>
 [Collection(RecoveryCollectionDefinition.Name)]

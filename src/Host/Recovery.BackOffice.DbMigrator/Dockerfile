@@ -15,9 +15,8 @@ RUN dotnet publish src/Host/Recovery.BackOffice.DbMigrator/Recovery.BackOffice.D
     --no-restore \
     -o /publish
 
-# Chiseled on purpose (compose). The csproj ContainerFamily (SDK publish, AWS)
-# is full noble: chiseled strips libgssapi_krb5, and Npgsql's GSSAPI probe
-# then logs a noisy (benign) load error. See the API Dockerfile.
+# Docker Compose uses chiseled; SDK container publishing uses the noble
+# family configured in the project file.
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled AS runtime
 WORKDIR /app
 COPY --from=build /publish .

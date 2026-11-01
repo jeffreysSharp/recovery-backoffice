@@ -14,7 +14,7 @@ namespace Recovery.BackOffice.Framework.Tests.Eventing;
 /// <summary>
 /// In-memory SQLite EventingDbContext for store-level unit tests. SQLite has no
 /// schemas, so EF folds "framework.OutboxMessages" into a single table name —
-/// fine here; schema mapping is asserted separately against the Npgsql model in
+/// fine here; schema mapping is asserted separately against the SqlServer model in
 /// <see cref="EventingDbContextModelTests"/>.
 /// </summary>
 internal static class EventingTestContext
@@ -33,9 +33,9 @@ internal static class EventingTestContext
 
         var settings = Options.Create(new DatabaseOptions
         {
-            Provider = "postgresql",
+            Provider = "MSSQL",
             ConnectionString = string.Empty,
-            MigrationsAssembly = "Recovery.BackOffice.Migrations.PostgreSQL",
+            MigrationsAssembly = "Recovery.BackOffice.Migrations.SqlServer",
         });
 
         var environment = Substitute.For<IHostEnvironment>();

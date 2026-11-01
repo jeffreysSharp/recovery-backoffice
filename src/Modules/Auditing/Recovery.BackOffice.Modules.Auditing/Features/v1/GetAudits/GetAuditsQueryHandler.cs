@@ -10,7 +10,6 @@ using Recovery.BackOffice.Modules.Auditing.Persistence;
 using Recovery.BackOffice.Modules.Identity.Contracts.Services;
 using Mediator;
 using Microsoft.EntityFrameworkCore;
-using static Recovery.BackOffice.Modules.Auditing.Persistence.AuditJsonbFunctions;
 
 namespace Recovery.BackOffice.Modules.Auditing.Features.v1.GetAudits;
 
@@ -100,12 +99,12 @@ public sealed class GetAuditsQueryHandler : IQueryHandler<GetAuditsQuery, PagedR
         if (!string.IsNullOrWhiteSpace(query.Search))
         {
             string term = query.Search;
-            // ILIKE on PayloadJson is sequential; the (TenantId, OccurredAtUtc) index
+            // LIKE on PayloadJson is sequential; the (TenantId, OccurredAtUtc) index
             // scopes the scan — add a GIN index on PayloadJson in prod for fast search.
             audits = audits.Where(a =>
-                (a.PayloadJson != null && EF.Functions.ILike(AsText(a.PayloadJson), $"%{term}%")) ||
-                (a.Source != null && EF.Functions.ILike(a.Source, $"%{term}%")) ||
-                (a.UserName != null && EF.Functions.ILike(a.UserName, $"%{term}%")));
+                (a.PayloadJson != null && EF.Functions.Like(EF.Functions.Collate(a.PayloadJson, "Latin1_General_100_CI_AS"), $"%{term}%")) ||
+                (a.Source != null && EF.Functions.Like(EF.Functions.Collate(a.Source, "Latin1_General_100_CI_AS"), $"%{term}%")) ||
+                (a.UserName != null && EF.Functions.Like(EF.Functions.Collate(a.UserName, "Latin1_General_100_CI_AS"), $"%{term}%")));
         }
 
         audits = audits.OrderByDescending(a => a.OccurredAtUtc);

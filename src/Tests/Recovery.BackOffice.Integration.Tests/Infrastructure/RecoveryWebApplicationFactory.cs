@@ -23,7 +23,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
-using Testcontainers.PostgreSql;
+using Testcontainers.MsSql;
 
 namespace Recovery.BackOffice.Integration.Tests.Infrastructure;
 
@@ -34,10 +34,8 @@ public sealed class RecoveryWebApplicationFactory : WebApplicationFactory<Progra
     internal const string S3Bucket = "recovery-integration-test-uploads";
 
     private static readonly SemaphoreSlim _migrationLock = new(1, 1);
-    private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder("postgres:17-alpine")
-        .WithDatabase("recovery_integration_tests")
-        .WithUsername("postgres")
-        .WithPassword("integration_test_pwd")
+    private readonly MsSqlContainer _sqlServer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest")
+        .WithPassword("Integration_Test_Only123!")
         .WithAutoRemove(true)
         .WithCleanUp(true)
         .Build();
@@ -55,7 +53,8 @@ public sealed class RecoveryWebApplicationFactory : WebApplicationFactory<Progra
 
     public async Task InitializeAsync()
     {
-        await Task.WhenAll(_postgres.StartAsync(), _s3.StartAsync());
+        await Task.WhenAll(_sqlServer.StartAsync(), _s3.StartAsync());
+        await CreateDatabaseAsync();
         await CreateS3BucketAsync();
 
         // Force host creation via the Server property (no leaked HttpClient)
@@ -77,7 +76,7 @@ public sealed class RecoveryWebApplicationFactory : WebApplicationFactory<Progra
     public new async Task DisposeAsync()
     {
         await base.DisposeAsync();
-        await _postgres.DisposeAsync();
+        await _sqlServer.DisposeAsync();
         await _s3.DisposeAsync();
     }
 
@@ -127,9 +126,9 @@ public sealed class RecoveryWebApplicationFactory : WebApplicationFactory<Progra
         {
             config.AddInMemoryCollection(new Dictionary<string, string?>
             {
-                ["DatabaseOptions:Provider"] = "POSTGRESQL",
-                ["DatabaseOptions:ConnectionString"] = _postgres.GetConnectionString(),
-                ["DatabaseOptions:MigrationsAssembly"] = "Recovery.BackOffice.Migrations.PostgreSQL",
+                ["DatabaseOptions:Provider"] = "MSSQL",
+                ["DatabaseOptions:ConnectionString"] = GetDatabaseConnectionString(),
+                ["DatabaseOptions:MigrationsAssembly"] = "Recovery.BackOffice.Migrations.SqlServer",
                 ["CachingOptions:Redis"] = "",
                 ["JwtOptions:Issuer"] = TestConstants.JwtIssuer,
                 ["JwtOptions:Audience"] = TestConstants.JwtAudience,
@@ -147,7 +146,7 @@ public sealed class RecoveryWebApplicationFactory : WebApplicationFactory<Progra
                 ["EventingOptions:UseHostedServiceDispatcher"] = "false",
                 ["Serilog:MinimumLevel:Default"] = "Warning",
                 ["Serilog:MinimumLevel:Override:Microsoft.EntityFrameworkCore"] = "Fatal",
-                ["Serilog:MinimumLevel:Override:Npgsql"] = "Fatal",
+                ["Serilog:MinimumLevel:Override:SqlServer"] = "Fatal",
                 ["Serilog:WriteTo:0:Name"] = "Console",
                 ["Serilog:WriteTo:0:Args:restrictedToMinimumLevel"] = "Warning",
                 ["Serilog:WriteTo:1:Name"] = "",
@@ -353,5 +352,17 @@ public sealed class RecoveryWebApplicationFactory : WebApplicationFactory<Progra
         }
 
         loadedField?.SetValue(null, false);
+    }
+
+    private string GetDatabaseConnectionString() => new Microsoft.Data.SqlClient.SqlConnectionStringBuilder(_sqlServer.GetConnectionString())
+    { InitialCatalog = "RecoveryIntegrationTests" }.ConnectionString;
+
+    private async Task CreateDatabaseAsync()
+    {
+        await using var connection = new Microsoft.Data.SqlClient.SqlConnection(_sqlServer.GetConnectionString());
+        await connection.OpenAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = "CREATE DATABASE [RecoveryIntegrationTests]";
+        await command.ExecuteNonQueryAsync();
     }
 }

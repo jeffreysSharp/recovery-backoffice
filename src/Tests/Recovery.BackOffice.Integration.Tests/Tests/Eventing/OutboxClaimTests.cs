@@ -10,7 +10,7 @@ namespace Recovery.BackOffice.Integration.Tests.Tests.Eventing;
 /// <summary>
 /// Covers plan Phase 3: without row claiming, two API instances both drain the same outbox rows
 /// and publish every integration event twice. Claiming is a concurrency behaviour, so it needs a
-/// real Postgres — SKIP LOCKED has no in-memory equivalent.
+/// real SqlServer — SKIP LOCKED has no in-memory equivalent.
 /// </summary>
 [Collection(RecoveryCollectionDefinition.Name)]
 public sealed class OutboxClaimTests

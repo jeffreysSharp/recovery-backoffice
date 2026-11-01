@@ -1,7 +1,7 @@
 ﻿using System.Data.Common;
 using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+
 
 namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
@@ -14,7 +14,7 @@ public static class OptionsBuilderExtensions
     /// Configures the database provider and connection for the Recovery framework.
     /// </summary>
     /// <param name="builder">The DbContextOptionsBuilder to configure.</param>
-    /// <param name="dbProvider">The database provider (PostgreSQL, MSSQL).</param>
+    /// <param name="dbProvider">The database provider (SQL Server, MSSQL).</param>
     /// <param name="connectionString">The database connection string.</param>
     /// <param name="migrationsAssembly">The assembly containing database migrations.</param>
     /// <param name="isDevelopment">Whether the application is running in development mode.</param>
@@ -35,17 +35,12 @@ public static class OptionsBuilderExtensions
 
         switch (dbProvider.ToUpperInvariant())
         {
-            case DbProviders.PostgreSQL:
-                builder.UseNpgsql(connectionString, e =>
-                {
-                    e.MigrationsAssembly(migrationsAssembly);
-                });
-                break;
 
             case DbProviders.MSSQL:
                 builder.UseSqlServer(connectionString, e =>
                 {
                     e.MigrationsAssembly(migrationsAssembly);
+                    e.UseCompatibilityLevel(160);
                     e.EnableRetryOnFailure();
                 });
                 break;
@@ -81,18 +76,12 @@ public static class OptionsBuilderExtensions
 
         switch (dbProvider.ToUpperInvariant())
         {
-            case DbProviders.PostgreSQL:
-                // contextOwnsConnection: false — the scope disposes it, not the first context to finish.
-                builder.UseNpgsql(connection, contextOwnsConnection: false, e =>
-                {
-                    e.MigrationsAssembly(migrationsAssembly);
-                });
-                break;
 
             case DbProviders.MSSQL:
                 builder.UseSqlServer(connection, contextOwnsConnection: false, e =>
                 {
                     e.MigrationsAssembly(migrationsAssembly);
+                    e.UseCompatibilityLevel(160);
                     e.EnableRetryOnFailure();
                 });
                 break;
@@ -107,10 +96,7 @@ public static class OptionsBuilderExtensions
 
     private static void ConfigureCommon(DbContextOptionsBuilder builder, bool isDevelopment)
     {
-        builder.ConfigureWarnings(warnings =>
-            warnings.Log(RelationalEventId.PendingModelChangesWarning));
-
-        if (isDevelopment)
+if (isDevelopment)
         {
             builder.EnableSensitiveDataLogging();
             builder.EnableDetailedErrors();

@@ -36,6 +36,7 @@ public sealed class RateLimitingTests
     {
         // Arrange
         using var client = _factory.CreateClient();
+        client.DefaultRequestHeaders.Add("X-Test-Remote-Ip", "192.0.2.10");
 
         // Act + Assert: the first PermitLimit requests must NOT be rejected with 429.
         for (int i = 0; i < AuthPermitLimit; i++)
@@ -56,6 +57,7 @@ public sealed class RateLimitingTests
     {
         // Arrange
         using var client = _factory.CreateClient();
+        client.DefaultRequestHeaders.Add("X-Test-Remote-Ip", "192.0.2.11");
 
         // Act: burst well past the limit so at least one request is rejected.
         var responses = new List<HttpResponseMessage>();

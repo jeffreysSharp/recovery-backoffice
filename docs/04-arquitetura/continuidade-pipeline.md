@@ -26,7 +26,7 @@ Pins exigem atualização explícita para receber correções futuras. O Azure p
 
 ## Implantação pendente de adequação
 
-Destino anterior: App Service `recovery-backoffice-api`, conexão `sc-recovery-backoffice-prod`. Não verificados como ativos. O template precisa de PostgreSQL, cache, armazenamento, email, segredos/chaves e hospedagem dos clientes. Aspire serve à orquestração local; publicar somente a DLL da API não reproduz a pilha.
+Destino anterior: App Service `recovery-backoffice-api`, conexão `sc-recovery-backoffice-prod`. Não verificados como ativos. O template precisa de SQL Server, cache, armazenamento, email, segredos/chaves e hospedagem dos clientes. Aspire serve à orquestração local; publicar somente a DLL da API não reproduz a pilha.
 
 Por isso, esta versão produz artefatos, mas não restaura a antiga tarefa automática de produção. A verificação antiga esperava literalmente Hello World e não valida esta aplicação. Preparar deployment concreto após confirmar recursos/configuração existentes e se o alvo é demonstração ou operação real. Não implantar seeds, contas ou credenciais demo em produção real.
 

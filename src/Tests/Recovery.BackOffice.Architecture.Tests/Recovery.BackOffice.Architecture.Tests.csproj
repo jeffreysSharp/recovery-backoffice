@@ -40,6 +40,6 @@
     <ProjectReference Include="..\..\Modules\Chat\Recovery.BackOffice.Modules.Chat\Recovery.BackOffice.Modules.Chat.csproj" />
     <ProjectReference Include="..\..\Modules\Chat\Recovery.BackOffice.Modules.Chat.Contracts\Recovery.BackOffice.Modules.Chat.Contracts.csproj" />
     <ProjectReference Include="..\..\Host\Recovery.BackOffice.Api\Recovery.BackOffice.Api.csproj" />
-    <ProjectReference Include="..\..\Host\Recovery.BackOffice.Migrations.PostgreSQL\Recovery.BackOffice.Migrations.PostgreSQL.csproj" />
+    <ProjectReference Include="..\..\Host\Recovery.BackOffice.Migrations.SqlServer\Recovery.BackOffice.Migrations.SqlServer.csproj" />
   </ItemGroup>
 </Project>

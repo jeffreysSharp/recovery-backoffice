@@ -148,7 +148,7 @@ Permissões/IP podem ter atualização em até 1 minuto provisoriamente. Disponi
 
 ## Persistência e consistência
 
-EF Core na mesma versão principal do .NET é candidato. Banco relacional único inicialmente, schemas e DbContext por módulo, migrações com proprietário e ordem controlada. SQL Server e PostgreSQL continuam em avaliação conforme padrões corporativos, provedor, custo e operação. Não manter suporte a vários bancos como requisito implícito.
+EF Core na mesma versão principal do .NET é candidato. Banco relacional único inicialmente, schemas e DbContext por módulo, migrações com proprietário e ordem controlada. SQL Server e SQL Server continuam em avaliação conforme padrões corporativos, provedor, custo e operação. Não manter suporte a vários bancos como requisito implícito.
 
 Chaves e índices devem garantir unicidade do CPF normalizado e pares de vínculos. Um token de concorrência persistido atende CON-001; APIs devem devolver conflito sem gravar versão desatualizada. Tipo de token será escolhido após banco.
 

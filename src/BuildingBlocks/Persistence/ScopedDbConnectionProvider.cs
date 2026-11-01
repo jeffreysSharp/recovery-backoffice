@@ -1,7 +1,6 @@
 using System.Data.Common;
 using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 using Microsoft.Data.SqlClient;
-using Npgsql;
 
 namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
@@ -31,7 +30,6 @@ public sealed class ScopedDbConnectionProvider : IScopedDbConnectionProvider, IA
 
         DbConnection connection = dbProvider.ToUpperInvariant() switch
         {
-            DbProviders.PostgreSQL => new NpgsqlConnection(connectionString),
             DbProviders.MSSQL => new SqlConnection(connectionString),
             _ => throw new InvalidOperationException($"Database Provider {dbProvider} is not supported."),
         };

@@ -2,7 +2,7 @@
 using Recovery.BackOffice.BuildingBlocks.Jobs.Services;
 using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 using Hangfire;
-using Hangfire.PostgreSql;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,12 +39,6 @@ public static class Extensions
 
             switch (dbOptions.Provider.ToUpperInvariant())
             {
-                case DbProviders.PostgreSQL:
-                    config.UsePostgreSqlStorage(o =>
-                    {
-                        o.UseNpgsqlConnection(dbOptions.ConnectionString);
-                    });
-                    break;
 
                 case DbProviders.MSSQL:
                     config.UseSqlServerStorage(dbOptions.ConnectionString);
@@ -65,7 +59,6 @@ public static class Extensions
         });
 
         // Deferred stale lock cleanup — runs after app starts accepting requests
-        services.AddHostedService<HangfireStaleLockCleanupService>();
 
         services.AddTransient<IJobService, HangfireService>();
 

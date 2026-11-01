@@ -25,8 +25,8 @@ public sealed class SearchBrandsQueryHandler(CatalogDbContext dbContext)
         {
             string term = query.Search.Trim();
             q = q.Where(b =>
-                EF.Functions.ILike(b.Name, $"%{term}%") ||
-                EF.Functions.ILike(b.Slug, $"%{term}%"));
+                EF.Functions.Like(EF.Functions.Collate(b.Name, "Latin1_General_100_CI_AS"), $"%{term}%") ||
+                EF.Functions.Like(EF.Functions.Collate(b.Slug, "Latin1_General_100_CI_AS"), $"%{term}%"));
         }
 
         q = ApplySort(q, query.SortBy, query.SortDir);
