@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# One-command deploy of the Recovery TemplateEvaluation Starter Kit to AWS.
+# One-command deploy of the Recovery BackOffice Starter Kit to AWS.
 #
 #   ./deploy.sh <dev|staging|prod> <region>
 #
@@ -16,7 +16,7 @@
 # Flags:
 #   --build-api          Build & push the API + migrator images at the current git SHA and deploy that tag.
 #   --image-tag TAG      Deploy a specific, already-published image tag.
-#   --registry REG       Container registry (default: ghcr.io/fullstackhero). Used only with --build-api.
+#   --registry REG       Container registry (default: ghcr.io/recovery-backoffice). Used only with --build-api.
 #   --skip-migrate       Skip running the DbMigrator task after apply.
 #   --seed-demo          After migrating, also run the migrator's `seed-demo` verb (acme/globex demo tenants).
 #   --skip-frontend      Skip building/publishing the SPAs.
@@ -27,9 +27,9 @@
 set -euo pipefail
 
 MIN_TF_VERSION="1.15.4"
-DEFAULT_REGISTRY="ghcr.io/fullstackhero"
-API_IMAGE_NAME="fsh-api"
-MIGRATOR_IMAGE_NAME="fsh-db-migrator"
+DEFAULT_REGISTRY="ghcr.io/recovery-backoffice"
+API_IMAGE_NAME="recovery-api"
+MIGRATOR_IMAGE_NAME="recovery-db-migrator"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
@@ -114,18 +114,18 @@ if [[ "$BUILD_API" == true ]]; then
   # registry host must be split out of the repository name (folding it into
   # ContainerRepository silently loads to the local Docker daemon instead).
   REGISTRY_HOST="${REGISTRY%%/*}"                       # e.g. ghcr.io
-  REGISTRY_PATH="${REGISTRY#"$REGISTRY_HOST"}"; REGISTRY_PATH="${REGISTRY_PATH#/}"  # e.g. fullstackhero
+  REGISTRY_PATH="${REGISTRY#"$REGISTRY_HOST"}"; REGISTRY_PATH="${REGISTRY_PATH#/}"  # e.g. recovery-backoffice
   API_REPO="${REGISTRY_PATH:+$REGISTRY_PATH/}$API_IMAGE_NAME"
   MIGRATOR_REPO="${REGISTRY_PATH:+$REGISTRY_PATH/}$MIGRATOR_IMAGE_NAME"
   echo "==> Building & pushing API image $REGISTRY_HOST/$API_REPO:$IMAGE_TAG"
-  dotnet publish "$REPO_ROOT/src/Host/Recovery.TemplateEvaluation.Api/Recovery.TemplateEvaluation.Api.csproj" \
+  dotnet publish "$REPO_ROOT/src/Host/Recovery.BackOffice.Api/Recovery.BackOffice.Api.csproj" \
     -c Release -r linux-x64 \
     /t:PublishContainer \
     -p:ContainerRegistry="$REGISTRY_HOST" \
     -p:ContainerRepository="$API_REPO" \
     -p:ContainerImageTags="$IMAGE_TAG"
   echo "==> Building & pushing migrator image $REGISTRY_HOST/$MIGRATOR_REPO:$IMAGE_TAG"
-  dotnet publish "$REPO_ROOT/src/Host/Recovery.TemplateEvaluation.DbMigrator/Recovery.TemplateEvaluation.DbMigrator.csproj" \
+  dotnet publish "$REPO_ROOT/src/Host/Recovery.BackOffice.DbMigrator/Recovery.BackOffice.DbMigrator.csproj" \
     -c Release -r linux-x64 \
     /t:PublishContainer \
     -p:ContainerRegistry="$REGISTRY_HOST" \

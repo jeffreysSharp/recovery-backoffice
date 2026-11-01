@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.Modules.Identity.Contracts</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.Modules.Identity.Contracts</AssemblyName>
+		<NoWarn>$(NoWarn);CA1002;CA1056;CS1572;S2094</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Mediator.Abstractions" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Eventing.Abstractions\Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions.csproj" />
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Shared\Recovery.BackOffice.BuildingBlocks.Shared.csproj" />
+	</ItemGroup>
+
+</Project>

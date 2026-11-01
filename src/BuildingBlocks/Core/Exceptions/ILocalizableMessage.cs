@@ -1,4 +1,4 @@
-namespace FSH.Framework.Core.Exceptions;
+namespace Recovery.BackOffice.BuildingBlocks.Core.Exceptions;
 
 /// <summary>
 /// Implemented by exceptions whose response Detail can be localized from a resource key.

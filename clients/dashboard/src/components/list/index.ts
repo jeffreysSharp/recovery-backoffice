@@ -1,4 +1,4 @@
-export { PageHero } from "./page-hero";
+export { PageRecovery } from "./page-hero";
 export { Field } from "./field";
 export { ErrorBand } from "./error-band";
 export { Combobox, type ComboboxOption } from "./combobox";
@@ -24,7 +24,7 @@ export {
 } from "./entity-shell";
 export {
   EntityDetailBack,
-  EntityDetailHero,
+  EntityDetailRecovery,
   EntityDetailAvatar,
   EntityDetailStat,
   EntityDetailMeta,

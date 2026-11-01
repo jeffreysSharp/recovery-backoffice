@@ -96,7 +96,7 @@ const ROOT = "/api/v1/audits";
 // API boundary — one place, one fix.
 //
 // Index mirrors the C# enum declarations in
-// `src/Modules/Auditing/Modules.Auditing.Contracts/AuditEnums.cs`.
+// `src/Modules/Auditing/Recovery.BackOffice.Modules.Auditing.Contracts/AuditEnums.cs`.
 // ──────────────────────────────────────────────────────────────────────
 
 const EVENT_TYPE_BY_INT: readonly AuditEventType[] = [

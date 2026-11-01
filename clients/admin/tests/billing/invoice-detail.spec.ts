@@ -62,7 +62,7 @@ test.describe("billing invoice detail", () => {
 
     const main = page.getByRole("main");
 
-    // Hero: invoice number + status badge + amount.
+    // Recovery: invoice number + status badge + amount.
     await expect(main.getByText("INV-2026-0001", { exact: true })).toBeVisible({ timeout: 10_000 });
     await expect(main.getByText("Draft", { exact: true }).first()).toBeVisible();
     // Amount renders formatted (USD). $129.50 appears in the hero + subtotal.

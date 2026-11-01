@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using StackExchange.Redis;
 
-namespace FSH.Framework.Quota;
+namespace Recovery.BackOffice.BuildingBlocks.Quota;
 
 public static class Extensions
 {
@@ -13,7 +13,7 @@ public static class Extensions
     /// is configured; otherwise falls back to a per-process in-memory counter (development/tests
     /// only — not shared across instances).
     /// </summary>
-    public static IServiceCollection AddHeroQuotas(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRecoveryQuotas(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
@@ -63,7 +63,7 @@ public static class Extensions
     /// (so we know the tenant) and after the rate limiter (so rate-limited requests don't burn
     /// quota). The middleware no-ops when <see cref="QuotaOptions.Enabled"/> is false.
     /// </summary>
-    public static IApplicationBuilder UseHeroQuotas(this IApplicationBuilder app)
+    public static IApplicationBuilder UseRecoveryQuotas(this IApplicationBuilder app)
     {
         ArgumentNullException.ThrowIfNull(app);
         return app.UseMiddleware<QuotaEnforcementMiddleware>();

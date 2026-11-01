@@ -1,4 +1,4 @@
-namespace FSH.Framework.Web.Idempotency;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Idempotency;
 
 /// <summary>
 /// Marks an endpoint as idempotent. Applied by <c>WithIdempotency()</c> so the wiring can be asserted

@@ -1,9 +1,9 @@
-﻿using FSH.Framework.Core.Context;
-using FSH.Framework.Shared.Identity.Claims;
+﻿using Recovery.BackOffice.BuildingBlocks.Core.Context;
+using Recovery.BackOffice.BuildingBlocks.Shared.Identity.Claims;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 
-namespace FSH.Framework.Web.Auth;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Auth;
 
 public class CurrentUserMiddleware(ICurrentUserInitializer currentUserInitializer) : IMiddleware
 {
@@ -24,13 +24,13 @@ public class CurrentUserMiddleware(ICurrentUserInitializer currentUserInitialize
             var correlationId = context.Request.HttpContext.TraceIdentifier;
 
             if (!string.IsNullOrEmpty(userId))
-                activity.SetTag("fsh.user_id", userId);
+                activity.SetTag("recovery.user_id", userId);
 
             if (!string.IsNullOrEmpty(tenant))
-                activity.SetTag("fsh.tenant_id", tenant);
+                activity.SetTag("recovery.tenant_id", tenant);
 
             if (!string.IsNullOrEmpty(correlationId))
-                activity.SetTag("fsh.correlation_id", correlationId);
+                activity.SetTag("recovery.correlation_id", correlationId);
         }
 
         await next(context);

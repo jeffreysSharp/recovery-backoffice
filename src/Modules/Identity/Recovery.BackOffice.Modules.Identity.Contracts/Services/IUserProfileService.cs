@@ -1,0 +1,54 @@
+using Recovery.BackOffice.BuildingBlocks.Shared.Storage;
+using Recovery.BackOffice.Modules.Identity.Contracts.DTOs;
+
+namespace Recovery.BackOffice.Modules.Identity.Contracts.Services;
+
+/// <summary>
+/// Service for user profile operations.
+/// </summary>
+public interface IUserProfileService
+{
+    /// <summary>
+    /// Gets a user by ID.
+    /// </summary>
+    Task<UserDto> GetAsync(string userId, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Gets all users.
+    /// </summary>
+    Task<List<UserDto>> GetListAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Gets the total user count.
+    /// </summary>
+    Task<int> GetCountAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Updates a user's profile. When <paramref name="expectedConcurrencyStamps"/> is non-null the
+    /// update is rejected with <see cref="System.Net.HttpStatusCode.PreconditionFailed"/> unless the
+    /// current profile version matches one of the entries — the caller edited a stale copy.
+    /// </summary>
+    Task UpdateAsync(string userId, string firstName, string lastName, string phoneNumber, FileUploadRequest image, bool deleteCurrentImage, string? locale, IReadOnlyList<string>? expectedConcurrencyStamps, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sets the profile image URL directly (no upload). Used by the presigned-upload flow:
+    /// the client uploads via the Files module, then calls this with the resulting durable
+    /// <c>publicUrl</c>. Passing <c>null</c> clears the image.
+    /// </summary>
+    Task SetImageUrlAsync(string userId, string? imageUrl, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Checks if a user exists with the given email.
+    /// </summary>
+    Task<bool> ExistsWithEmailAsync(string email, string? exceptId = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Checks if a user exists with the given username.
+    /// </summary>
+    Task<bool> ExistsWithNameAsync(string name, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Checks if a user exists with the given phone number.
+    /// </summary>
+    Task<bool> ExistsWithPhoneNumberAsync(string phoneNumber, string? exceptId = null, CancellationToken cancellationToken = default);
+}

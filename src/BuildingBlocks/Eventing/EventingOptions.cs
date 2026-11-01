@@ -1,4 +1,4 @@
-namespace FSH.Framework.Eventing;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing;
 
 /// <summary>
 /// Configuration options for the eventing building block.

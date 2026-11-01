@@ -1,4 +1,4 @@
-namespace FSH.Framework.Web.TrustedProxy;
+namespace Recovery.BackOffice.BuildingBlocks.Web.TrustedProxy;
 
 /// <summary>
 /// Trusted reverse-proxy configuration for X-Forwarded-* processing. Behind an ingress

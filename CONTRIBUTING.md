@@ -1,37 +1,5 @@
-# Contributing
+# Contribuição
 
-Thanks for helping out. The conventions below keep PRs reviewable.
+Criar branches a partir de develop, revisar por pull request e promover releases para main conforme o GitFlow do repositório. Não executar push automático.
 
-## Reporting issues
-
-- **Security:** Use GitHub's private advisories — see [SECURITY.md](SECURITY.md). Do not file public issues for vulnerabilities.
-- **Bugs:** Open a [GitHub issue](https://github.com/fullstackhero/dotnet-starter-kit/issues) with a minimal repro, your .NET SDK version, and the DB provider.
-- **Features:** Start a [Discussion](https://github.com/fullstackhero/dotnet-starter-kit/discussions) before opening a PR for non-trivial work.
-
-## Dev setup
-
-Prerequisites: .NET 10 SDK, Docker, Node.js 20+.
-
-```bash
-dotnet build src/Recovery.TemplateEvaluation.slnx
-dotnet run --project src/Host/Recovery.TemplateEvaluation.AppHost   # full Aspire stack
-dotnet test src/Recovery.TemplateEvaluation.slnx                    # tests (integration suite needs Docker)
-```
-
-Client apps live under `clients/admin` and `clients/dashboard` — `npm install && npm run dev` in each.
-
-## Pull requests
-
-- Branch from and target `main`.
-- Follow [Conventional Commits](https://www.conventionalcommits.org) — match the existing history (`feat(chat): ...`, `fix(identity): ...`).
-- Add tests. The build runs with `TreatWarningsAsErrors=true`; analyzer warnings must be fixed.
-- Don't touch `src/BuildingBlocks/` without prior discussion — wide blast radius.
-- Architecture rules (module boundaries, file layout, coding style) are documented in [CLAUDE.md](CLAUDE.md). Apply them.
-
-## Code of conduct
-
-This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md).
-
-## Licensing
-
-Contributions are licensed under the project's [MIT License](LICENSE).
+Módulos devem consumir outros módulos pelos contratos públicos. Compilar a solução, executar os testes relevantes e os de arquitetura, e compilar os clientes alterados antes de revisão. Atualizar regras e decisões afetadas. Preservar avisos legais e não adicionar segredos ou artefatos gerados.

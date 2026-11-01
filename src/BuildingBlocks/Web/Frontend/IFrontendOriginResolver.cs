@@ -1,4 +1,4 @@
-namespace FSH.Framework.Web.Frontend;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Frontend;
 
 /// <summary>
 /// Resolves the front-end (SPA) origin used to build user-facing links inside e-mails and

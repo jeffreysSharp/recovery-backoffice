@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.Modules.Identity</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.Modules.Identity</AssemblyName>
+		<NoWarn>$(NoWarn);CA1031;CA1812;CA2208;S3267;S3928;CA1062;CA1304;CA1308;CA1311;CA1862;CA2227;S2094</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Mediator.Abstractions" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	  <PackageReference Include="Finbuckle.MultiTenant.Identity.EntityFrameworkCore" />
+	  <PackageReference Include="UAParser" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Caching\Recovery.BackOffice.BuildingBlocks.Caching.csproj" />
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Eventing\Recovery.BackOffice.BuildingBlocks.Eventing.csproj" />
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Jobs\Recovery.BackOffice.BuildingBlocks.Jobs.csproj" />
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Mailing\Recovery.BackOffice.BuildingBlocks.Mailing.csproj" />
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Persistence\Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Storage\Recovery.BackOffice.BuildingBlocks.Storage.csproj" />
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Web\Recovery.BackOffice.BuildingBlocks.Web.csproj" />
+	  <ProjectReference Include="..\..\Auditing\Recovery.BackOffice.Modules.Auditing.Contracts\Recovery.BackOffice.Modules.Auditing.Contracts.csproj" />
+	  <ProjectReference Include="..\..\Files\Recovery.BackOffice.Modules.Files.Contracts\Recovery.BackOffice.Modules.Files.Contracts.csproj" />
+	  <ProjectReference Include="..\Recovery.BackOffice.Modules.Identity.Contracts\Recovery.BackOffice.Modules.Identity.Contracts.csproj" />
+	</ItemGroup>
+
+</Project>

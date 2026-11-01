@@ -36,7 +36,7 @@ enable_logs_endpoint = true
 # exactly one region).
 ################################################################################
 
-app_s3_bucket_name        = "dev-fsh-app-bucket-aps1"
+app_s3_bucket_name        = "dev-recovery-app-bucket-aps1"
 app_s3_enable_public_read = false
 app_s3_enable_cloudfront  = true
 
@@ -44,8 +44,8 @@ app_s3_enable_cloudfront  = true
 # Frontend SPAs (S3 + CloudFront) — bucket names must be globally unique
 ################################################################################
 
-dashboard_s3_bucket_name = "dev-fsh-dashboard-aps1"
-admin_s3_bucket_name     = "dev-fsh-admin-aps1"
+dashboard_s3_bucket_name = "dev-recovery-dashboard-aps1"
+admin_s3_bucket_name     = "dev-recovery-admin-aps1"
 dashboard_demo_mode      = true
 
 # HTTPS for the API without a custom domain: front the ALB with CloudFront
@@ -56,24 +56,24 @@ enable_api_cloudfront = true
 # Database
 ################################################################################
 
-db_name                        = "fshdb"
-db_username                    = "fshadmin"
+db_name                        = "recoverydb"
+db_username                    = "recoveryadmin"
 db_manage_master_user_password = true
 
 ################################################################################
 # Container Images
 #
 # Final image refs are "<registry>/<image_name>:<tag>", e.g.
-#   ghcr.io/fullstackhero/fsh-api:<tag>
-#   ghcr.io/fullstackhero/fsh-db-migrator:<tag>
+#   ghcr.io/recovery-backoffice/recovery-api:<tag>
+#   ghcr.io/recovery-backoffice/recovery-db-migrator:<tag>
 # The tag is SHARED by both images (built together from the same commit) and must
 # be immutable. CI publishes "dev-<full-sha>"; `deploy.sh --build-api` publishes a
 # bare 12-char short SHA. Set the tag to whichever was actually pushed to GHCR.
 ################################################################################
 
-container_registry  = "ghcr.io/fullstackhero"
-api_image_name      = "fsh-api"
-migrator_image_name = "fsh-db-migrator"
+container_registry  = "ghcr.io/recovery-backoffice"
+api_image_name      = "recovery-api"
+migrator_image_name = "recovery-db-migrator"
 container_image_tag = "dev-ba3e9498632df227a04a633e3573b646c9c2aa62"
 
 ################################################################################

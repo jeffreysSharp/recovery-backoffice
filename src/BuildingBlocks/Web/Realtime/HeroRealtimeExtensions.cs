@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FSH.Framework.Web.Realtime;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Realtime;
 
-public static class HeroRealtimeExtensions
+public static class RecoveryRealtimeExtensions
 {
     /// <summary>
     /// Registers SignalR with a Redis backplane when <c>CachingOptions:Redis</c> is configured.
     /// Without Redis the hub still works in single-host mode (useful for tests / dev).
     /// Also registers the in-memory presence tracker shared by the hub and the presence endpoint.
     /// </summary>
-    public static IServiceCollection AddHeroRealtime(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRecoveryRealtime(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
@@ -25,7 +25,7 @@ public static class HeroRealtimeExtensions
         if (!string.IsNullOrWhiteSpace(redis))
         {
             signalr.AddStackExchangeRedis(redis, options => options.Configuration.ChannelPrefix =
-                StackExchange.Redis.RedisChannel.Literal("fsh-signalr"));
+                StackExchange.Redis.RedisChannel.Literal("recovery-signalr"));
         }
 
         services.AddSingleton<IPresenceTracker, PresenceTracker>();
@@ -33,7 +33,7 @@ public static class HeroRealtimeExtensions
         return services;
     }
 
-    public static IEndpointRouteBuilder MapHeroRealtime(this IEndpointRouteBuilder endpoints)
+    public static IEndpointRouteBuilder MapRecoveryRealtime(this IEndpointRouteBuilder endpoints)
     {
         ArgumentNullException.ThrowIfNull(endpoints);
         endpoints.MapHub<AppHub>("/api/v1/realtime/hub");

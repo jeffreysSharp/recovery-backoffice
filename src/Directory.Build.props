@@ -21,7 +21,7 @@
 		<!-- Docs -->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);CS1591;MSG0005;CA1054;CA1056</NoWarn>
-		<!-- AV0029/AV0030 (Asp.Versioning 10.2+): advisories toward AddApiVersioning().AddOpenApi(). FSH deliberately registers one
+		<!-- AV0029/AV0030 (Asp.Versioning 10.2+): advisories toward AddApiVersioning().AddOpenApi(). Recovery deliberately registers one
 		     AddOpenApi(groupName) document per version (Web/OpenApi/Extensions.cs); also fires inside the OpenApi source-generated file. -->
 		<NoWarn>$(NoWarn);AV0029;AV0030</NoWarn>
 		<!-- Suppress warning about missing XML docs -->
@@ -43,24 +43,16 @@
 
 	<PropertyGroup>
 		<!-- Default NuGet metadata -->
-		<Authors>Recovery TemplateEvaluation</Authors>
-		<Company>Recovery TemplateEvaluation</Company>
+		<Authors>Recovery BackOffice</Authors>
+		<Company>Recovery BackOffice</Company>
 		<Version>10.0.0</Version>
-		<RepositoryUrl>https://github.com/fullstackhero/dotnet-starter-kit</RepositoryUrl>
-		<PackageTags>FSH;Recovery TemplateEvaluation;Modular;CQRS;VerticalSlice;DotNet;CleanArchitecture</PackageTags>
+		<RepositoryUrl>https://dev.azure.com/gauss-platform/recovery-backoffice/_git/recovery-backoffice</RepositoryUrl>
+		<PackageTags>Recovery;Recovery BackOffice;Modular;CQRS;VerticalSlice;DotNet;CleanArchitecture</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageProjectUrl>https://fullstackhero.net</PackageProjectUrl>
-		<Description>Recovery TemplateEvaluation .NET Starter Kit - A production-ready modular .NET framework for building enterprise applications</Description>
-		<!--
-		  Distribution model = SOURCE OWNERSHIP. Only TWO packages ship to NuGet.org:
-		  Recovery TemplateEvaluation.NET.StarterKit (template, in templates/) and Recovery TemplateEvaluation.CLI
-		  (src/Tools/CLI). The template scaffolds full, owned source; modules/framework
-		  are consumed via ProjectReference, never as binary NuGets. So pack is OFF by
-		  default here and explicitly re-enabled ONLY on the CLI. This prevents the 33
-		  module/framework projects from accidentally emitting orphan, mutually-
-		  unresolvable binary packages. CI (backend.yml) packs only those two projects.
-		-->
+		<PackageProjectUrl>https://dev.azure.com/gauss-platform/recovery-backoffice/_git/recovery-backoffice</PackageProjectUrl>
+		<Description>Recovery BackOffice modular application</Description>
+		<!-- Internal projects are consumed through ProjectReference. -->
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 

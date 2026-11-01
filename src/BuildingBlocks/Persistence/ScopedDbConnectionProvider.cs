@@ -1,9 +1,9 @@
 using System.Data.Common;
-using FSH.Framework.Shared.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 using Microsoft.Data.SqlClient;
 using Npgsql;
 
-namespace FSH.Framework.Persistence;
+namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
 /// <summary>
 /// Default <see cref="IScopedDbConnectionProvider"/>: caches one connection per connection string

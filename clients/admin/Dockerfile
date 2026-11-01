@@ -26,7 +26,7 @@ COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 # Copy the built bundle, the runtime config template (outside the web root so
 # it is never served), and the entrypoint
 COPY --from=build /app/dist/ ./
-COPY docker/config.json.template /etc/fsh/config.json.template
+COPY docker/config.json.template /etc/recovery/config.json.template
 COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 

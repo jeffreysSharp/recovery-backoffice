@@ -1,4 +1,4 @@
-namespace FSH.Framework.Eventing.Abstractions;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions;
 
 /// <summary>
 /// Serializes and deserializes integration events for transport and storage (outbox).

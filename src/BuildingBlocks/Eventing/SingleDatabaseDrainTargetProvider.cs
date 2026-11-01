@@ -1,6 +1,6 @@
-using FSH.Framework.Eventing.Abstractions;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions;
 
-namespace FSH.Framework.Eventing;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing;
 
 /// <summary>
 /// Default provider for single-database deployments: one pass over the configured connection.

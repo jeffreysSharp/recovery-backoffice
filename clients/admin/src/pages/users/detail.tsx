@@ -82,7 +82,7 @@ export function UserDetailPage() {
 
       {user && (
         <>
-          {/* Hero card */}
+          {/* Recovery card */}
           <div className="overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-xs">
             <div className="flex flex-col items-start gap-6 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
               <div className="flex items-center gap-5">

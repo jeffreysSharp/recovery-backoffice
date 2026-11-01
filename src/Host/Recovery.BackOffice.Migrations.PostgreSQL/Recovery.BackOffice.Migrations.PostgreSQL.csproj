@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.Migrations.PostgreSQL</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.Migrations.PostgreSQL</AssemblyName>
+		<IsPackable>false</IsPackable>
+		<!-- Suppress analyzer warnings for EF Core auto-generated migration files -->
+		<NoWarn>$(NoWarn);CA1062;CA1861</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\BuildingBlocks\Persistence\Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+	  <ProjectReference Include="..\..\Modules\Auditing\Recovery.BackOffice.Modules.Auditing\Recovery.BackOffice.Modules.Auditing.csproj" />
+	  <ProjectReference Include="..\..\Modules\Identity\Recovery.BackOffice.Modules.Identity\Recovery.BackOffice.Modules.Identity.csproj" />
+	  <ProjectReference Include="..\..\Modules\Multitenancy\Recovery.BackOffice.Modules.Multitenancy\Recovery.BackOffice.Modules.Multitenancy.csproj" />
+	  <ProjectReference Include="..\..\Modules\Webhooks\Recovery.BackOffice.Modules.Webhooks\Recovery.BackOffice.Modules.Webhooks.csproj" />
+	  <ProjectReference Include="..\..\Modules\Billing\Recovery.BackOffice.Modules.Billing\Recovery.BackOffice.Modules.Billing.csproj" />
+	  <ProjectReference Include="..\..\Modules\Catalog\Recovery.BackOffice.Modules.Catalog\Recovery.BackOffice.Modules.Catalog.csproj" />
+	  <ProjectReference Include="..\..\Modules\Tickets\Recovery.BackOffice.Modules.Tickets\Recovery.BackOffice.Modules.Tickets.csproj" />
+	  <ProjectReference Include="..\..\Modules\Chat\Recovery.BackOffice.Modules.Chat\Recovery.BackOffice.Modules.Chat.csproj" />
+	  <ProjectReference Include="..\..\Modules\Notifications\Recovery.BackOffice.Modules.Notifications\Recovery.BackOffice.Modules.Notifications.csproj" />
+	  <ProjectReference Include="..\..\Modules\Files\Recovery.BackOffice.Modules.Files\Recovery.BackOffice.Modules.Files.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Audit\" />
+	  <Folder Include="MultiTenancy\" />
+	  <Folder Include="Billing\" />
+	  <Folder Include="Catalog\" />
+	  <Folder Include="Tickets\" />
+	  <Folder Include="Chat\" />
+	  <Folder Include="Notifications\" />
+	  <Folder Include="Files\" />
+	</ItemGroup>
+
+</Project>

@@ -1,4 +1,4 @@
-bucket       = "fsh-tfstate"
+bucket       = "recovery-tfstate"
 key          = "dev/ap-south-1/terraform.tfstate"
 region       = "us-east-1"
 encrypt      = true

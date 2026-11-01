@@ -1,8 +1,8 @@
-using FSH.Framework.Shared.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace FSH.Framework.Persistence;
+namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
 /// <summary>
 /// Extension methods for converting IQueryable results to paginated responses.

@@ -1,4 +1,4 @@
-namespace FSH.Framework.Web.Frontend;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Frontend;
 
 /// <summary>
 /// Configuration for resolving the front-end (SPA) origin used when building user-facing links

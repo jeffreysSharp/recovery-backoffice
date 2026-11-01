@@ -1,6 +1,6 @@
-﻿using FSH.Framework.Shared.Quota;
+﻿using Recovery.BackOffice.BuildingBlocks.Shared.Quota;
 
-namespace FSH.Framework.Shared.Multitenancy;
+namespace Recovery.BackOffice.BuildingBlocks.Shared.Multitenancy;
 
 public interface IAppTenantInfo
 {

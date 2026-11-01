@@ -14,9 +14,9 @@ import { expect, test, type Page } from "@playwright/test";
 import { mockProblemDetails } from "../helpers/api-mocks";
 import { installShellMocks } from "../helpers/shell-mocks";
 
-const ACCESS_KEY = "fsh.dashboard.accessToken";
-const REFRESH_KEY = "fsh.dashboard.refreshToken";
-const TENANT_KEY = "fsh.dashboard.tenant";
+const ACCESS_KEY = "recovery.dashboard.accessToken";
+const REFRESH_KEY = "recovery.dashboard.refreshToken";
+const TENANT_KEY = "recovery.dashboard.tenant";
 
 /**
  * Seed an IMPERSONATION session into localStorage before React boots: an

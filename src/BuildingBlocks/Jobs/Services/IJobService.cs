@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace FSH.Framework.Jobs.Services;
+namespace Recovery.BackOffice.BuildingBlocks.Jobs.Services;
 
 public interface IJobService
 {

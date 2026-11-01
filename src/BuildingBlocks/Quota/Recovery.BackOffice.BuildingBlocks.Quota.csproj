@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.BuildingBlocks.Quota</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.BuildingBlocks.Quota</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Finbuckle.MultiTenant" />
+		<PackageReference Include="Finbuckle.MultiTenant.Abstractions" />
+		<PackageReference Include="StackExchange.Redis" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Core\Recovery.BackOffice.BuildingBlocks.Core.csproj" />
+		<ProjectReference Include="..\Shared\Recovery.BackOffice.BuildingBlocks.Shared.csproj" />
+	</ItemGroup>
+
+</Project>

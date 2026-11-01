@@ -1,6 +1,6 @@
 using System.Collections.Frozen;
 
-namespace FSH.Framework.Core.Localization;
+namespace Recovery.BackOffice.BuildingBlocks.Core.Localization;
 
 /// <summary>Canonical set of cultures the platform supports for user-facing localization.</summary>
 public static class SupportedCultures

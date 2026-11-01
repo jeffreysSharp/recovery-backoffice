@@ -6,13 +6,13 @@ using Microsoft.Net.Http.Headers;
 using System;
 using AspNetCorsOptions = Microsoft.AspNetCore.Cors.Infrastructure.CorsOptions;
 
-namespace FSH.Framework.Web.Cors;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Cors;
 
 public static class Extensions
 {
-    private const string PolicyName = "FSHCorsPolicy";
+    private const string PolicyName = "RecoveryCorsPolicy";
 
-    public static IServiceCollection AddHeroCors(
+    public static IServiceCollection AddRecoveryCors(
         this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -67,7 +67,7 @@ public static class Extensions
         return services;
     }
 
-    public static void UseHeroCors(this WebApplication app)
+    public static void UseRecoveryCors(this WebApplication app)
     {
         ArgumentNullException.ThrowIfNull(app);
         app.UseCors(PolicyName);

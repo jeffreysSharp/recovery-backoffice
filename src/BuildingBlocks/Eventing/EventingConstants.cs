@@ -1,4 +1,4 @@
-namespace FSH.Framework.Eventing;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing;
 
 /// <summary>
 /// Constants for the framework-owned eventing store.

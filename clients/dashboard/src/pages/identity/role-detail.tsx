@@ -45,7 +45,7 @@ import {
 import {
   EntityDetailAvatar,
   EntityDetailBack,
-  EntityDetailHero,
+  EntityDetailRecovery,
   EntityDetailSection,
   EntityDetailStat,
   ErrorBand,
@@ -313,7 +313,7 @@ export function RoleDetailPage() {
     <div className="space-y-5 pb-12">
       <EntityDetailBack to="/identity/roles" label="Back to roles" />
 
-      <EntityDetailHero
+      <EntityDetailRecovery
         avatar={<EntityDetailAvatar name={role.name} icon={ShieldCheck} />}
         title={role.name}
         badges={

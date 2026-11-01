@@ -1,4 +1,4 @@
-﻿namespace FSH.Framework.Shared.Constants;
+﻿namespace Recovery.BackOffice.BuildingBlocks.Shared.Constants;
 
 public static class ActionConstants
 {

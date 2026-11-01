@@ -1,7 +1,7 @@
-namespace FSH.Framework.Caching;
+namespace Recovery.BackOffice.BuildingBlocks.Caching;
 
 /// <summary>
-/// Cache key conventions and tag constants used across the Recovery TemplateEvaluation starter kit.
+/// Cache key conventions and tag constants used across the Recovery BackOffice starter kit.
 /// Keys should be tenant-scoped where applicable; tags enable bulk invalidation via
 /// <see cref="Microsoft.Extensions.Caching.Hybrid.HybridCache.RemoveByTagAsync(string, System.Threading.CancellationToken)"/>.
 /// </summary>

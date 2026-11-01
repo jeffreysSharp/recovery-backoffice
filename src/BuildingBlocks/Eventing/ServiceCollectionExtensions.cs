@@ -1,17 +1,17 @@
-using FSH.Framework.Eventing.Abstractions;
-using FSH.Framework.Eventing.Inbox;
-using FSH.Framework.Eventing.InMemory;
-using FSH.Framework.Eventing.Outbox;
-using FSH.Framework.Eventing.Persistence;
-using FSH.Framework.Eventing.RabbitMq;
-using FSH.Framework.Eventing.Serialization;
-using FSH.Framework.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Abstractions;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Inbox;
+using Recovery.BackOffice.BuildingBlocks.Eventing.InMemory;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Outbox;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Persistence;
+using Recovery.BackOffice.BuildingBlocks.Eventing.RabbitMq;
+using Recovery.BackOffice.BuildingBlocks.Eventing.Serialization;
+using Recovery.BackOffice.BuildingBlocks.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Reflection;
 
-namespace FSH.Framework.Eventing;
+namespace Recovery.BackOffice.BuildingBlocks.Eventing;
 
 public static class ServiceCollectionExtensions
 {
@@ -62,7 +62,7 @@ public static class ServiceCollectionExtensions
         // one registration. Registering them per module DbContext (the old
         // AddEventingForDbContext<T>) left .NET DI resolving whichever module registered last —
         // for the whole application, including Identity's working outbox (issue #1349).
-        services.AddHeroDbContext<EventingDbContext>();
+        services.AddRecoveryDbContext<EventingDbContext>();
         services.TryAddEnumerable(ServiceDescriptor.Scoped<IDbInitializer, EventingDbInitializer>());
         services.TryAddScoped<IOutboxStore, EfCoreOutboxStore>();
 

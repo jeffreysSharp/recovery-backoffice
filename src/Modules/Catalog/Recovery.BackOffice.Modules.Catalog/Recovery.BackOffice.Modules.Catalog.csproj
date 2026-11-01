@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Recovery.BackOffice.Modules.Catalog</RootNamespace>
+		<AssemblyName>Recovery.BackOffice.Modules.Catalog</AssemblyName>
+		<NoWarn>$(NoWarn);CA1031;CA1812;CA1859;S3267</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\Eventing\Recovery.BackOffice.BuildingBlocks.Eventing.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Persistence\Recovery.BackOffice.BuildingBlocks.Persistence.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Web\Recovery.BackOffice.BuildingBlocks.Web.csproj" />
+		<ProjectReference Include="..\Recovery.BackOffice.Modules.Catalog.Contracts\Recovery.BackOffice.Modules.Catalog.Contracts.csproj" />
+		<ProjectReference Include="..\..\Files\Recovery.BackOffice.Modules.Files.Contracts\Recovery.BackOffice.Modules.Files.Contracts.csproj" />
+	</ItemGroup>
+
+</Project>

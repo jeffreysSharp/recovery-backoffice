@@ -1,0 +1,28 @@
+using Recovery.BackOffice.Modules.Identity.Contracts.Authorization;
+using Recovery.BackOffice.BuildingBlocks.Shared.Identity.Authorization;
+using Recovery.BackOffice.Modules.Identity.Contracts.v1.Roles.DeleteRole;
+using Mediator;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace Recovery.BackOffice.Modules.Identity.Features.v1.Roles.DeleteRole;
+
+public static class DeleteRoleEndpoint
+{
+    public static RouteHandlerBuilder MapDeleteRoleEndpoint(this IEndpointRouteBuilder endpoints)
+    {
+        return endpoints.MapDelete("/roles/{id:guid}", async (string id, IMediator mediator, CancellationToken cancellationToken) =>
+        {
+            await mediator.Send(new DeleteRoleCommand(id), cancellationToken);
+            return TypedResults.NoContent();
+        })
+        .WithName("DeleteRole")
+        .WithSummary("Delete role by ID")
+        .RequirePermission(IdentityPermissions.Roles.Delete)
+        .WithDescription("Remove an existing role by its unique identifier.")
+        .Produces(StatusCodes.Status204NoContent)
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status403Forbidden);
+    }
+}

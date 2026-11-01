@@ -1,4 +1,4 @@
-namespace FSH.Framework.Core.Exceptions;
+namespace Recovery.BackOffice.BuildingBlocks.Core.Exceptions;
 
 /// <summary>
 /// <see cref="UnauthorizedAccessException"/> whose 401 response Detail is localized via

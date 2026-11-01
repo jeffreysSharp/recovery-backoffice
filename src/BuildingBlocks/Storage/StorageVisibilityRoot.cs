@@ -1,4 +1,4 @@
-namespace FSH.Framework.Storage;
+namespace Recovery.BackOffice.BuildingBlocks.Storage;
 
 /// <summary>
 /// Root prefixes that encode an object's visibility in its storage key. Every stack's bucket policy

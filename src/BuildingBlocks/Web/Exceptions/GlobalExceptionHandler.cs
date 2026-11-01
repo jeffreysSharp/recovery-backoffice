@@ -2,8 +2,8 @@ using System.Diagnostics;
 using System;
 using System.Globalization;
 using System.Net;
-using FSH.Framework.Core.Exceptions;
-using FSH.Framework.Core.Localization;
+using Recovery.BackOffice.BuildingBlocks.Core.Exceptions;
+using Recovery.BackOffice.BuildingBlocks.Core.Localization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
@@ -12,7 +12,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 
-namespace FSH.Framework.Web.Exceptions;
+namespace Recovery.BackOffice.BuildingBlocks.Web.Exceptions;
 
 public class GlobalExceptionHandler(
     ILogger<GlobalExceptionHandler> logger,
@@ -76,7 +76,7 @@ public class GlobalExceptionHandler(
         }
     }
 
-    // UseExceptionHandler sits ABOVE UseHeroLocalization in the pipeline, and
+    // UseExceptionHandler sits ABOVE UseRecoveryLocalization in the pipeline, and
     // RequestLocalizationMiddleware assigns CultureInfo.CurrentUICulture inside its own async frame —
     // an assignment that belongs to that frame's ExecutionContext and is already gone by the time an
     // exception unwinds up to this handler. Every localizer below would therefore resolve under the
@@ -84,7 +84,7 @@ public class GlobalExceptionHandler(
     // neutral resx no matter what the client asked for. The negotiated culture survives on the request
     // itself, so take it from there and restore the ambient one afterwards.
     //
-    // CurrentUICulture only: AddHeroLocalization pins CurrentCulture to invariant on purpose, so that
+    // CurrentUICulture only: AddRecoveryLocalization pins CurrentCulture to invariant on purpose, so that
     // no request can shift numeric or date formatting anywhere in the pipeline.
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {

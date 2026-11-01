@@ -60,7 +60,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
   EntityDetailAvatar,
   EntityDetailBack,
-  EntityDetailHero,
+  EntityDetailRecovery,
   EntityDetailMeta,
   EntityDetailSection,
   EntityDetailStat,
@@ -116,7 +116,7 @@ export function TicketDetailPage() {
         <DetailSkeleton />
       ) : ticket ? (
         <>
-          <Hero
+          <Recovery
             ticket={ticket}
             commentCount={commentsQuery.data?.length ?? ticket.commentCount ?? 0}
             isFetching={ticketQuery.isFetching}
@@ -172,10 +172,10 @@ export function TicketDetailPage() {
 }
 
 // ───────────────────────────────────────────────────────────────────────
-//  Hero — identity row + status/priority badges + stats + meta
+//  Recovery — identity row + status/priority badges + stats + meta
 // ───────────────────────────────────────────────────────────────────────
 
-function Hero({
+function Recovery({
   ticket,
   commentCount,
   isFetching,
@@ -199,7 +199,7 @@ function Hero({
   const assignee = useUserDisplay(ticket.assignedToUserId);
 
   return (
-    <EntityDetailHero
+    <EntityDetailRecovery
       avatar={<EntityDetailAvatar icon={TicketIcon} name={ticket.title} />}
       title={ticket.title}
       badges={
