@@ -14,6 +14,9 @@ export type SelectOption<T extends string = string> = {
 };
 
 export type SelectProps<T extends string = string> = {
+  id?: string;
+  "aria-invalid"?: boolean;
+  "aria-describedby"?: string;
   /** Currently-selected value. Pass "" to indicate the "all / empty" state. */
   value: T | "";
   onChange: (value: T | "") => void;
@@ -54,6 +57,9 @@ export function Select<T extends string = string>({
   className,
   disabled = false,
   minWidth = "10rem",
+  id,
+  "aria-invalid": ariaInvalid,
+  "aria-describedby": ariaDescribedBy,
 }: SelectProps<T>) {
   const allOptions: SelectOption<string>[] = placeholder
     ? [{ value: "", label: placeholder }, ...options]
@@ -76,6 +82,9 @@ export function Select<T extends string = string>({
 
       <DropdownMenu>
         <DropdownMenuTrigger
+          id={id}
+          aria-invalid={ariaInvalid}
+          aria-describedby={ariaDescribedBy}
           disabled={disabled}
           style={{ minWidth }}
           className={cn(

@@ -1,4 +1,9 @@
 using Asp.Versioning;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.States.CreateState;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.States.UpdateState;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.States.DeleteState;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.States.GetStateById;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.States.SearchStates;
 using Recovery.BackOffice.Modules.Catalog.Features.v1.Countries.CreateCountry;
 using Recovery.BackOffice.Modules.Catalog.Features.v1.Countries.UpdateCountry;
 using Recovery.BackOffice.Modules.Catalog.Features.v1.Countries.DeleteCountry;
@@ -62,6 +67,7 @@ public sealed class CatalogModule : IModule
         builder.Services.AddRecoveryDbContext<CatalogDbContext>();
         builder.Services.AddRecoveryDbContext<CountriesDbContext>();
         builder.Services.AddScoped<IDbInitializer, CountriesDbInitializer>();
+        builder.Services.AddScoped<IDbInitializer, StatesDbInitializer>();
         builder.Services.AddScoped<IDbInitializer, CatalogDbInitializer>();
 
         // OwnerType=Product policy for Files module attachments (product images).
@@ -97,6 +103,11 @@ public sealed class CatalogModule : IModule
             .RequireAuthorization();
 
         group.MapCreateCountryEndpoint();
+        group.MapCreateStateEndpoint();
+        group.MapUpdateStateEndpoint();
+        group.MapDeleteStateEndpoint();
+        group.MapGetStateByIdEndpoint();
+        group.MapSearchStatesEndpoint();
         group.MapUpdateCountryEndpoint();
         group.MapDeleteCountryEndpoint();
         group.MapGetCountryByIdEndpoint();

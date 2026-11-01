@@ -8,11 +8,13 @@ namespace Recovery.BackOffice.Modules.Catalog.Data;
 public sealed class CountriesDbContext(DbContextOptions<CountriesDbContext> options) : DbContext(options)
 {
     public DbSet<Country> Countries => Set<Country>();
+    public DbSet<State> States => Set<State>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(CatalogDbContext.Schema);
         modelBuilder.ApplyConfiguration(new CountryConfiguration());
+        modelBuilder.ApplyConfiguration(new StateConfiguration());
     }
 }

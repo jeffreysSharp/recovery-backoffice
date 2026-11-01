@@ -1,4 +1,4 @@
-import { CountriesPermissions } from "@/lib/permissions";
+import { CountriesPermissions, StatesPermissions } from "@/lib/permissions";
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { AppShell } from "@/components/layout/app-shell";
@@ -29,6 +29,7 @@ const lazyNamed = <T extends string>(
   });
 
 const CountriesPage = lazyNamed(() => import("@/pages/countries/list"), "CountriesPage");
+const StatesPage = lazyNamed(() => import("@/pages/states/list"), "StatesPage");
 const TenantsListPage = lazyNamed(() => import("@/pages/tenants/list"), "TenantsListPage");
 const TenantDetailPage = lazyNamed(() => import("@/pages/tenants/detail"), "TenantDetailPage");
 const UsersListPage = lazyNamed(() => import("@/pages/users/list"), "UsersListPage");
@@ -83,6 +84,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <DashboardPage /> },
           { path: "countries", element: <RouteGuard perms={[CountriesPermissions.View]}><CountriesPage /></RouteGuard> },
+          { path: "states", element: <RouteGuard perms={[StatesPermissions.View]}><StatesPage /></RouteGuard> },
 
           // Tenants — root-only
           {

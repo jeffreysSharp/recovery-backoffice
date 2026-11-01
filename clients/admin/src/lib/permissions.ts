@@ -98,6 +98,16 @@ export type PermissionGroup = {
 
 export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
   {
+    category: "Estados",
+    blurb: "Catálogo global de estados e subdivisões por país.",
+    entries: [
+      { name: "Permissions.Catalog.States.View", description: "Consultar Estados", basic: true },
+      { name: "Permissions.Catalog.States.Create", description: "Criar Estados", root: true },
+      { name: "Permissions.Catalog.States.Update", description: "Editar Estados", root: true },
+      { name: "Permissions.Catalog.States.Delete", description: "Excluir Estados", root: true },
+    ],
+  },
+  {
     category: "Países",
     blurb: "Catálogo global de países.",
     entries: [
@@ -200,3 +210,4 @@ export const ALL_PERMISSION_NAMES: readonly string[] = PERMISSION_CATALOG.flatMa
 );
 
 export const CountriesPermissions = Object.freeze({ View: "Permissions.Catalog.Countries.View", Create: "Permissions.Catalog.Countries.Create", Update: "Permissions.Catalog.Countries.Update", Delete: "Permissions.Catalog.Countries.Delete" } as const);
+export const StatesPermissions = Object.freeze({ View: "Permissions.Catalog.States.View", Create: "Permissions.Catalog.States.Create", Update: "Permissions.Catalog.States.Update", Delete: "Permissions.Catalog.States.Delete" } as const);

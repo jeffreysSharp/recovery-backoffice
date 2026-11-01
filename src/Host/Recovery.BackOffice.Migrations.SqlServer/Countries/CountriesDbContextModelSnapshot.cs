@@ -90,6 +90,76 @@ namespace Recovery.BackOffice.Migrations.SqlServer.Countries
                             t.HasCheckConstraint("CK_Countries_Numeric", "[NumericCode] IS NULL OR (LEN([NumericCode]) = 3 AND [NumericCode] NOT LIKE '%[^0-9]%')");
                         });
                 });
+
+            modelBuilder.Entity("Recovery.BackOffice.Modules.Catalog.Domain.State", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOnUtc")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("IbgeCode")
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTimeOffset?>("LastModifiedOnUtc")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId", "Code")
+                        .IsUnique();
+
+                    b.HasIndex("CountryId", "IbgeCode")
+                        .IsUnique()
+                        .HasFilter("[IbgeCode] IS NOT NULL");
+
+                    b.ToTable("States", "catalog", t =>
+                        {
+                            t.HasCheckConstraint("CK_States_Code", "LEN(LTRIM(RTRIM([Code]))) BETWEEN 1 AND 10");
+
+                            t.HasCheckConstraint("CK_States_IbgeCode", "[IbgeCode] IS NULL OR (LEN([IbgeCode]) = 2 AND [IbgeCode] NOT LIKE '%[^0-9]%')");
+
+                            t.HasCheckConstraint("CK_States_Name", "LEN(LTRIM(RTRIM([Name]))) BETWEEN 2 AND 100");
+                        });
+                });
+
+            modelBuilder.Entity("Recovery.BackOffice.Modules.Catalog.Domain.State", b =>
+                {
+                    b.HasOne("Recovery.BackOffice.Modules.Catalog.Domain.Country", null)
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
 #pragma warning restore 612, 618
         }
     }
