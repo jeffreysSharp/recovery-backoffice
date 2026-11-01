@@ -11,24 +11,24 @@ pool:
 # Microsoft azure-pipelines-tasks v281 manifests. Review pins when updating.
 stages:
   - stage: BackendQuality
-    displayName: '1. Backend e testes'
+    displayName: '1. Backend and tests'
     jobs:
       - job: ValidateBackend
-        displayName: Build, testes, cobertura e Sonar
+        displayName: Build, tests, coverage and Sonar
         steps:
           - checkout: self
             clean: true
             fetchDepth: 0
 
           - task: UseDotNet@2.281.2
-            displayName: Instalar .NET 10 SDK
+            displayName: Install .NET 10 SDK
             inputs:
               packageType: sdk
               version: '10.x'
 
           # Prepare, build and Analyze must share the same job/workspace.
           - task: SonarCloudPrepare@4.2.6
-            displayName: Preparar análise Sonar
+            displayName: Prepare Sonar analysis
             condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
             inputs:
               SonarCloud: sc-recovery-backoffice-sonar
@@ -45,16 +45,41 @@ stages:
                 sonar.qualitygate.timeout=300
 
           - task: PowerShell@2.281.0
-            displayName: Compilar e testar backend
+            displayName: Build backend in Release
             inputs:
-              targetType: filePath
-              filePath: scripts/verify-template.ps1
-              arguments: '-Phase Backend -Configuration Release'
+              targetType: inline
+              script: |
+                dotnet build src/Recovery.BackOffice.slnx -c Release
+                if ($LASTEXITCODE -ne 0) { throw 'Backend build failed.' }
+              workingDirectory: $(Build.SourcesDirectory)
+              pwsh: true
+
+          - task: PowerShell@2.281.0
+            displayName: Run backend tests and generate coverage
+            inputs:
+              targetType: inline
+              script: |
+                $suites = @(
+                  'Recovery.BackOffice.Architecture.Tests',
+                  'Recovery.BackOffice.Identity.Tests',
+                  'Recovery.BackOffice.Auditing.Tests',
+                  'Recovery.BackOffice.Framework.Tests',
+                  'Recovery.BackOffice.Multitenancy.Tests'
+                )
+                $failedSuites = @()
+                foreach ($suite in $suites) {
+                  $resultPath = Join-Path '$(Build.SourcesDirectory)' "artifacts/test-results/$suite"
+                  dotnet test "src/Tests/$suite" -c Release --no-build --no-restore --logger trx --results-directory $resultPath --collect 'XPlat Code Coverage' -- 'DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover'
+                  if ($LASTEXITCODE -ne 0) { $failedSuites += $suite }
+                }
+                if ($failedSuites.Count -gt 0) {
+                  throw "Backend tests failed: $($failedSuites -join ', ')"
+                }
               workingDirectory: $(Build.SourcesDirectory)
               pwsh: true
 
           - task: PublishTestResults@2.279.0
-            displayName: Publicar resultados dos testes
+            displayName: Publish test results
             condition: succeededOrFailed()
             inputs:
               testResultsFormat: VSTest
@@ -65,24 +90,34 @@ stages:
               failTaskOnMissingResultsFile: true
 
           - task: PublishCodeCoverageResults@2.281.1
-            displayName: Publicar cobertura
+            displayName: Publish code coverage
             condition: succeededOrFailed()
             inputs:
               summaryFileLocation: '$(Build.SourcesDirectory)/artifacts/test-results/**/coverage.cobertura.xml'
               failIfCoverageEmpty: true
 
           - task: SonarCloudAnalyze@4.2.6
-            displayName: Executar análise e validar Quality Gate
+            displayName: Run analysis and validate Quality Gate
             condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
 
           - task: SonarCloudPublish@4.2.6
-            displayName: Publicar resultado do Quality Gate
+            displayName: Publish Quality Gate result
             condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
             inputs:
               pollingTimeoutSec: '300'
 
+          - task: PowerShell@2.281.0
+            displayName: Create API package
+            inputs:
+              targetType: inline
+              script: |
+                dotnet publish src/Host/Recovery.BackOffice.Api -c Release --no-build --no-restore -o '$(Build.SourcesDirectory)/artifacts/publish/api'
+                if ($LASTEXITCODE -ne 0) { throw 'API publish failed.' }
+              workingDirectory: $(Build.SourcesDirectory)
+              pwsh: true
+
           - task: PublishPipelineArtifact@1.279.0
-            displayName: Disponibilizar pacote da API para próxima etapa
+            displayName: Publish API package for the next stage
             inputs:
               targetPath: '$(Build.SourcesDirectory)/artifacts/publish/api'
               artifact: backend-package
@@ -93,57 +128,94 @@ stages:
     dependsOn: BackendQuality
     jobs:
       - job: BuildClients
-        displayName: Verificar TypeScript e compilar Admin e Dashboard
+        displayName: Check TypeScript and build Admin and Dashboard
         steps:
           - checkout: self
             clean: true
 
           - task: NodeTool@0.281.0
-            displayName: Instalar Node.js 24
+            displayName: Install Node.js 24
             inputs:
               versionSpec: '24.x'
 
           - task: PowerShell@2.281.0
-            displayName: Instalar dependências e compilar frontends
+            displayName: Install Admin dependencies
             inputs:
-              targetType: filePath
-              filePath: scripts/verify-template.ps1
-              arguments: '-Phase Frontend'
-              workingDirectory: $(Build.SourcesDirectory)
+              targetType: inline
+              script: |
+                npm.cmd ci --no-audit --no-fund
+                if ($LASTEXITCODE -ne 0) { throw 'Admin dependency installation failed.' }
+              workingDirectory: '$(Build.SourcesDirectory)/clients/admin'
+              pwsh: true
+
+          - task: PowerShell@2.281.0
+            displayName: Build and package Admin
+            inputs:
+              targetType: inline
+              script: |
+                npm.cmd run build
+                if ($LASTEXITCODE -ne 0) { throw 'Admin build failed.' }
+                $destination = Join-Path '$(Build.SourcesDirectory)' 'artifacts/publish/admin'
+                New-Item -ItemType Directory -Path $destination -Force | Out-Null
+                Copy-Item -Path 'dist/*' -Destination $destination -Recurse -Force
+              workingDirectory: '$(Build.SourcesDirectory)/clients/admin'
+              pwsh: true
+
+          - task: PowerShell@2.281.0
+            displayName: Install Dashboard dependencies
+            inputs:
+              targetType: inline
+              script: |
+                npm.cmd ci --no-audit --no-fund
+                if ($LASTEXITCODE -ne 0) { throw 'Dashboard dependency installation failed.' }
+              workingDirectory: '$(Build.SourcesDirectory)/clients/dashboard'
+              pwsh: true
+
+          - task: PowerShell@2.281.0
+            displayName: Build and package Dashboard
+            inputs:
+              targetType: inline
+              script: |
+                npm.cmd run build
+                if ($LASTEXITCODE -ne 0) { throw 'Dashboard build failed.' }
+                $destination = Join-Path '$(Build.SourcesDirectory)' 'artifacts/publish/dashboard'
+                New-Item -ItemType Directory -Path $destination -Force | Out-Null
+                Copy-Item -Path 'dist/*' -Destination $destination -Recurse -Force
+              workingDirectory: '$(Build.SourcesDirectory)/clients/dashboard'
               pwsh: true
 
           - task: PublishPipelineArtifact@1.279.0
-            displayName: Disponibilizar pacotes dos frontends
+            displayName: Publish frontend packages
             inputs:
               targetPath: '$(Build.SourcesDirectory)/artifacts/publish'
               artifact: frontend-package
               publishLocation: pipeline
 
   - stage: Package
-    displayName: '3. Artefatos'
+    displayName: '3. Artifacts'
     dependsOn: FrontendBuild
     jobs:
       - job: PublishRelease
-        displayName: Consolidar API, Admin e Dashboard aprovados
+        displayName: Consolidate validated API, Admin and Dashboard packages
         steps:
           - checkout: none
 
           - task: DownloadPipelineArtifact@2.279.0
-            displayName: Obter API desta execução
+            displayName: Download API from this run
             inputs:
               buildType: current
               artifactName: backend-package
               targetPath: '$(Pipeline.Workspace)/release/api'
 
           - task: DownloadPipelineArtifact@2.279.0
-            displayName: Obter frontends desta execução
+            displayName: Download frontends from this run
             inputs:
               buildType: current
               artifactName: frontend-package
               targetPath: '$(Pipeline.Workspace)/release'
 
           - task: PublishPipelineArtifact@1.279.0
-            displayName: Publicar pacote final Recovery BackOffice
+            displayName: Publish final Recovery BackOffice package
             inputs:
               targetPath: '$(Pipeline.Workspace)/release'
               artifact: recovery-backoffice
