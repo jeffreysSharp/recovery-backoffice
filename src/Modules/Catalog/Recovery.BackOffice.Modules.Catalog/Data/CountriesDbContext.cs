@@ -9,6 +9,7 @@ public sealed class CountriesDbContext(DbContextOptions<CountriesDbContext> opti
 {
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<State> States => Set<State>();
+    public DbSet<City> Cities => Set<City>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
@@ -16,5 +17,6 @@ public sealed class CountriesDbContext(DbContextOptions<CountriesDbContext> opti
         modelBuilder.HasDefaultSchema(CatalogDbContext.Schema);
         modelBuilder.ApplyConfiguration(new CountryConfiguration());
         modelBuilder.ApplyConfiguration(new StateConfiguration());
+        modelBuilder.ApplyConfiguration(new CityConfiguration());
     }
 }

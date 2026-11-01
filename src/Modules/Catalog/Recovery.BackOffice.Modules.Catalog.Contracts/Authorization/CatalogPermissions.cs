@@ -4,6 +4,14 @@ namespace Recovery.BackOffice.Modules.Catalog.Contracts.Authorization;
 
 public static class CatalogPermissions
 {
+    public static class Cities
+    {
+        public const string Resource = "Catalog.Cities";
+        public const string View = $"Permissions.{Resource}.View";
+        public const string Create = $"Permissions.{Resource}.Create";
+        public const string Update = $"Permissions.{Resource}.Update";
+        public const string Delete = $"Permissions.{Resource}.Delete";
+    }
     public static class States
     {
         public const string Resource = "Catalog.States";
@@ -53,6 +61,10 @@ public static class CatalogPermissions
 
     public static IReadOnlyList<RecoveryPermission> All { get; } =
     [
+        new("Consultar Cidades", ActionConstants.View, Cities.Resource, IsBasic: true),
+        new("Criar Cidades", ActionConstants.Create, Cities.Resource, IsRoot: true),
+        new("Editar Cidades", ActionConstants.Update, Cities.Resource, IsRoot: true),
+        new("Excluir Cidades", ActionConstants.Delete, Cities.Resource, IsRoot: true),
         new("Consultar Estados", ActionConstants.View, States.Resource, IsBasic: true),
         new("Criar Estados", ActionConstants.Create, States.Resource, IsRoot: true),
         new("Editar Estados", ActionConstants.Update, States.Resource, IsRoot: true),

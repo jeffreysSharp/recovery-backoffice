@@ -23,6 +23,63 @@ namespace Recovery.BackOffice.Migrations.SqlServer.Countries
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Recovery.BackOffice.Modules.Catalog.Domain.City", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTimeOffset>("CreatedOnUtc")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("IbgeCode")
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTimeOffset?>("LastModifiedOnUtc")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .UseCollation("Latin1_General_100_CI_AI");
+
+                    b.Property<Guid>("StateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IbgeCode")
+                        .IsUnique()
+                        .HasFilter("[IbgeCode] IS NOT NULL");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("StateId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("Cities", "catalog", t =>
+                        {
+                            t.HasCheckConstraint("CK_Cities_IbgeCode", "[IbgeCode] IS NULL OR (LEN([IbgeCode]) = 7 AND [IbgeCode] NOT LIKE '%[^0-9]%')");
+
+                            t.HasCheckConstraint("CK_Cities_Name", "LEN(LTRIM(RTRIM([Name]))) BETWEEN 2 AND 150");
+                        });
+                });
+
             modelBuilder.Entity("Recovery.BackOffice.Modules.Catalog.Domain.Country", b =>
                 {
                     b.Property<Guid>("Id")
@@ -150,6 +207,15 @@ namespace Recovery.BackOffice.Migrations.SqlServer.Countries
 
                             t.HasCheckConstraint("CK_States_Name", "LEN(LTRIM(RTRIM([Name]))) BETWEEN 2 AND 100");
                         });
+                });
+
+            modelBuilder.Entity("Recovery.BackOffice.Modules.Catalog.Domain.City", b =>
+                {
+                    b.HasOne("Recovery.BackOffice.Modules.Catalog.Domain.State", null)
+                        .WithMany()
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Recovery.BackOffice.Modules.Catalog.Domain.State", b =>
