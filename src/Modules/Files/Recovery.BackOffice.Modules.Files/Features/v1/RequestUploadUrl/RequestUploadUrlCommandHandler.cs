@@ -28,7 +28,7 @@ public sealed class RequestUploadUrlCommandHandler(
     {
         ArgumentNullException.ThrowIfNull(cmd);
 
-        var tenantId = currentUser.GetTenant() ?? throw new UnauthorizedException("invalid tenant");
+        var tenantId = currentUser.GetTenant() ?? throw new UnauthorizedException("invalid agency");
         var userId = currentUser.GetUserId();
         if (userId == Guid.Empty)
         {

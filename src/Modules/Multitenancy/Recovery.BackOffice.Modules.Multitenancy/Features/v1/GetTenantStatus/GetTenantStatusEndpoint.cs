@@ -17,8 +17,8 @@ public static class GetTenantStatusEndpoint
         return endpoints.MapGet("/{id}/status", async (string id, IMediator mediator, CancellationToken cancellationToken) =>
                 TypedResults.Ok(await mediator.Send(new GetTenantStatusQuery(id), cancellationToken)))
             .WithName("GetTenantStatus")
-            .WithSummary("Get tenant status")
-            .WithDescription("Retrieve status information for a tenant, including activation, validity, and basic metadata.")
+            .WithSummary("Get agency status")
+            .WithDescription("Retrieve status information for an agency, including activation, validity, and basic metadata.")
             .RequirePermission(MultitenancyPermissions.Tenants.View)
             .Produces<TenantStatusDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)

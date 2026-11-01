@@ -1144,7 +1144,7 @@ function DrawerBody({
       <section>
         <SectionLabel>Identity</SectionLabel>
         <dl className="mt-2 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
-          <DefRow label="Tenant" value={detail.tenantId ?? "—"} mono />
+          <DefRow label="Agency" value={detail.tenantId ?? "—"} mono />
           <DefRow label="User" value={detail.userName ?? detail.userId ?? "—"} />
           <DefRow label="User ID" value={detail.userId ?? "—"} mono />
           <DefRow label="Source" value={detail.source ?? "—"} mono />

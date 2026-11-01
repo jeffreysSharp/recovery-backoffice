@@ -6,7 +6,7 @@ import { mockJsonResponse } from "../helpers/api-mocks";
 const NOTIF = {
   id: "n-1",
   type: "tenant.created",
-  title: "New tenant provisioned",
+  title: "New agency provisioned",
   body: "Acme Corp finished provisioning.",
   link: null,
   source: "Multitenancy",
@@ -48,7 +48,7 @@ test.describe("notifications inbox", () => {
     ).toBeVisible({ timeout: 10_000 });
 
     // Row content from our mock.
-    await expect(main.getByText("New tenant provisioned", { exact: true })).toBeVisible();
+    await expect(main.getByText("New agency provisioned", { exact: true })).toBeVisible();
     await expect(main.getByText("Acme Corp finished provisioning.", { exact: true })).toBeVisible();
     // Unread → Mark read button.
     await expect(main.getByRole("button", { name: /mark read/i }).first()).toBeVisible();

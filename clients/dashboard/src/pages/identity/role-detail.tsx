@@ -27,6 +27,7 @@ import {
 } from "@/api/identity";
 import {
   groupPermissions,
+  permissionResourceLabel,
   type PermissionDescriptor,
 } from "@/api/permissions-catalog";
 import { Button } from "@/components/ui/button";
@@ -172,7 +173,7 @@ export function RoleDetailPage() {
     if (!q) return true;
     const needle = q.toLowerCase();
     return (
-      p.resource.toLowerCase().includes(needle) ||
+      permissionResourceLabel(p.resource).toLowerCase().includes(needle) ||
       p.action.toLowerCase().includes(needle) ||
       p.description.toLowerCase().includes(needle) ||
       p.name.toLowerCase().includes(needle)
@@ -841,7 +842,7 @@ function PermissionGroupCard({
             onSetGroupAll(!allOn);
           }}
           disabled={disabled}
-          aria-label={`Toggle all ${resource}`}
+          aria-label={`Toggle all ${permissionResourceLabel(resource)}`}
           className={cn(
             "grid size-5 shrink-0 cursor-pointer place-items-center rounded border transition-colors",
             allOn
@@ -858,7 +859,7 @@ function PermissionGroupCard({
         {/* Resource name + meta */}
         <div className="flex min-w-0 flex-1 items-baseline gap-3">
           <span className="font-display text-[14px] font-semibold tracking-tight text-[var(--color-foreground)]">
-            {resource}
+            {permissionResourceLabel(resource)}
           </span>
           <span className="font-mono text-[11px] tabular-nums text-[var(--color-muted-foreground)]">
             {pad2(onCount)} / {pad2(totalInGroup)}

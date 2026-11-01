@@ -162,7 +162,7 @@ export function CreateUserDialog({
             </div>
           </div>
           <DialogDescription className="mt-1">
-            The new user is created in the current tenant and emailed a confirmation link. Roles can
+            The new user is created in the current agency and emailed a confirmation link. Roles can
             be assigned from the detail page after creation.
           </DialogDescription>
         </DialogHeader>

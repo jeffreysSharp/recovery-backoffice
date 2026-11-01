@@ -257,7 +257,7 @@ export function UserDetailPage() {
   const impersonate = useMutation({
     mutationFn: () => {
       if (!user?.id) throw new Error("Missing user id");
-      if (!actor?.tenant) throw new Error("No tenant on current session");
+      if (!actor?.tenant) throw new Error("No agency on current session");
       return beginImpersonation({
         targetUserId: user.id,
         targetTenantId: actor.tenant,

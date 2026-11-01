@@ -21,9 +21,9 @@ public static class RetryTenantProvisioningEndpoint
             CancellationToken cancellationToken) =>
             TypedResults.Ok(await mediator.Send(new RetryTenantProvisioningCommand(tenantId), cancellationToken)))
             .WithName("RetryTenantProvisioning")
-            .WithSummary("Retry tenant provisioning")
+            .WithSummary("Retry agency provisioning")
             .RequirePermission(MultitenancyPermissions.Tenants.Update)
-            .WithDescription("Retry the provisioning workflow for a tenant.")
+            .WithDescription("Retry the provisioning workflow for an agency.")
             .Produces<TenantProvisioningStatusDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden)

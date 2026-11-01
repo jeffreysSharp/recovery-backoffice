@@ -128,7 +128,7 @@ export function ImpersonationListPage() {
           title={status === "Active" ? "No active impersonations." : "No grants match this filter."}
           description={
             status === "Active"
-              ? "When an operator starts impersonating a tenant user, the session appears here in real time."
+              ? "When an operator starts impersonating an agency user, the session appears here in real time."
               : "Try a different status filter to see the rest of the grant history."
           }
         />

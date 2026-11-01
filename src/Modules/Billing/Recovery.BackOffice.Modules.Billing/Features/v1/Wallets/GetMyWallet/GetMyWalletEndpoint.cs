@@ -16,7 +16,7 @@ public static class GetMyWalletEndpoint
                 async (IMediator mediator, CancellationToken ct) =>
                     Results.Ok(await mediator.Send(new GetMyWalletQuery(), ct)))
             .WithName("GetMyWallet")
-            .WithSummary("Get the wallet for the current tenant")
+            .WithSummary("Get the wallet for the current agency")
             .RequirePermission(BillingPermissions.View);
     }
 }

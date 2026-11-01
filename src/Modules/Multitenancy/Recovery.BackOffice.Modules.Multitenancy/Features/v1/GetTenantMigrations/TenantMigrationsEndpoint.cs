@@ -25,8 +25,8 @@ public static class TenantMigrationsEndpoint
                 })
             .WithName("GetTenantMigrations")
             .RequirePermission(MultitenancyPermissions.Tenants.View)
-            .WithSummary("Get per-tenant migration status")
-            .WithDescription("Retrieve migration status for each tenant, including pending migrations and provider information.")
+            .WithSummary("Get per-agency migration status")
+            .WithDescription("Retrieve migration status for each agency, including pending migrations and provider information.")
             .Produces<IReadOnlyCollection<TenantMigrationStatusDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden);

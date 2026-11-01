@@ -143,7 +143,7 @@ export function UsersPage() {
         title="Users"
         total={data?.totalCount ?? null}
         unit="user"
-        description="Every member with access to this tenant. Register newcomers, review status, and manage roles."
+        description="Every member with access to this agency. Register newcomers, review status, and manage roles."
       >
         <Button
           onClick={() => setRegisterOpen(true)}
@@ -206,7 +206,7 @@ export function UsersPage() {
               ? debouncedSearch
                 ? `Nothing matches "${debouncedSearch}". Try a different term or clear the filters.`
                 : "No users match the current filters."
-              : "Register the first member to seed this tenant. They'll receive a confirmation email if email confirmation is enabled."
+              : "Register the first member to seed this agency. They'll receive a confirmation email if email confirmation is enabled."
           }
           action={
             searchActive ? (
@@ -450,7 +450,7 @@ function RegisterUserDialog({
           <DialogHeader>
             <DialogTitle>Register a member</DialogTitle>
             <DialogDescription>
-              Add a new user to this tenant. Username and email must be unique.
+              Add a new user to this agency. Username and email must be unique.
               Passwords need an uppercase letter, lowercase letter, and a digit.
             </DialogDescription>
           </DialogHeader>

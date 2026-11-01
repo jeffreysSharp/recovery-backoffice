@@ -60,7 +60,7 @@ export function BrandMarkXL({ className }: { className?: string }) {
         Admin<span className="text-[var(--color-primary)]">.</span>
       </h1>
       <p className="max-w-md text-sm leading-relaxed text-[var(--color-muted-foreground)]">
-        Operate every tenant on this instance — identity, multitenancy, billing,
+        Operate every agency on this instance — identity, agency management, billing,
         and the rest of the system surface, from one place.
       </p>
     </div>

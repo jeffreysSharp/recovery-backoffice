@@ -71,7 +71,7 @@ export function ImpersonationBanner() {
   // flip between warning / destructive without scattering conditionals.
   const tone = isCrossTenant ? "var(--color-destructive)" : "var(--color-warning)";
   const metaLabel = isCrossTenant
-    ? "Cross-tenant impersonation"
+    ? "Cross-agency impersonation"
     : "Impersonating";
 
   return (

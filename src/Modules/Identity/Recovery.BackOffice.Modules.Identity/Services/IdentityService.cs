@@ -316,7 +316,7 @@ public sealed class IdentityService : IIdentityService
 
         if (!tenant.IsActive)
         {
-            throw new UnauthorizedException($"tenant {tenant.Id} is deactivated")
+            throw new UnauthorizedException($"agency {tenant.Id} is deactivated")
             {
                 MessageKey = "Identity.TenantDeactivated",
                 MessageArgs = [tenant.Id],
@@ -328,7 +328,7 @@ public sealed class IdentityService : IIdentityService
         // ValidUpto + grace (matching the request-time guard in MultitenancyModule).
         if (_timeProvider.GetUtcNow().UtcDateTime > tenant.ValidUpto.AddDays(_gracePeriodDays))
         {
-            throw new UnauthorizedException($"tenant {tenant.Id} validity has expired")
+            throw new UnauthorizedException($"agency {tenant.Id} validity has expired")
             {
                 MessageKey = "Identity.TenantValidityExpired",
                 MessageArgs = [tenant.Id],

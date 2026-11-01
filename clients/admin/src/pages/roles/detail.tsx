@@ -290,7 +290,7 @@ function PermissionEditor({ role, disabled }: { role: RoleDto; disabled: boolean
     <SettingsSection
       title="Permissions"
       icon={ShieldCheck}
-      description={`Pick what holders of this role can do. Root-only permissions take effect only on roles assigned in the root tenant.`}
+      description={`Pick what holders of this role can do. Root-only permissions take effect only on roles assigned in the root agency.`}
       footer={
         !disabled ? (
           <div className="flex flex-wrap items-center justify-between gap-3">

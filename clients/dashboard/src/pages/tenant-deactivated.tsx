@@ -51,10 +51,10 @@ export function TenantDeactivatedPage() {
         </div>
 
         <h1 className="mb-2 font-display text-display-stat font-semibold tracking-tight text-[var(--color-foreground)]">
-          Tenant deactivated
+          Agency deactivated
         </h1>
         <p className="mb-7 max-w-[380px] text-[14px] leading-relaxed text-[var(--color-muted-foreground)]">
-          This tenant has been deactivated and is no longer available. If you
+          This agency has been deactivated and is no longer available. If you
           think this is a mistake, please contact your administrator.
         </p>
 

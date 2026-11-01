@@ -45,7 +45,7 @@ test.describe("billing top-ups list", () => {
     // The list card + the request row (amount + tenant + Approve button).
     await expect(page.getByText("Top-up requests", { exact: true })).toBeVisible({ timeout: 10_000 });
     await expect(page.getByText("$500.00").first()).toBeVisible();
-    await expect(page.getByText(/tenant\s+acme/i)).toBeVisible();
+    await expect(page.getByText(/agency\s+acme/i)).toBeVisible();
     await expect(page.getByRole("button", { name: "Approve", exact: true })).toBeVisible();
   });
 

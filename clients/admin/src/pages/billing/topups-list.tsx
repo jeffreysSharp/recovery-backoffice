@@ -234,7 +234,7 @@ export function TopupsListPage() {
               <span>Filters</span>
             </CardTitle>
             <CardDescription>
-              Review wallet top-up requests across every tenant. Approve to generate an invoice.
+              Review wallet top-up requests across every agency. Approve to generate an invoice.
             </CardDescription>
           </div>
           {filtersDirty && (
@@ -245,10 +245,10 @@ export function TopupsListPage() {
         </CardHeader>
         <CardContent className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <Label htmlFor="filter-tenant">Tenant</Label>
+            <Label htmlFor="filter-tenant">Agency</Label>
             <Input
               id="filter-tenant"
-              placeholder="tenant identifier"
+              placeholder="agency identifier"
               value={tenantFilter}
               onChange={(e) => {
                 setTenantFilter(e.target.value);
@@ -347,7 +347,7 @@ export function TopupsListPage() {
                         )}
                       </div>
                       <div className="mt-1 truncate font-mono text-[11px] tracking-tight text-[var(--color-muted-foreground)]">
-                        tenant <span className="text-[var(--color-foreground)]">{req.tenantId}</span> ·
+                        agency <span className="text-[var(--color-foreground)]">{req.tenantId}</span> ·
                         created {formatDate(req.createdAtUtc)}
                         {req.decidedAtUtc && ` · decided ${formatDate(req.decidedAtUtc)}`}
                         {req.note && ` · “${req.note}”`}
@@ -434,7 +434,7 @@ export function TopupsListPage() {
                     <span className="font-semibold">
                       {formatMoney(action.request.amount, action.request.currency)}
                     </span>{" "}
-                    top-up for tenant{" "}
+                    top-up for agency{" "}
                     <span className="font-mono">{action.request.tenantId}</span>? This cannot be undone.
                   </>
                 ) : (
@@ -443,7 +443,7 @@ export function TopupsListPage() {
                     <span className="font-semibold">
                       {formatMoney(action.request.amount, action.request.currency)}
                     </span>{" "}
-                    top-up for tenant{" "}
+                    top-up for agency{" "}
                     <span className="font-mono">{action.request.tenantId}</span>? An invoice will be
                     generated for the operator to mark paid.
                   </>

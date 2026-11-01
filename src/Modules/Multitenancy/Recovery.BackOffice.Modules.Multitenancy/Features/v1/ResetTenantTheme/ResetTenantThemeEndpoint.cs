@@ -19,8 +19,8 @@ public static class ResetTenantThemeEndpoint
                 return TypedResults.NoContent();
             })
             .WithName("ResetTenantTheme")
-            .WithSummary("Reset tenant theme to defaults")
-            .WithDescription("Reset the theme settings for the current tenant to the default values.")
+            .WithSummary("Reset agency theme to defaults")
+            .WithDescription("Reset the theme settings for the current agency to the default values.")
             .RequirePermission(MultitenancyPermissions.Tenants.UpdateTheme)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status401Unauthorized)

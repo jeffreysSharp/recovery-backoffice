@@ -94,7 +94,7 @@ export function TenantDetailPage() {
   const activationMutation = useMutation({
     mutationFn: (isActive: boolean) => changeTenantActivation(id, isActive),
     onSuccess: (result) => {
-      toast.success(result.isActive ? "Tenant activated" : "Tenant deactivated");
+      toast.success(result.isActive ? "Agency activated" : "Agency deactivated");
       setActivationConfirmOpen(false);
       queryClient.invalidateQueries({ queryKey: ["tenant", id] });
       queryClient.invalidateQueries({ queryKey: ["tenants"] });
@@ -121,7 +121,7 @@ export function TenantDetailPage() {
     <div className="space-y-8">
       <EntityPageHeader
         icon={Building2}
-        title={tenant?.name ?? "Tenant"}
+        title={tenant?.name ?? "Agency"}
         tone="info"
         description={tenant?.adminEmail}
       >
@@ -134,7 +134,7 @@ export function TenantDetailPage() {
         <ErrorBand message={describe(tenantQuery.error)} />
       )}
 
-      {tenantQuery.isLoading && !tenant && <LoadingRow label="Loading tenant" />}
+      {tenantQuery.isLoading && !tenant && <LoadingRow label="Loading agency" />}
 
       {tenant && (
         <>
@@ -193,7 +193,7 @@ export function TenantDetailPage() {
                     variant="signal"
                     onClick={() => setImpersonateOpen(true)}
                     className="shrink-0"
-                    title="Sign in as a user inside this tenant"
+                    title="Sign in as a user inside this agency"
                   >
                     <UserCog className="mr-1.5 h-3.5 w-3.5" />
                     Impersonate user
@@ -231,8 +231,8 @@ export function TenantDetailPage() {
                     {activationMutation.isPending
                       ? "Updating…"
                       : tenant.isActive
-                        ? "Deactivate tenant"
-                        : "Activate tenant"}
+                        ? "Deactivate agency"
+                        : "Activate agency"}
                   </Button>
                 )}
               </div>
@@ -270,13 +270,13 @@ export function TenantDetailPage() {
             open={activationConfirmOpen}
             onOpenChange={setActivationConfirmOpen}
             destructive={tenant.isActive}
-            title={tenant.isActive ? "Deactivate tenant?" : "Activate tenant?"}
+            title={tenant.isActive ? "Deactivate agency?" : "Activate agency?"}
             description={
               tenant.isActive ? (
                 <>
                   Users of <strong className="text-[var(--color-foreground)]">{tenant.name}</strong> will
                   be blocked from signing in and all their API requests will be rejected until you
-                  reactivate the tenant.
+                  reactivate the agency.
                 </>
               ) : (
                 <>
@@ -299,7 +299,7 @@ export function TenantDetailPage() {
           <SettingsSection
             title="Details"
             icon={Info}
-            description="The tenant's identity, contact, and subscription window. Identifiers are immutable; the issuer scopes JWTs to this tenant."
+            description="The agency's identity, contact, and subscription window. Identifiers are immutable; the issuer scopes JWTs to this agency."
           >
             <div className="space-y-0">
               <InfoRow label="Identifier" mono>{tenant.id}</InfoRow>
@@ -330,7 +330,7 @@ export function TenantDetailPage() {
           <SettingsSection
             title="Provisioning"
             icon={ClipboardList}
-            description="Live status of the background pipeline that seeds the tenant database, default roles, and admin user. Polls every 2 seconds while running."
+            description="Live status of the background pipeline that seeds the agency database, default roles, and admin user. Polls every 2 seconds while running."
           >
             <ProvisioningPanel
               steps={provisioning?.steps ?? []}
@@ -471,8 +471,8 @@ function ProvisioningPanel({
             className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-muted-foreground)]"
           />
           <p className="text-[13px] leading-relaxed text-[var(--color-muted-foreground)]">
-            This tenant wasn't created through the provisioning pipeline, so there's no run
-            history to show. Tenants created via the console report their seed/migrate steps here.
+            This agency wasn't created through the provisioning pipeline, so there's no run
+            history to show. Agencies created via the console report their seed/migrate steps here.
           </p>
         </div>
       ) : steps.length === 0 ? (

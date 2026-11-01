@@ -74,7 +74,7 @@ public sealed class TenantMigrationsHealthCheckTests : IAsyncLifetime
         var result = await check.CheckHealthAsync(context, CancellationToken.None);
         result.Status.ShouldBe(HealthStatus.Unhealthy);
         result.Description.ShouldNotBeNull();
-        result.Description.ShouldContain("error probing tenant", Case.Insensitive);
+        result.Description.ShouldContain("error probing agencies", Case.Insensitive);
     }
 
     private ServiceProvider BuildServiceProvider(bool badConnectionString = false)

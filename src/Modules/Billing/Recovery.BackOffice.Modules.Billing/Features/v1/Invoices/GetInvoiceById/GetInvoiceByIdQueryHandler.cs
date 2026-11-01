@@ -21,7 +21,7 @@ public sealed class GetInvoiceByIdQueryHandler(
         // BillingDbContext isn't tenant-filtered (raw DbContext for cross-tenant admin visibility): root
         // reads any invoice by id; a tenant caller is pinned to its own so it can't read another's. Mirrors GetSubscriptionQueryHandler.
         var callerTenantId = tenantAccessor.MultiTenantContext?.TenantInfo?.Id
-            ?? throw new UnauthorizedException("Tenant context is required.");
+            ?? throw new UnauthorizedException("Agency context is required.");
         var isRoot = callerTenantId == MultitenancyConstants.Root.Id;
 
         var invoice = await dbContext.Invoices.AsNoTracking()

@@ -50,7 +50,7 @@ export function DemoAccountsDialog({ open, onOpenChange, onPick }: DemoAccountsD
       <DialogContent className="overflow-hidden rounded-2xl border-border/70 p-0 sm:max-w-[680px]">
         <DialogTitle className="sr-only">Demo accounts</DialogTitle>
         <DialogDescription className="sr-only">
-          Pick a demo tenant and account to sign in with.
+          Pick a demo agency and account to sign in with.
         </DialogDescription>
 
         {/* Atmospheric gradients */}
@@ -78,7 +78,7 @@ export function DemoAccountsDialog({ open, onOpenChange, onPick }: DemoAccountsD
             Step into any role.
           </h2>
           <p className="mt-1.5 max-w-[80%] text-[12.5px] leading-relaxed text-muted-foreground/80">
-            Explore recovery-backoffice as any user across the demo tenants — we'll sign you in instantly.
+            Explore recovery-backoffice as any user across the demo agencies — we'll sign you in instantly.
           </p>
         </header>
 
@@ -125,7 +125,7 @@ function TenantRail({
   return (
     <nav
       className="relative flex gap-1 overflow-x-auto p-3 sm:flex-col sm:overflow-visible"
-      aria-label="Demo tenants"
+      aria-label="Demo agencies"
     >
       {tenants.map((tenant, i) => {
         const isActive = i === activeIdx;

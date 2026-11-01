@@ -13,7 +13,7 @@ namespace Recovery.BackOffice.Modules.Files.Features.v1.ListSharedFiles;
 
 /// <summary>
 /// Returns Public, Available files belonging to the built-in tenant-wide owner types so the SPA
-/// can render a "Shared in tenant" surface alongside "My files". Tenant scoping is handled by
+/// can render a "Shared in agency" surface alongside "My files". Tenant scoping is handled by
 /// the framework's BaseDbContext (schema-per-tenant), not by a WHERE clause here.
 /// </summary>
 public sealed class ListSharedFilesQueryHandler(FilesDbContext db, IStorageService storage)

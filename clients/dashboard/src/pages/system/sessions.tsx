@@ -138,7 +138,7 @@ export function SessionsPage() {
         title="Active sessions"
         total={data?.totalCount ?? null}
         unit="session"
-        description={`Every browser and device currently signed in to ${user?.tenant ?? "this tenant"}. Refreshes every 30 seconds.`}
+        description={`Every browser and device currently signed in to ${user?.tenant ?? "this agency"}. Refreshes every 30 seconds.`}
       >
         <Button
           variant="outline"

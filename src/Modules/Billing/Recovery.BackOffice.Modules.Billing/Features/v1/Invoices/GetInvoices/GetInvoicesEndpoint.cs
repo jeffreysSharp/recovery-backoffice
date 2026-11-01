@@ -24,7 +24,7 @@ public static class GetInvoicesEndpoint
                         pageNumber <= 0 ? 1 : pageNumber,
                         pageSize <= 0 ? 20 : Math.Min(pageSize, 100)), ct))
             .WithName("GetInvoices")
-            .WithSummary("List invoices across all tenants (admin)")
+            .WithSummary("List invoices across all agencies (admin)")
             .RequirePermission(BillingPermissions.View);
     }
 }

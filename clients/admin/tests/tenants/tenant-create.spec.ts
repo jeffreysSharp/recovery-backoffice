@@ -40,19 +40,19 @@ test.beforeEach(async ({ page }) => {
   );
 });
 
-test.describe("tenant create dialog", () => {
+test.describe("agency create dialog", () => {
   test("renders the core fields and tucks issuer/database behind Advanced", async ({ page }) => {
     await page.goto("/tenants");
 
     // Open the create dialog from the list-page trigger. `exact` keeps this off
     // the dialog's own "Create tenant" submit button.
     await page
-      .getByRole("button", { name: "New tenant", exact: true })
+      .getByRole("button", { name: "New agency", exact: true })
       .click();
 
     const dialog = page.getByRole("dialog");
     await expect(
-      dialog.getByRole("heading", { name: "New tenant", exact: true }),
+      dialog.getByRole("heading", { name: "New agency", exact: true }),
     ).toBeVisible({ timeout: 10_000 });
 
     await expect(dialog.getByLabel(/^Display name/)).toBeVisible();
@@ -67,7 +67,7 @@ test.describe("tenant create dialog", () => {
     await expect(dialog.getByLabel(/^Connection string/)).toBeVisible();
 
     await expect(
-      dialog.getByRole("button", { name: "Create tenant", exact: true }),
+      dialog.getByRole("button", { name: "Create agency", exact: true }),
     ).toBeVisible();
   });
 
@@ -114,7 +114,7 @@ test.describe("tenant create dialog", () => {
 
     await page.goto("/tenants");
     await page
-      .getByRole("button", { name: "New tenant", exact: true })
+      .getByRole("button", { name: "New agency", exact: true })
       .click();
 
     const dialog = page.getByRole("dialog");
@@ -132,7 +132,7 @@ test.describe("tenant create dialog", () => {
       (r) => r.url().endsWith("/api/v1/tenants/") && r.method() === "POST",
       { timeout: 5_000 },
     );
-    await dialog.getByRole("button", { name: "Create tenant", exact: true }).click();
+    await dialog.getByRole("button", { name: "Create agency", exact: true }).click();
     const req = await reqPromise;
 
     const body = JSON.parse(req.postData() ?? "{}");
@@ -149,7 +149,7 @@ test.describe("tenant create dialog", () => {
   test("unlocking the identifier lets you type a custom slug", async ({ page }) => {
     await page.goto("/tenants");
     await page
-      .getByRole("button", { name: "New tenant", exact: true })
+      .getByRole("button", { name: "New agency", exact: true })
       .click();
 
     const dialog = page.getByRole("dialog");
@@ -172,7 +172,7 @@ test.describe("tenant create dialog", () => {
   test("the password generator fills a strong value and reveals it", async ({ page }) => {
     await page.goto("/tenants");
     await page
-      .getByRole("button", { name: "New tenant", exact: true })
+      .getByRole("button", { name: "New agency", exact: true })
       .click();
 
     const dialog = page.getByRole("dialog");
@@ -201,7 +201,7 @@ test.describe("tenant create dialog", () => {
 
     await page.goto("/tenants");
     await page
-      .getByRole("button", { name: "New tenant", exact: true })
+      .getByRole("button", { name: "New agency", exact: true })
       .click();
 
     const dialog = page.getByRole("dialog");
@@ -216,7 +216,7 @@ test.describe("tenant create dialog", () => {
     await dialog.getByLabel(/^Identifier/).fill("A");
     await dialog.getByLabel(/^Initial admin password/).fill("short");
 
-    await dialog.getByRole("button", { name: "Create tenant", exact: true }).click();
+    await dialog.getByRole("button", { name: "Create agency", exact: true }).click();
 
     // Zod messages surface and no POST is fired.
     await expect(

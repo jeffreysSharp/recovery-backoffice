@@ -73,7 +73,7 @@ export function RenewTenantDialog({
     mutationFn: (key: string) => renewTenant(tenantId, key || null),
     onSuccess: (result) => {
       toast.success(
-        result.planChanged ? `Plan changed to ${result.planKey}` : "Tenant renewed",
+        result.planChanged ? `Plan changed to ${result.planKey}` : "Agency renewed",
         { description: `Valid until ${formatDate(result.validUpto)}. A term invoice was issued.` },
       );
       queryClient.invalidateQueries({ queryKey: ["tenant", tenantId] });
@@ -107,7 +107,7 @@ export function RenewTenantDialog({
             <DialogTitle className="text-[16px]">Renew subscription</DialogTitle>
           </div>
           <DialogDescription className="mt-1">
-            Extend the tenant by one plan term (stacking on remaining time) or switch plans. Currently
+            Extend the agency by one plan term (stacking on remaining time) or switch plans. Currently
             valid until {formatDate(validUpto)}.
           </DialogDescription>
         </DialogHeader>

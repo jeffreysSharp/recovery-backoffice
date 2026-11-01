@@ -15,9 +15,9 @@ public static class AdjustTenantValidityEndpoint
     {
         return endpoints.MapPost("/{id}/adjust-validity", Handler)
             .WithName("AdjustTenantValidity")
-            .WithSummary("Adjust tenant validity (operator override)")
+            .WithSummary("Adjust agency validity (operator override)")
             .RequirePermission(MultitenancyPermissions.Tenants.UpgradeSubscription)
-            .WithDescription("Set a tenant's validity to an explicit date with no invoice or renewal event — for comps, support extensions, or immediate expiry.")
+            .WithDescription("Set an agency's validity to an explicit date with no invoice or renewal event — for comps, support extensions, or immediate expiry.")
             .Produces<AdjustTenantValidityCommandResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized)

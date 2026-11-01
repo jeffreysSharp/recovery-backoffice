@@ -17,11 +17,11 @@ public static class MultitenancyPermissions
 
     public static IReadOnlyList<RecoveryPermission> All { get; } =
     [
-        new("View Tenants",               ActionConstants.View,                Tenants.Resource, IsRoot: true),
-        new("Create Tenants",             ActionConstants.Create,              Tenants.Resource, IsRoot: true),
-        new("Update Tenants",             ActionConstants.Update,              Tenants.Resource, IsRoot: true),
-        new("Upgrade Tenant Subscription",ActionConstants.UpgradeSubscription, Tenants.Resource, IsRoot: true),
-        new("View Tenant Theme",          "ViewTheme",                         Tenants.Resource, IsBasic: true),
-        new("Update Tenant Theme",        "UpdateTheme",                       Tenants.Resource),
+        new("View Agencies",               ActionConstants.View,                Tenants.Resource, IsRoot: true),
+        new("Create Agencies",             ActionConstants.Create,              Tenants.Resource, IsRoot: true),
+        new("Update Agencies",             ActionConstants.Update,              Tenants.Resource, IsRoot: true),
+        new("Upgrade Agency Subscription",ActionConstants.UpgradeSubscription, Tenants.Resource, IsRoot: true),
+        new("View Agency Theme",          "ViewTheme",                         Tenants.Resource, IsBasic: true),
+        new("Update Agency Theme",        "UpdateTheme",                       Tenants.Resource),
     ];
 }

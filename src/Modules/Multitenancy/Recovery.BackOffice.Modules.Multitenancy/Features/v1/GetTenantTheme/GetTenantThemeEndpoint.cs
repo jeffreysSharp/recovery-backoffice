@@ -17,8 +17,8 @@ public static class GetTenantThemeEndpoint
         return endpoints.MapGet("/theme", async (IMediator mediator, CancellationToken cancellationToken) =>
                 TypedResults.Ok(await mediator.Send(new GetTenantThemeQuery(), cancellationToken)))
             .WithName("GetTenantTheme")
-            .WithSummary("Get current tenant theme")
-            .WithDescription("Retrieve the theme settings for the current tenant, including colors, typography, and brand assets.")
+            .WithSummary("Get current agency theme")
+            .WithDescription("Retrieve the theme settings for the current agency, including colors, typography, and brand assets.")
             .RequirePermission(MultitenancyPermissions.Tenants.ViewTheme)
             .Produces<TenantThemeDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)

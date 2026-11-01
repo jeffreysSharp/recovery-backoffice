@@ -47,7 +47,7 @@ internal sealed class IdentityDbInitializer(
                 is not RecoveryRole role)
             {
                 // create role
-                role = new RecoveryRole(roleName, $"{roleName} Role for {multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id} Tenant");
+                role = new RecoveryRole(roleName, $"{roleName} Role for {multiTenantContextAccessor.MultiTenantContext.TenantInfo?.Id} Agency");
                 await roleManager.CreateAsync(role);
             }
 
@@ -216,7 +216,7 @@ internal sealed class IdentityDbInitializer(
             if (!createResult.Succeeded)
             {
                 throw new InvalidOperationException(
-                    $"Failed to seed admin user for tenant '{multiTenantContextAccessor.MultiTenantContext.TenantInfo.Id}': "
+                    $"Failed to seed admin user for agency '{multiTenantContextAccessor.MultiTenantContext.TenantInfo.Id}': "
                     + string.Join("; ", createResult.Errors.Select(e => e.Description)));
             }
         }
@@ -258,7 +258,7 @@ internal sealed class IdentityDbInitializer(
         }
 
         throw new InvalidOperationException(
-            $"No initial admin password available for tenant '{tenantId}'. " +
+            $"No initial admin password available for agency '{tenantId}'. " +
             "Supply AdminPassword on the CreateTenant request, or set " +
             "'Seed:DefaultAdminPassword' in configuration for the root/startup seed.");
     }

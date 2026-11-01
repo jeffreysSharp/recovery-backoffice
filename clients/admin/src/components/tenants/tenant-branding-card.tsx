@@ -84,7 +84,7 @@ export function TenantBrandingCard({ tenantId }: { tenantId: string }) {
       <SettingsSection
         title="Branding"
         icon={Palette}
-        description="Operator-controlled colors + brand assets that drive this tenant's UI."
+        description="Operator-controlled colors + brand assets that drive this agency's UI."
       >
         <LoadingRow label="Loading branding" />
       </SettingsSection>
@@ -157,7 +157,7 @@ export function TenantBrandingCard({ tenantId }: { tenantId: string }) {
     <SettingsSection
       title="Branding"
       icon={Palette}
-      description="Theme tokens consumed by this tenant's apps on sign-in. Live preview reflects the primary action with the chosen palette."
+      description="Theme tokens consumed by this agency's apps on sign-in. Live preview reflects the primary action with the chosen palette."
       footer={footer}
     >
       <div className="space-y-6">
@@ -422,7 +422,7 @@ function ThemePreview({ palette, label }: { palette: PaletteDto; label: string }
               className="text-[13px] font-semibold"
               style={{ color: palette.secondary }}
             >
-              Sample tenant page
+              Sample agency page
             </span>
             <span
               className="rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em]"

@@ -16,8 +16,8 @@ test.beforeEach(async ({ page }) => {
   await installAdminShellMocks(page);
 });
 
-test.describe("tenants registry list", () => {
-  test("renders the Registry heading and a tenant row from the mock", async ({ page }) => {
+test.describe("agencies registry list", () => {
+  test("renders the Registry heading and an agency row from the mock", async ({ page }) => {
     await page.route("**/api/v1/tenants/?*", async (route) => {
       await route.fulfill({
         status: 200,
@@ -42,7 +42,7 @@ test.describe("tenants registry list", () => {
     await expect(desktopRow.getByText("admin@acme.com", { exact: true })).toBeVisible();
   });
 
-  test("shows the empty state when no tenants are registered", async ({ page }) => {
+  test("shows the empty state when no agencies are registered", async ({ page }) => {
     await page.route("**/api/v1/tenants/?*", async (route) => {
       await route.fulfill({
         status: 200,
@@ -53,15 +53,15 @@ test.describe("tenants registry list", () => {
 
     await page.goto("/tenants");
 
-    await expect(page.getByText("No tenants yet.", { exact: true })).toBeVisible({
+    await expect(page.getByText("No agencies yet.", { exact: true })).toBeVisible({
       timeout: 10_000,
     });
     await expect(
-      page.getByText("Provision the first tenant to get started.", { exact: true }),
+      page.getByText("Provision the first agency to get started.", { exact: true }),
     ).toBeVisible();
   });
 
-  test("the New tenant button opens the create dialog", async ({ page }) => {
+  test("the New agency button opens the create dialog", async ({ page }) => {
     await page.route("**/api/v1/tenants/?*", async (route) => {
       await route.fulfill({
         status: 200,
@@ -78,16 +78,16 @@ test.describe("tenants registry list", () => {
     // Creation is now an in-page dialog, not a /tenants/new route. Clicking the
     // trigger opens the Radix dialog rather than navigating. `exact` keeps the
     // trigger off the dialog's own "Create tenant" submit button.
-    await page.getByRole("button", { name: "New tenant", exact: true }).click();
+    await page.getByRole("button", { name: "New agency", exact: true }).click();
 
     await expect(page).toHaveURL(/\/tenants$/);
     const dialog = page.getByRole("dialog");
     await expect(
-      dialog.getByRole("heading", { name: "New tenant", exact: true }),
+      dialog.getByRole("heading", { name: "New agency", exact: true }),
     ).toBeVisible();
   });
 
-  test("hides the New tenant button for a Tenants.View-only user", async ({ page }) => {
+  test("hides the New agency button for a Agencies.View-only user", async ({ page }) => {
     // Keep Tenants.View (route guard) but drop Tenants.Create.
     const viewOnly = ADMIN_PERMS.filter((p) => p !== "Permissions.Tenants.Create");
     await seedAuthedSession(page, { ...TEST_USER, permissions: viewOnly });
@@ -106,6 +106,6 @@ test.describe("tenants registry list", () => {
       page.getByRole("heading", { name: "Registry", exact: true }),
     ).toBeVisible({ timeout: 10_000 });
 
-    await expect(page.getByRole("button", { name: "New tenant", exact: true })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "New agency", exact: true })).toHaveCount(0);
   });
 });

@@ -36,12 +36,12 @@ public sealed class TenantProvisioningService : ITenantProvisioningService
     public async Task<TenantProvisioning> StartAsync(string tenantId, CancellationToken cancellationToken)
     {
         var tenant = await _tenantStore.GetAsync(tenantId).ConfigureAwait(false)
-            ?? throw new NotFoundException($"Tenant {tenantId} not found for provisioning.");
+            ?? throw new NotFoundException($"Agency {tenantId} not found for provisioning.");
 
         var existing = await GetLatestAsync(tenantId, cancellationToken).ConfigureAwait(false);
         if (existing is not null && (existing.Status is TenantProvisioningStatus.Running or TenantProvisioningStatus.Pending))
         {
-            throw new CustomException($"Provisioning already running for tenant {tenantId}.");
+            throw new CustomException($"Provisioning already running for agency {tenantId}.");
         }
 
         var correlationId = Guid.NewGuid().ToString();
@@ -86,7 +86,7 @@ public sealed class TenantProvisioningService : ITenantProvisioningService
     public async Task<TenantProvisioningStatusDto> GetStatusAsync(string tenantId, CancellationToken cancellationToken)
     {
         var provisioning = await GetLatestAsync(tenantId, cancellationToken).ConfigureAwait(false)
-            ?? throw new NotFoundException($"Provisioning not found for tenant {tenantId}.");
+            ?? throw new NotFoundException($"Provisioning not found for agency {tenantId}.");
 
         return ToDto(provisioning);
     }
@@ -101,7 +101,7 @@ public sealed class TenantProvisioningService : ITenantProvisioningService
 
         if (provisioning.Status != TenantProvisioningStatus.Completed)
         {
-            throw new CustomException($"Tenant {tenantId} is not provisioned. Status: {provisioning.Status}.");
+            throw new CustomException($"Agency {tenantId} is not provisioned. Status: {provisioning.Status}.");
         }
     }
 
@@ -172,7 +172,7 @@ public sealed class TenantProvisioningService : ITenantProvisioningService
             .Include(p => p.Steps)
             .FirstOrDefaultAsync(p => p.TenantId == tenantId && p.CorrelationId == correlationId, cancellationToken)
             .ConfigureAwait(false)
-            ?? throw new NotFoundException($"Provisioning {correlationId} for tenant {tenantId} not found.");
+            ?? throw new NotFoundException($"Provisioning {correlationId} for agency {tenantId} not found.");
     }
 
     private static bool TryEnsureJobStorage()

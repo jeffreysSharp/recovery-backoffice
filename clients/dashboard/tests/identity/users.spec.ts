@@ -65,7 +65,7 @@ test.describe("identity/users — list", () => {
       page.getByRole("heading", { name: "No users yet", level: 2 }),
     ).toBeVisible();
     await expect(
-      page.getByText(/register the first member to seed this tenant/i),
+      page.getByText(/register the first member to seed this agency/i),
     ).toBeVisible();
   });
 

@@ -18,8 +18,8 @@ public static class ChangeTenantActivationEndpoint
     {
         return endpoints.MapPost("/{id}/activation", Handler)
             .WithName("ChangeTenantActivation")
-            .WithSummary("Change tenant activation state")
-            .WithDescription("Activate or deactivate a tenant in a single endpoint.")
+            .WithSummary("Change agency activation state")
+            .WithDescription("Activate or deactivate an agency in a single endpoint.")
             .RequirePermission(MultitenancyPermissions.Tenants.Update)
             .Produces<TenantLifecycleResultDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)

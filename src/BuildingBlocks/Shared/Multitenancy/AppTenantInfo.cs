@@ -62,7 +62,7 @@ public class AppTenantInfo : TenantInfo, IAppTenantInfo
     {
         if (Id == MultitenancyConstants.Root.Id)
         {
-            throw new InvalidOperationException("Invalid Tenant");
+            throw new InvalidOperationException("Invalid Agency");
         }
 
         IsActive = true;
@@ -72,7 +72,7 @@ public class AppTenantInfo : TenantInfo, IAppTenantInfo
     {
         if (Id == MultitenancyConstants.Root.Id)
         {
-            throw new InvalidOperationException("Invalid Tenant");
+            throw new InvalidOperationException("Invalid Agency");
         }
 
         IsActive = false;

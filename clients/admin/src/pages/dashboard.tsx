@@ -59,14 +59,14 @@ export function DashboardPage() {
             </>
           }
           tone="primary"
-          description="Operate every tenant on this instance — identity, multitenancy, billing, and the rest of the system surface."
+          description="Operate every agency on this instance — identity, agency management, billing, and the rest of the system surface."
         />
       </div>
 
       {/* ── KPI stat strip ───────────────────────────────────────────── */}
       <StatStrip cols={4} className="recovery-enter recovery-enter-2">
         <Stat
-          label="Tenants"
+          label="Agencies"
           value={
             tenantsQuery.isLoading ? (
               <Skeleton className="h-7 w-16" />
@@ -126,15 +126,15 @@ export function DashboardPage() {
             to="/tenants"
             icon={Building2}
             tone="info"
-            title="Tenants"
-            description="Provision, suspend, and inspect tenants."
+            title="Agencies"
+            description="Provision, suspend, and inspect agencies."
           />
           <PivotCard
             to="/users"
             icon={UsersRound}
             tone="primary"
             title="Users"
-            description="Root-tenant operators and role management."
+            description="Root-agency operators and role management."
           />
           <PivotCard
             to="/billing/plans"
@@ -148,7 +148,7 @@ export function DashboardPage() {
             icon={FileText}
             tone="warning"
             title="Invoices"
-            description="Cross-tenant ledger. Issue, mark paid, void."
+            description="Cross-agency ledger. Issue, mark paid, void."
           />
         </div>
       </section>

@@ -51,12 +51,12 @@ export const topNavBottom: NavSpec[] = [
 export const sections: NavSection[] = [
   {
     id: "multitenancy",
-    caption: "Tenants",
+    caption: "Agencies",
     icon: Building2,
     items: [
       {
         to: "/tenants",
-        label: "Tenants",
+        label: "Agencies",
         icon: Building2,
         perms: [MultitenancyPermissions.Tenants.View],
       },
@@ -165,7 +165,7 @@ export const NAV_ITEMS: NavItem[] = [
   { to: "/", label: "Overview", icon: LayoutDashboard },
   {
     to: "/tenants",
-    label: "Tenants",
+    label: "Agencies",
     icon: Building2,
     matchPrefix: "/tenants",
     perms: [MultitenancyPermissions.Tenants.View],

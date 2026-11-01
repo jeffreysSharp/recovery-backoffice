@@ -21,8 +21,8 @@ public static class GetTenantsEndpoint
                 async ([AsParameters] GetTenantsQuery query, IMediator mediator, CancellationToken cancellationToken) =>
                     TypedResults.Ok(await mediator.Send(query, cancellationToken)))
             .WithName("ListTenants")
-            .WithSummary("List tenants")
-            .WithDescription("Retrieve tenants for the current environment with pagination and optional sorting.")
+            .WithSummary("List agencies")
+            .WithDescription("Retrieve agencies for the current environment with pagination and optional sorting.")
             .RequirePermission(MultitenancyPermissions.Tenants.View)
             .Produces<PagedResponse<TenantDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)

@@ -19,10 +19,10 @@ public sealed class GenerateInvoicesCommandHandler(
         // Platform-wide invoice generation runs across EVERY tenant — it is a root-operator action.
         // A tenant admin (who also holds Billing.Manage) must not be able to trigger it.
         var callerTenantId = tenantAccessor.MultiTenantContext?.TenantInfo?.Id
-            ?? throw new UnauthorizedException("Tenant context is required.");
+            ?? throw new UnauthorizedException("Agency context is required.");
         if (callerTenantId != MultitenancyConstants.Root.Id)
         {
-            throw new ForbiddenException("Only the root operator may generate invoices across tenants.");
+            throw new ForbiddenException("Only the root operator may generate invoices across agencies.");
         }
 
         return await billing.GenerateInvoicesForAllTenantsAsync(command.PeriodYear, command.PeriodMonth, cancellationToken).ConfigureAwait(false);

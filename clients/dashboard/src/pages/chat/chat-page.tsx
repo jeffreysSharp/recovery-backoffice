@@ -118,7 +118,7 @@ function EmptyState() {
         </h3>
         <p className="mb-6 max-w-[360px] text-[13px] text-[var(--color-muted-foreground)]">
           Choose a channel on the left to jump in. Channels are public to your
-          tenant; DMs are private to the people in them. Mentions land in the
+          agency; DMs are private to the people in them. Mentions land in the
           notification bell, top right.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">

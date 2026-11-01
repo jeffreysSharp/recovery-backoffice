@@ -189,8 +189,8 @@ export function AuditsListPage() {
             <Input
               value={tenantId}
               onChange={(e) => setParam("tenant", e.target.value || null)}
-              placeholder="Tenant id (cross-tenant)"
-              aria-label="Filter by tenant id"
+              placeholder="Agency id (cross-agency)"
+              aria-label="Filter by agency id"
               className="h-8 font-mono text-xs"
             />
           </div>
@@ -226,7 +226,7 @@ export function AuditsListPage() {
           description={
             activeFilters > 0
               ? "Try clearing or relaxing a filter — the trail is broad by default."
-              : "The audit pipeline hasn't recorded anything for this tenant yet."
+              : "The audit pipeline hasn't recorded anything for this agency yet."
           }
           action={
             activeFilters > 0 ? (

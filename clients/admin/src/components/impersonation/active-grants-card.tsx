@@ -68,7 +68,7 @@ export function ActiveGrantsCard({ tenantId }: { tenantId: string }) {
       <SettingsSection
         title="Active impersonations"
         icon={UserCog}
-        description="Operators currently signed in as users in this tenant. Revoking immediately invalidates the issued token; the dashboard tab will 401 on its next request."
+        description="Operators currently signed in as users in this agency. Revoking immediately invalidates the issued token; the dashboard tab will 401 on its next request."
       >
         <ul className="divide-y divide-[var(--color-border)]">
           {items.map((g) => (

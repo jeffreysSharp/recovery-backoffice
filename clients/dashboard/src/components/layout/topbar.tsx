@@ -369,7 +369,7 @@ export function Topbar() {
           <DialogHeader>
             <DialogTitle>Sign out of recovery-backoffice?</DialogTitle>
             <DialogDescription>
-              You'll need to sign in again to access this tenant. Any unsaved
+              You'll need to sign in again to access this agency. Any unsaved
               work in this session will be lost.
             </DialogDescription>
           </DialogHeader>

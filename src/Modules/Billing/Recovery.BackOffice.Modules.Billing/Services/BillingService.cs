@@ -75,7 +75,7 @@ public sealed class BillingService : IBillingService
         }
 
         var plan = await _db.Plans.FirstOrDefaultAsync(p => p.Id == subscription.PlanId, cancellationToken).ConfigureAwait(false)
-            ?? throw new NotFoundException($"Plan {subscription.PlanId} not found for tenant {tenantId}.");
+            ?? throw new NotFoundException($"Plan {subscription.PlanId} not found for agency {tenantId}.");
 
         var snapshots = await _usageReporter.CaptureForPeriodAsync(tenantId, periodYear, periodMonth, cancellationToken).ConfigureAwait(false);
 
@@ -289,7 +289,7 @@ public sealed class BillingService : IBillingService
     private async Task<Invoice> LoadInvoiceAsync(Guid invoiceId, CancellationToken cancellationToken)
     {
         var callerTenantId = _tenantAccessor.MultiTenantContext?.TenantInfo?.Id
-            ?? throw new UnauthorizedException("Tenant context is required.");
+            ?? throw new UnauthorizedException("Agency context is required.");
         var isRoot = callerTenantId == MultitenancyConstants.Root.Id;
 
         return await _db.Invoices
@@ -308,7 +308,7 @@ public sealed class BillingService : IBillingService
         ArgumentException.ThrowIfNullOrWhiteSpace(tenantId);
 
         var plan = await _db.Plans.FirstOrDefaultAsync(p => p.Id == planId, cancellationToken).ConfigureAwait(false)
-            ?? throw new NotFoundException($"Plan {planId} not found for tenant {tenantId}.");
+            ?? throw new NotFoundException($"Plan {planId} not found for agency {tenantId}.");
 
         var termPrice = plan.TermPrice;
         if (termPrice.Amount <= 0m)

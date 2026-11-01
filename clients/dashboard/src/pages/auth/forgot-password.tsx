@@ -90,7 +90,7 @@ export function ForgotPasswordPage() {
             <p className="text-[13px] leading-relaxed text-[var(--color-muted-foreground)]">
               If an account exists for{" "}
               <span className="text-[var(--color-foreground)]">{email}</span> in
-              tenant{" "}
+              agency{" "}
               <span className="text-[var(--color-foreground)]">{tenant}</span>,
               a one-time reset link is on its way. The link expires in 30 minutes.
             </p>
@@ -102,7 +102,7 @@ export function ForgotPasswordPage() {
             </li>
             <li className="flex items-start gap-2">
               <Check className="mt-0.5 size-3.5 shrink-0 text-[var(--color-success)]" />
-              Still nothing? Confirm the email + tenant and try again.
+              Still nothing? Confirm the email + agency and try again.
             </li>
           </ul>
           <div className="flex items-center gap-2 pt-1">
@@ -138,7 +138,7 @@ export function ForgotPasswordPage() {
                 htmlFor="reset-tenant"
                 className="block text-[11.5px] font-semibold uppercase tracking-wider text-[var(--color-muted-foreground)]"
               >
-                Tenant
+                Agency
               </Label>
               <div className="relative">
                 <Building2 className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[oklch(from_var(--color-muted-foreground)_l_c_h_/_0.6)]" />

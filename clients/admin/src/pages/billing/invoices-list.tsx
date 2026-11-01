@@ -202,10 +202,10 @@ export function InvoicesListPage() {
         </CardHeader>
         <CardContent className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-1.5">
-            <Label htmlFor="filter-tenant">Tenant</Label>
+            <Label htmlFor="filter-tenant">Agency</Label>
             <Input
               id="filter-tenant"
-              placeholder="tenant identifier"
+              placeholder="agency identifier"
               value={tenantFilter}
               onChange={(e) => {
                 setTenantFilter(e.target.value);
@@ -330,7 +330,7 @@ export function InvoicesListPage() {
                         )}
                       </div>
                       <div className="mt-1 truncate font-mono text-[11px] tracking-tight text-[var(--color-muted-foreground)]">
-                        tenant <span className="text-[var(--color-foreground)]">{inv.tenantId}</span> ·
+                        agency <span className="text-[var(--color-foreground)]">{inv.tenantId}</span> ·
                         period {formatPeriod(inv.periodYear, inv.periodMonth)} ·
                         created {formatDate(inv.createdAtUtc)}
                         {inv.paidAtUtc && (

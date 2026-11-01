@@ -20,8 +20,8 @@ public static class UpdateTenantThemeEndpoint
                 return TypedResults.NoContent();
             })
             .WithName("UpdateTenantTheme")
-            .WithSummary("Update current tenant theme")
-            .WithDescription("Update the theme settings for the current tenant, including colors, typography, and layout.")
+            .WithSummary("Update current agency theme")
+            .WithDescription("Update the theme settings for the current agency, including colors, typography, and layout.")
             .RequirePermission(MultitenancyPermissions.Tenants.UpdateTheme)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status400BadRequest)

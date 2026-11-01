@@ -129,7 +129,7 @@ export function InvoicesPage() {
         title="Invoices"
         total={query.data?.totalCount ?? null}
         unit="invoice"
-        description="Your tenant's billing history, newest first."
+        description="Your agency's billing history, newest first."
       />
 
       <EntitySearch
@@ -149,7 +149,7 @@ export function InvoicesPage() {
           body={
             searchActive
               ? `Nothing matches "${search.trim()}". Try a different term or clear the search.`
-              : "Once your tenant has been billed for a period, invoices will appear here."
+              : "Once your agency has been billed for a period, invoices will appear here."
           }
           action={
             searchActive ? (

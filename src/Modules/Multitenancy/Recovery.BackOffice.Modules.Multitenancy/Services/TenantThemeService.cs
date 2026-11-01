@@ -52,7 +52,7 @@ public sealed class TenantThemeService : ITenantThemeService
     public async Task<TenantThemeDto> GetCurrentTenantThemeAsync(CancellationToken ct = default)
     {
         var tenantId = _tenantAccessor.MultiTenantContext?.TenantInfo?.Id
-            ?? throw new InvalidOperationException("No tenant context available");
+            ?? throw new InvalidOperationException("No agency context available");
         return await GetThemeAsync(tenantId, ct).ConfigureAwait(false);
     }
 
@@ -220,7 +220,7 @@ public sealed class TenantThemeService : ITenantThemeService
         var currentTenantId = _tenantAccessor.MultiTenantContext?.TenantInfo?.Id;
         if (currentTenantId != MultitenancyConstants.Root.Id)
         {
-            throw new ForbiddenException("Only the root tenant can set the default theme");
+            throw new ForbiddenException("Only the root agency can set the default theme");
         }
 
         // Clear existing default
@@ -240,7 +240,7 @@ public sealed class TenantThemeService : ITenantThemeService
 
         if (entity is null)
         {
-            throw new NotFoundException($"Theme for tenant {tenantId} not found");
+            throw new NotFoundException($"Theme for agency {tenantId} not found");
         }
 
         entity.IsDefault = true;

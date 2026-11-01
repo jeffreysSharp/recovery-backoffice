@@ -141,7 +141,7 @@ export function ActivityPage() {
         unit="event"
         description={
           canViewHistory
-            ? "Events streamed over Server-Sent Events while this tab is connected, above the tenant's recent audit history."
+            ? "Events streamed over Server-Sent Events while this tab is connected, above the agency's recent audit history."
             : "Events streamed from the API over Server-Sent Events while this tab is connected."
         }
       >
@@ -350,7 +350,7 @@ function HistorySection() {
         id="activity-history-heading"
         icon={History}
         title="Recent history"
-        caption={`The latest ${HISTORY_PAGE_SIZE} audited events for this tenant, excluding per-request system activity.`}
+        caption={`The latest ${HISTORY_PAGE_SIZE} audited events for this agency, excluding per-request system activity.`}
       >
         <Button
           variant="outline"
@@ -383,7 +383,7 @@ function HistorySection() {
           <EntityEmpty
             icon={ScrollText}
             title="No history yet"
-            body="Audited changes, sign-ins and errors in this tenant will show up here."
+            body="Audited changes, sign-ins and errors in this agency will show up here."
           />
         )
       ) : (

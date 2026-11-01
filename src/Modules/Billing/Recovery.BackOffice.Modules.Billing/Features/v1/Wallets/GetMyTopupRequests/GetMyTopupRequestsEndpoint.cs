@@ -20,7 +20,7 @@ public static class GetMyTopupRequestsEndpoint
                         pageNumber <= 0 ? 1 : pageNumber,
                         pageSize <= 0 ? 20 : Math.Min(pageSize, 100)), ct))
             .WithName("GetMyTopupRequests")
-            .WithSummary("List top-up requests for the current tenant")
+            .WithSummary("List top-up requests for the current agency")
             .RequirePermission(BillingPermissions.View);
     }
 }

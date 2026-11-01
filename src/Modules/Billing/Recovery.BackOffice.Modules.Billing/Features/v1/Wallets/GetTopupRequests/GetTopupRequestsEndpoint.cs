@@ -22,7 +22,7 @@ public static class GetTopupRequestsEndpoint
                         pageNumber <= 0 ? 1 : pageNumber,
                         pageSize <= 0 ? 20 : Math.Min(pageSize, 100)), ct))
             .WithName("GetTopupRequests")
-            .WithSummary("List top-up requests across all tenants (operator admin)")
+            .WithSummary("List top-up requests across all agencies (operator admin)")
             .RequirePermission(BillingPermissions.View);
     }
 }

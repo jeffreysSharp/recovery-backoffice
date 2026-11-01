@@ -15,7 +15,7 @@ public sealed class ResetTenantThemeCommandHandler(
     public async ValueTask<Unit> Handle(ResetTenantThemeCommand command, CancellationToken cancellationToken)
     {
         var tenantId = tenantAccessor.MultiTenantContext?.TenantInfo?.Id
-            ?? throw new InvalidOperationException("No tenant context available");
+            ?? throw new InvalidOperationException("No agency context available");
 
         await themeService.ResetThemeAsync(tenantId, cancellationToken);
 

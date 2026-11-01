@@ -166,7 +166,7 @@ export function InvoiceDetailPage() {
                   </Badge>
                 )}
                 <span className="font-mono text-[11px] text-[var(--color-muted-foreground)]">
-                  tenant {invoice.tenantId} · period {formatPeriod(invoice.periodYear, invoice.periodMonth)} · created {formatDate(invoice.createdAtUtc)}
+                  agency {invoice.tenantId} · period {formatPeriod(invoice.periodYear, invoice.periodMonth)} · created {formatDate(invoice.createdAtUtc)}
                   {invoice.periodStartUtc && invoice.periodEndUtc && (
                     ` · term ${formatDate(invoice.periodStartUtc)} – ${formatDate(invoice.periodEndUtc)}`
                   )}

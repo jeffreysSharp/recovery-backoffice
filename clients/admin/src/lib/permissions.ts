@@ -98,18 +98,18 @@ export type PermissionGroup = {
 
 export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
   {
-    category: "Tenants",
-    blurb: "Provision and operate tenants. Reserved for the root-tenant operator.",
+    category: "Agencies",
+    blurb: "Provision and operate agencies. Reserved for the root-agency operator.",
     entries: [
-      { name: MultitenancyPermissions.Tenants.View, description: "View tenants", root: true },
-      { name: MultitenancyPermissions.Tenants.Create, description: "Create tenants", root: true },
-      { name: MultitenancyPermissions.Tenants.Update, description: "Update tenants", root: true },
-      { name: MultitenancyPermissions.Tenants.UpgradeSubscription, description: "Upgrade tenant subscription", root: true },
+      { name: MultitenancyPermissions.Tenants.View, description: "View agencies", root: true },
+      { name: MultitenancyPermissions.Tenants.Create, description: "Create agencies", root: true },
+      { name: MultitenancyPermissions.Tenants.Update, description: "Update agencies", root: true },
+      { name: MultitenancyPermissions.Tenants.UpgradeSubscription, description: "Upgrade agency subscription", root: true },
     ],
   },
   {
     category: "Users",
-    blurb: "Manage tenant user accounts and their assigned roles.",
+    blurb: "Manage agency user accounts and their assigned roles.",
     entries: [
       { name: IdentityPermissions.Users.View, description: "View users", basic: true },
       { name: IdentityPermissions.Users.Search, description: "Search users" },
@@ -141,13 +141,13 @@ export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
     entries: [
       { name: IdentityPermissions.Sessions.View, description: "View my sessions", basic: true },
       { name: IdentityPermissions.Sessions.Revoke, description: "Revoke my sessions", basic: true },
-      { name: IdentityPermissions.Sessions.ViewAll, description: "View all tenant sessions" },
+      { name: IdentityPermissions.Sessions.ViewAll, description: "View all agency sessions" },
       { name: IdentityPermissions.Sessions.RevokeAll, description: "Revoke any session" },
     ],
   },
   {
     category: "Billing",
-    blurb: "Inspect and manage tenant subscriptions and invoices.",
+    blurb: "Inspect and manage agency subscriptions and invoices.",
     entries: [
       { name: BillingPermissions.View, description: "View billing", basic: true },
       { name: BillingPermissions.Manage, description: "Manage billing — plans, subscriptions, invoices" },
@@ -160,7 +160,7 @@ export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
       { name: AuditingPermissions.AuditTrails.View, description: "View audit trails", basic: true },
       {
         name: AuditingPermissions.AuditTrails.ViewCrossTenant,
-        description: "View audit trails across tenants",
+        description: "View audit trails across agencies",
         root: true,
       },
     ],

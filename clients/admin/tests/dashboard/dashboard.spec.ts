@@ -119,7 +119,7 @@ test.describe("admin dashboard", () => {
     // element by its class rather than a bare text match.
     const kpiLabel = (text: string) =>
       main.locator("div.meta", { hasText: text });
-    await expect(kpiLabel("Tenants")).toBeVisible({ timeout: 10_000 });
+    await expect(kpiLabel("Agencies")).toBeVisible({ timeout: 10_000 });
     await expect(kpiLabel("Plans")).toBeVisible();
     await expect(kpiLabel("Invoices")).toBeVisible();
     await expect(kpiLabel("Outstanding")).toBeVisible();
@@ -139,7 +139,7 @@ test.describe("admin dashboard", () => {
     const main = page.getByRole("main");
     await expect(main.getByText("Entry points")).toBeVisible({ timeout: 10_000 });
 
-    await expect(main.getByRole("link", { name: /Tenants/ })).toBeVisible();
+    await expect(main.getByRole("link", { name: /Agencies/ })).toBeVisible();
     await expect(main.getByRole("link", { name: /Users/ })).toBeVisible();
     await expect(main.getByRole("link", { name: /Billing/ })).toBeVisible();
     await expect(main.getByRole("link", { name: /Invoices/ })).toBeVisible();

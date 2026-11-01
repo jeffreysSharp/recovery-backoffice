@@ -245,7 +245,7 @@ export function PlanFormDialog({
           <DialogDescription className="mt-1">
             {isEdit
               ? "Update name, pricing, interval, or overage rates. Key and currency are immutable."
-              : "Plan keys are canonical slugs used by tenant subscriptions and quota configuration."}
+              : "Plan keys are canonical slugs used by agency subscriptions and quota configuration."}
           </DialogDescription>
         </DialogHeader>
 
@@ -256,7 +256,7 @@ export function PlanFormDialog({
               <SectionLabel
                 icon={CreditCard}
                 title="Plan details"
-                description="Identity + pricing. The interval sets the term length and how often the tenant is billed."
+                description="Identity + pricing. The interval sets the term length and how often the agency is billed."
               />
               <div className="h-px bg-[var(--color-border)] opacity-60" />
               <div className="grid gap-4 sm:grid-cols-2">
@@ -338,7 +338,7 @@ export function PlanFormDialog({
               <SectionLabel
                 icon={Gauge}
                 title="Overage rates"
-                description="Per-unit price when a tenant exceeds the plan limit. Leave blank to skip a resource."
+                description="Per-unit price when an agency exceeds the plan limit. Leave blank to skip a resource."
               />
               <div className="h-px bg-[var(--color-border)] opacity-60" />
               <div className="grid gap-4 sm:grid-cols-2">

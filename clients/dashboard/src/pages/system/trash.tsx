@@ -127,7 +127,7 @@ export function TrashPage() {
         <EntityEmpty
           icon={Trash2}
           title="No recycle bins available"
-          body="You don't have permission to restore deleted records in this tenant. Ask an administrator if you think you should."
+          body="You don't have permission to restore deleted records in this agency. Ask an administrator if you think you should."
         />
       ) : (
         <>

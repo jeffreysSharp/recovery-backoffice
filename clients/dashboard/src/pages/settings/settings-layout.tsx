@@ -29,13 +29,13 @@ type Tab = {
 };
 
 const TABS: Tab[] = [
-  { to: "/settings/profile", label: "Profile", hint: "Your identity across the tenant", icon: UserRound },
+  { to: "/settings/profile", label: "Profile", hint: "Your identity across the agency", icon: UserRound },
   { to: "/settings/security", label: "Security", hint: "Password and active sessions", icon: Shield },
   { to: "/settings/appearance", label: "Appearance", hint: "Theme and visual preferences", icon: Palette },
   // Tenant-wide branding (palette + logos served on sign-in), distinct from the
   // per-user Appearance prefs above. Gated on the same permission the /theme
   // endpoints enforce server-side.
-  { to: "/settings/branding", label: "Branding", hint: "Tenant colours and logos", icon: Brush, perm: "Permissions.Tenants.UpdateTheme" },
+  { to: "/settings/branding", label: "Branding", hint: "Agency colours and logos", icon: Brush, perm: "Permissions.Tenants.UpdateTheme" },
   { to: "/settings/notifications", label: "Notifications", hint: "How we reach you", icon: Bell },
   { to: "/settings/api-keys", label: "API keys", hint: "Personal access tokens", icon: KeyRound },
 ];

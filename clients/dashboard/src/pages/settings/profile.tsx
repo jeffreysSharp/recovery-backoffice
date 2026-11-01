@@ -234,7 +234,7 @@ export function ProfileSettings() {
               className="h-10 cursor-not-allowed bg-[var(--color-muted)] text-[13px]"
             />
             <p className="mt-1 text-[11px] text-[var(--color-muted-foreground)]">
-              Contact your tenant admin to change your sign-in email.
+              Contact your agency admin to change your sign-in email.
             </p>
           </Field>
           <Field id="phone" label="Phone">

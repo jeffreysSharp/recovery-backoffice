@@ -386,7 +386,7 @@ function NotFoundPanel() {
         Invoice not found
       </h3>
       <p className="mb-6 text-[13px] text-[var(--color-muted-foreground)]">
-        It may not belong to your tenant, or the link may be wrong.
+        It may not belong to your agency, or the link may be wrong.
       </p>
       <Button asChild variant="outline" size="sm">
         <Link to="/invoices">Back to invoices</Link>

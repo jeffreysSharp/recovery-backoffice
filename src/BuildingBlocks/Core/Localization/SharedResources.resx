@@ -95,10 +95,10 @@
     <value>No authenticated user.</value>
   </data>
   <data name="Error.InvalidTenant" xml:space="preserve">
-    <value>Invalid or missing tenant.</value>
+    <value>Invalid or missing agency.</value>
   </data>
   <data name="Error.TenantContextRequired" xml:space="preserve">
-    <value>Tenant context is required.</value>
+    <value>Agency context is required.</value>
   </data>
   <data name="Error.Unexpected" xml:space="preserve">
     <value>An unexpected error occurred</value>
@@ -110,7 +110,7 @@
     <value>App boundary</value>
   </data>
   <data name="Error.AppBoundary.Detail" xml:space="preserve">
-    <value>SuperAdmin accounts must use the admin app. Sign in there instead of the tenant dashboard.</value>
+    <value>SuperAdmin accounts must use the admin app. Sign in there instead of the agency dashboard.</value>
   </data>
   <data name="Error.AuthenticationFailed" xml:space="preserve">
     <value>Authentication failed.</value>
@@ -197,7 +197,7 @@
     <value>Confirmation code is required.</value>
   </data>
   <data name="Validation.TenantRequired" xml:space="preserve">
-    <value>Tenant is required.</value>
+    <value>Agency is required.</value>
   </data>
   <data name="Validation.CurrentPasswordRequired" xml:space="preserve">
     <value>Current password is required.</value>

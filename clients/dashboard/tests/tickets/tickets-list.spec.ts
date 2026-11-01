@@ -25,7 +25,7 @@ const TICKETS = [
   {
     id: "00000000-0000-0000-0000-0000000000a2",
     number: "TK-2",
-    title: "Export CSV times out on large tenants",
+    title: "Export CSV times out on large agencies",
     description: null,
     status: "InProgress",
     priority: "Critical",
@@ -68,7 +68,7 @@ test.describe("tickets — list page", () => {
     await expect(card.getByText("Open", { exact: true })).toBeVisible();
 
     // Second ticket — In-progress / Critical.
-    await expect(card.getByText("Export CSV times out on large tenants")).toBeVisible();
+    await expect(card.getByText("Export CSV times out on large agencies")).toBeVisible();
     await expect(card.getByText("Critical", { exact: true })).toBeVisible();
     await expect(card.getByText("In progress", { exact: true })).toBeVisible();
   });

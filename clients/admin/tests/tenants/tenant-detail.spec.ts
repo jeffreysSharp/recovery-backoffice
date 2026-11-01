@@ -60,8 +60,8 @@ test.beforeEach(async ({ page }) => {
   await mockJsonResponse(page, "**/api/v1/identity/impersonation/grants**", []);
 });
 
-test.describe("tenant detail header + provisioning", () => {
-  test("renders the tenant header with name, id, email and active status", async ({ page }) => {
+test.describe("agency detail header + provisioning", () => {
+  test("renders the agency header with name, id, email and active status", async ({ page }) => {
     await mockJsonResponse(page, `**/api/v1/tenants/${TENANT_ID}/status`, TENANT);
     await mockJsonResponse(page, `**/api/v1/tenants/${TENANT_ID}/provisioning`, PROVISIONING);
 
@@ -99,7 +99,7 @@ test.describe("tenant detail header + provisioning", () => {
     await expect(page.getByText("SeedRoles", { exact: true })).toBeVisible();
   });
 
-  test("hides activation + renew/change-plan for a Tenants.View-only user", async ({ page }) => {
+  test("hides activation + renew/change-plan for a Agencies.View-only user", async ({ page }) => {
     // Keep Tenants.View (route guard) but drop Update + UpgradeSubscription.
     const viewOnly = ADMIN_PERMS.filter(
       (p) =>
@@ -121,7 +121,7 @@ test.describe("tenant detail header + provisioning", () => {
     ).toBeVisible({ timeout: 10_000 });
 
     const main = page.getByRole("main");
-    await expect(main.getByRole("button", { name: /deactivate tenant|activate tenant/i })).toHaveCount(0);
+    await expect(main.getByRole("button", { name: /deactivate agency|activate agency/i })).toHaveCount(0);
     await expect(main.getByRole("button", { name: /renew \/ change plan/i })).toHaveCount(0);
     await expect(main.getByRole("button", { name: /adjust validity/i })).toHaveCount(0);
   });
@@ -135,7 +135,7 @@ test.describe("tenant detail header + provisioning", () => {
           type: "https://httpstatuses.io/500",
           title: "Server error",
           status: 500,
-          detail: "Tenant status is unavailable right now.",
+          detail: "Agency status is unavailable right now.",
         }),
       }),
     );
@@ -143,7 +143,7 @@ test.describe("tenant detail header + provisioning", () => {
 
     await page.goto(`/tenants/${TENANT_ID}`);
 
-    await expect(page.getByText(/Tenant status is unavailable right now\./i)).toBeVisible({
+    await expect(page.getByText(/Agency status is unavailable right now\./i)).toBeVisible({
       timeout: 10_000,
     });
   });

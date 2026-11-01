@@ -183,7 +183,7 @@ public sealed class MultitenancyModule : IModule
                 {
                     if (!tenant.IsActive)
                     {
-                        throw new ForbiddenException("This tenant has been deactivated. Contact your administrator.");
+                        throw new ForbiddenException("This agency has been deactivated. Contact your administrator.");
                     }
 
                     // Expiry is enforced on every request (not just at login) with a grace period:
@@ -194,7 +194,7 @@ public sealed class MultitenancyModule : IModule
                     var graceEndsUtc = tenant.ValidUpto.AddDays(graceDays);
                     if (nowUtc > graceEndsUtc)
                     {
-                        throw new ForbiddenException("This tenant's subscription has expired. Please renew to continue.");
+                        throw new ForbiddenException("This agency's subscription has expired. Please renew to continue.");
                     }
 
                     // Inside the grace period: surface days-left so clients can warn. Set via OnStarting so
@@ -227,7 +227,7 @@ public sealed class MultitenancyModule : IModule
             .Build();
 
         var group = endpoints.MapGroup("api/v{version:apiVersion}/tenants")
-            .WithTags("Tenants")
+            .WithTags("Agencies")
             .WithApiVersionSet(versionSet);
         ChangeTenantActivationEndpoint.Map(group);
         GetTenantsEndpoint.Map(group);

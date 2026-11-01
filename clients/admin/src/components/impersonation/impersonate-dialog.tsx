@@ -79,7 +79,7 @@ export function ImpersonateDialog({
             <DialogTitle>Impersonate user</DialogTitle>
           </div>
           <DialogDescription>
-            Tenant{" "}
+            Agency{" "}
             <code className="code-chip">{tenantName ?? tenantId}</code> ·{" "}
             {step === "pick"
               ? "pick a user to impersonate."

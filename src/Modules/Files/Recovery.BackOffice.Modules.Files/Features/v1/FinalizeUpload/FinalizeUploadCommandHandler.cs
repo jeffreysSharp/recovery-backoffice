@@ -31,7 +31,7 @@ public sealed class FinalizeUploadCommandHandler(
     public async ValueTask<FileAssetDto> Handle(FinalizeUploadCommand cmd, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(cmd);
-        var tenantId = currentUser.GetTenant() ?? throw new UnauthorizedException("invalid tenant");
+        var tenantId = currentUser.GetTenant() ?? throw new UnauthorizedException("invalid agency");
         var userId = currentUser.GetUserId().ToString();
 
         var asset = await db.FileAssets

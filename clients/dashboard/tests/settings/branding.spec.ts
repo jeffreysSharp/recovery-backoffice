@@ -36,7 +36,7 @@ test.beforeEach(async ({ page }) => {
   await installShellMocks(page);
 });
 
-test.describe("settings/branding — tenant theme editor", () => {
+test.describe("settings/branding — agency theme editor", () => {
   test("renders the editor and saves an edited palette via PUT", async ({ page }) => {
     await grantBrandingPerms(page);
     await mockJsonResponse(page, "**/api/v1/tenants/theme", THEME);

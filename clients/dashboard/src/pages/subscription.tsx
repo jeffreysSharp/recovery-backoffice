@@ -151,7 +151,7 @@ export function SubscriptionPage() {
       <EntityPageHeader
         icon={CreditCard}
         title="Subscription"
-        description="Your tenant's plan, validity, usage, and recent invoices."
+        description="Your agency's plan, validity, usage, and recent invoices."
       />
 
       {errorMessage && <ErrorBand message={errorMessage} />}
@@ -241,7 +241,7 @@ function PlanBody({
           No active subscription
         </div>
         <p className="text-[11.5px] leading-relaxed text-[var(--color-muted-foreground)]">
-          Your tenant has no plan assigned. Contact your operator to enable
+          Your agency has no plan assigned. Contact your operator to enable
           billing, quotas, and overage tracking.
         </p>
       </div>
@@ -309,7 +309,7 @@ function ValidityBody({
   if (!status) {
     return (
       <p className="text-[12px] text-[var(--color-muted-foreground)]">
-        Tenant status is unavailable right now.
+        Agency status is unavailable right now.
       </p>
     );
   }
@@ -496,7 +496,7 @@ function RecentInvoicesBody({
           No invoices yet
         </div>
         <p className="max-w-sm text-[11.5px] text-[var(--color-muted-foreground)]">
-          Once your tenant has been billed for a period, invoices will appear here.
+          Once your agency has been billed for a period, invoices will appear here.
         </p>
       </div>
     );

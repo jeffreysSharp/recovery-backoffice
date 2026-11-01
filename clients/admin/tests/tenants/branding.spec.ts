@@ -94,7 +94,7 @@ test.beforeEach(async ({ page }) => {
   await mockJsonResponse(page, "**/api/v1/identity/impersonation/grants**", []);
 });
 
-test.describe("tenant branding card", () => {
+test.describe("agency branding card", () => {
   test("loads + renders the editor with default-palette badge", async ({ page }) => {
     await mockJsonResponse(page, "**/api/v1/tenants/theme", THEME_DEFAULT);
 
@@ -132,7 +132,7 @@ test.describe("tenant branding card", () => {
     await expect(page.locator("text=/^unsaved$/i").first()).toBeVisible();
   });
 
-  test("Save PUTs the edited theme with the tenant header", async ({ page }) => {
+  test("Save PUTs the edited theme with the agency header", async ({ page }) => {
     await mockJsonResponse(page, "**/api/v1/tenants/theme", THEME_DEFAULT);
 
     await page.goto(`/tenants/${TENANT_ID}`);
@@ -178,7 +178,7 @@ test.describe("tenant branding card", () => {
   test("surfaces a server error in the error band, not as a toast", async ({ page }) => {
     await mockProblemDetails(page, "**/api/v1/tenants/theme", 403, {
       title: "Forbidden",
-      detail: "Tenant theme is read-only for this caller.",
+      detail: "Agency theme is read-only for this caller.",
     });
 
     await page.goto(`/tenants/${TENANT_ID}`);
