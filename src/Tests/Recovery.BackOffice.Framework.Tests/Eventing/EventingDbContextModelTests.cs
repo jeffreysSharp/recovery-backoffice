@@ -23,14 +23,14 @@ public class EventingDbContextModelTests
         accessor.MultiTenantContext.Returns(new MultiTenantContext<AppTenantInfo>(new AppTenantInfo()));
 
         var options = new DbContextOptionsBuilder<EventingDbContext>()
-            .UseNpgsql("Host=arch;Database=arch;Username=arch;Password=arch")
+            .UseSqlServer("Server=localhost;Database=arch;Integrated Security=true;TrustServerCertificate=true")
             .Options;
 
         var settings = Options.Create(new DatabaseOptions
         {
-            Provider = "postgresql",
+            Provider = "MSSQL",
             ConnectionString = string.Empty,
-            MigrationsAssembly = "Recovery.BackOffice.Migrations.PostgreSQL",
+            MigrationsAssembly = "Recovery.BackOffice.Migrations.SqlServer",
         });
 
         var environment = Substitute.For<IHostEnvironment>();

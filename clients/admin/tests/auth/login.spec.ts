@@ -20,10 +20,10 @@ test.describe("admin login", () => {
   test("renders the Recovery brand lockup + the welcome form", async ({ page }) => {
     await page.goto("/login");
 
-    // Brand lockup: logo image, the recovery-backoffice wordmark, and the
+    // Brand lockup: logo image, the Recovery BackOffice wordmark, and the
     // "Platform Admin" divider label that marks this as the operator app.
-    await expect(page.getByRole("img", { name: /recovery-backoffice/i }).first()).toBeVisible();
-    await expect(page.getByText("recovery-backoffice").first()).toBeVisible();
+    await expect(page.getByRole("img", { name: /Recovery BackOffice/i }).first()).toBeVisible();
+    await expect(page.getByText("Recovery BackOffice").first()).toBeVisible();
     await expect(page.getByText("Platform Admin").first()).toBeVisible();
 
     // Card heading.

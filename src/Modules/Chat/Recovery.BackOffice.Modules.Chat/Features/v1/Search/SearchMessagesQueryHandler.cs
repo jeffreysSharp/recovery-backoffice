@@ -47,22 +47,14 @@ public sealed class SearchMessagesQueryHandler(
             return new List<MessageDto>().AsReadOnly();
         }
 
-        // Interpolation is parameterized (sanitized literal, not raw SQL); websearch_to_tsquery lets
-        // callers use natural syntax (quoted phrases, OR, -exclude) with no pre-processing.
+        // Parameterized substring search works without a paid/full-text service.
+        // Membership scope and tenant/soft-delete filters remain enforced by EF.
         int offset = PaginationExtensions.GetOffset(page, pageSize);
-        FormattableString sql = $@"
-SELECT m.*
-FROM chat.""Messages"" m
-WHERE m.""ChannelId"" = ANY({allowedChannelIds.ToArray()})
-  AND m.""DeletedAtUtc"" IS NULL
-  AND m.""BodyTsv"" @@ websearch_to_tsquery('english', {query.Q})
-ORDER BY ts_rank(m.""BodyTsv"", websearch_to_tsquery('english', {query.Q})) DESC,
-         m.""Id"" DESC
-LIMIT {pageSize} OFFSET {offset}
-";
-
         var rows = await db.Messages
-            .FromSqlInterpolated(sql)
+            .Where(m => allowedChannelIds.Contains(m.ChannelId)
+                && m.DeletedAtUtc == null && EF.Functions.Like(EF.Functions.Collate(m.Body, "Latin1_General_100_CI_AS"), $"%{query.Q}%"))
+            .OrderByDescending(m => m.CreatedAtUtc).ThenByDescending(m => m.Id)
+            .Skip(offset).Take(pageSize)
             .AsNoTracking()
             .Include(m => m.Attachments)
             .Include(m => m.Mentions)

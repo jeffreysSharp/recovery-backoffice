@@ -9,7 +9,7 @@ namespace Recovery.BackOffice.Multitenancy.Tests;
 
 public class TenantStoreDrainTargetProviderTests
 {
-    private const string AcmeConnection = "Host=acme;Database=acme;Username=u;Password=p";
+    private const string AcmeConnection = "Server=acme;Database=acme;User Id=u;Password=p";
 
     [Fact]
     public async Task Returns_Default_Plus_One_Target_Per_Distinct_Connection_String()
@@ -19,7 +19,7 @@ public class TenantStoreDrainTargetProviderTests
             Tenant("shared-b", connectionString: null),
             Tenant("acme", AcmeConnection),
             Tenant("acme-2", AcmeConnection),
-            Tenant("gone", "Host=gone;Database=gone;Username=u;Password=p", isActive: false)));
+            Tenant("gone", "Server=gone;Database=gone;User Id=u;Password=p", isActive: false)));
 
         var targets = await provider.GetTargetsAsync(CancellationToken.None);
 

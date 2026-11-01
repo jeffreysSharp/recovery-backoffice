@@ -111,7 +111,7 @@ public sealed class AdminSessionManagementTests
         var user = await IdentityUserSeeder.CreateLoginableUserAsync(_factory, adminClient, "sess-search");
         await _auth.GetTokenAsync(user.Email, user.Password);
 
-        // Act — search by the user's email (ILike on user email/name/ip).
+        // Act — search by the user's email (Like on user email/name/ip).
         var response = await adminClient.GetAsync(
             $"{TestConstants.IdentityBasePath}/sessions?search={Uri.EscapeDataString(user.Email)}");
 

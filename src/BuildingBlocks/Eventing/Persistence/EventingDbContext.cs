@@ -41,6 +41,7 @@ public class EventingDbContext : BaseDbContext
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
 
+
         modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration(EventingConstants.SchemaName));
         modelBuilder.ApplyConfiguration(new InboxMessageConfiguration(EventingConstants.SchemaName));
 

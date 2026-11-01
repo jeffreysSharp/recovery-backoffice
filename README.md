@@ -6,7 +6,7 @@ Backend modular .NET 10 e aplicações React para a plataforma Recovery. As regr
 
 - `src/BuildingBlocks`: infraestrutura compartilhada.
 - `src/Modules`: módulos e contratos públicos.
-- `src/Host`: API, AppHost, migrador e migrações PostgreSQL.
+- `src/Host`: API, AppHost, migrador e migrações SQL Server.
 - `src/Tests`: testes unitários, integração e arquitetura.
 - `clients/admin` e `clients/dashboard`: aplicações React.
 - `docs`: regras, decisões e referência técnica.

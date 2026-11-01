@@ -17,13 +17,13 @@ public sealed class ConnectionStringValidatorTests
     #region Happy Path
 
     [Fact]
-    public void TryValidate_Should_ReturnTrue_When_PostgresConnectionStringValid()
+    public void TryValidate_Should_ReturnTrue_When_SqlServerConnectionStringValid()
     {
         // Arrange
-        var sut = Build(DbProviders.PostgreSQL);
+        var sut = Build(DbProviders.MSSQL);
 
         // Act
-        var result = sut.TryValidate("Host=localhost;Port=5432;Database=recovery;Username=postgres;Password=pwd");
+        var result = sut.TryValidate("Server=localhost;Database=recovery;User Id=sa;Password=pwd");
 
         // Assert
         result.ShouldBeTrue();
@@ -45,8 +45,8 @@ public sealed class ConnectionStringValidatorTests
     [Fact]
     public void TryValidate_Should_HonorExplicitProviderOverride_When_ProvidedArgument()
     {
-        // Arrange — configured provider is Postgres, but call passes MSSQL explicitly.
-        var sut = Build(DbProviders.PostgreSQL);
+        // Arrange — configured provider is SqlServer, but call passes MSSQL explicitly.
+        var sut = Build(DbProviders.MSSQL);
 
         // Act
         var result = sut.TryValidate("Server=localhost;Database=recovery;", DbProviders.MSSQL);
@@ -60,7 +60,7 @@ public sealed class ConnectionStringValidatorTests
     #region Edge Cases
 
     [Fact]
-    public void TryValidate_Should_ReturnTrue_When_ProviderUnknown()
+    public void TryValidate_Should_ReturnFalse_When_ProviderUnknown()
     {
         // Arrange — unknown provider falls through default arm without parsing.
         var sut = Build("SQLITE");
@@ -69,17 +69,17 @@ public sealed class ConnectionStringValidatorTests
         var result = sut.TryValidate("any-string");
 
         // Assert
-        result.ShouldBeTrue();
+        result.ShouldBeFalse();
     }
 
     [Fact]
-    public void TryValidate_Should_ReturnFalse_When_PostgresConnectionStringMalformed()
+    public void TryValidate_Should_ReturnFalse_When_SqlServerConnectionStringMalformed()
     {
         // Arrange
-        var sut = Build(DbProviders.PostgreSQL);
+        var sut = Build(DbProviders.MSSQL);
 
         // Act — unknown keyword triggers ArgumentException in the builder.
-        var result = sut.TryValidate("Host=localhost;ThisKeyIsNotValid=oops");
+        var result = sut.TryValidate("Server=localhost;ThisKeyIsNotValid=oops");
 
         // Assert
         result.ShouldBeFalse();
@@ -89,7 +89,7 @@ public sealed class ConnectionStringValidatorTests
     public void TryValidate_Should_ReturnTrue_When_EmptyOrWhitespace()
     {
         // Arrange — builders accept empty/whitespace as a valid (empty) connection string.
-        var sut = Build(DbProviders.PostgreSQL);
+        var sut = Build(DbProviders.MSSQL);
 
         // Act & Assert
         sut.TryValidate(string.Empty).ShouldBeTrue();

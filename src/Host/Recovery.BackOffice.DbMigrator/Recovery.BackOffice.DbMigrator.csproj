@@ -47,7 +47,7 @@
     <ProjectReference Include="..\..\Modules\Tickets\Recovery.BackOffice.Modules.Tickets\Recovery.BackOffice.Modules.Tickets.csproj" />
     <ProjectReference Include="..\..\Modules\Tickets\Recovery.BackOffice.Modules.Tickets.Contracts\Recovery.BackOffice.Modules.Tickets.Contracts.csproj" />
     <ProjectReference Include="..\..\Modules\Webhooks\Recovery.BackOffice.Modules.Webhooks\Recovery.BackOffice.Modules.Webhooks.csproj" />
-    <ProjectReference Include="..\Recovery.BackOffice.Migrations.PostgreSQL\Recovery.BackOffice.Migrations.PostgreSQL.csproj" />
+    <ProjectReference Include="..\Recovery.BackOffice.Migrations.SqlServer\Recovery.BackOffice.Migrations.SqlServer.csproj" />
   </ItemGroup>
 
   <!-- Share configuration with the API so connection strings + tenant options

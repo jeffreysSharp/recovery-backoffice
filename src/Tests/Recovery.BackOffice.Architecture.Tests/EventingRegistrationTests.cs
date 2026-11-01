@@ -20,9 +20,9 @@ public class EventingRegistrationTests
         return new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
-                ["DatabaseOptions:Provider"] = "postgresql",
-                ["DatabaseOptions:ConnectionString"] = "Host=arch;Database=arch;Username=arch;Password=arch",
-                ["DatabaseOptions:MigrationsAssembly"] = "Recovery.BackOffice.Migrations.PostgreSQL",
+                ["DatabaseOptions:Provider"] = "MSSQL",
+                ["DatabaseOptions:ConnectionString"] = "Server=localhost;Database=arch;Integrated Security=true;TrustServerCertificate=true",
+                ["DatabaseOptions:MigrationsAssembly"] = "Recovery.BackOffice.Migrations.SqlServer",
             })
             .Build();
     }

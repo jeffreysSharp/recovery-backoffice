@@ -19,7 +19,7 @@ namespace Recovery.BackOffice.Modules.Files.Services;
 /// <c>public/*</c> only, so the key has to follow the visibility.
 /// <para>
 /// <b>Serialization.</b> Everything happens while holding the file's row lock (<c>SELECT … FOR UPDATE</c>
-/// on PostgreSQL) inside one transaction, and the row is re-read after the lock is taken. A migration
+/// on SQL Server) inside one transaction, and the row is re-read after the lock is taken. A migration
 /// racing a user's visibility flip, or two flips racing each other, therefore run one after the other,
 /// and each sees the other's result before deciding what to move.
 /// </para>
@@ -161,9 +161,9 @@ public sealed partial class FileStorageRelocator(
     // with stale values, hence the ChangeTracker.Clear() at the start of each attempt.
     private Task<FileAsset?> LoadLockedAsync(Guid fileAssetId, CancellationToken ct)
     {
-        var query = db.Database.IsNpgsql()
+        var query = db.Database.IsSqlServer()
             ? db.FileAssets.FromSqlRaw(
-                $$"""SELECT * FROM "{{FilesDbContext.Schema}}"."FileAssets" WHERE "Id" = {0} FOR UPDATE""",
+                $$"""SELECT * FROM "{{FilesDbContext.Schema}}"."FileAssets" WITH (UPDLOCK, ROWLOCK) WHERE "Id" = {0}""",
                 fileAssetId)
             : db.FileAssets.Where(f => f.Id == fileAssetId); // no portable row lock; single-writer only
 

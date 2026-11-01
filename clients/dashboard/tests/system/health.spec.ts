@@ -36,7 +36,7 @@ test.describe("system/health", () => {
       READY,
       readiness("Healthy", [
         { name: "self", status: "Healthy", description: "Liveness", durationMs: 1.2 },
-        { name: "postgres-db", status: "Healthy", description: "Primary database", durationMs: 12 },
+        { name: "sqlserver-db", status: "Healthy", description: "Primary database", durationMs: 12 },
         { name: "redis", status: "Healthy", durationMs: 3 },
       ]),
     );
@@ -55,7 +55,7 @@ test.describe("system/health", () => {
       page.getByRole("heading", { name: "Dependencies", level: 2 }),
     ).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "postgres-db" }),
+      page.getByRole("heading", { name: "sqlserver-db" }),
     ).toBeVisible();
     await expect(page.getByRole("heading", { name: "redis" })).toBeVisible();
   });

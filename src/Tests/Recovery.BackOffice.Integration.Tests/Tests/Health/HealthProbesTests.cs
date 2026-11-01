@@ -30,7 +30,7 @@ public sealed class HealthProbesTests
         var response = await client.GetAsync("/health/ready");
 
         // All registered health checks should pass in the integration test setup
-        // (PostgreSQL testcontainer is up, Hangfire in-memory storage is running).
+        // (SQL Server testcontainer is up, Hangfire in-memory storage is running).
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 

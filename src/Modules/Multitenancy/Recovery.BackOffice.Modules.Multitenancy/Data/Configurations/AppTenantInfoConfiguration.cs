@@ -13,7 +13,7 @@ public class AppTenantInfoConfiguration : IEntityTypeConfiguration<AppTenantInfo
     {
         ArgumentNullException.ThrowIfNull(builder);
 
-        builder.ToTable("Tenants", MultitenancyConstants.Schema);
+        builder.ToTable("Tenants", MultitenancyConstants.Schema, t => t.HasCheckConstraint("CK_Tenants_Json", "ISJSON([QuotaLimits]) = 1"));
 
         builder.Property(t => t.Plan).HasMaxLength(64);
 
@@ -24,7 +24,7 @@ public class AppTenantInfoConfiguration : IEntityTypeConfiguration<AppTenantInfo
                     ? new Dictionary<QuotaResource, long>()
                     : JsonSerializer.Deserialize<Dictionary<QuotaResource, long>>(v, (JsonSerializerOptions?)null)
                         ?? new Dictionary<QuotaResource, long>())
-            .HasColumnType("jsonb")
+            .HasColumnType("nvarchar(max)")
             .Metadata.SetValueComparer(new ValueComparer<Dictionary<QuotaResource, long>>(
                 (a, b) => ReferenceEquals(a, b) || (a != null && b != null && a.SequenceEqual(b)),
                 v => v.Aggregate(0, (h, kv) => HashCode.Combine(h, (int)kv.Key, kv.Value.GetHashCode())),

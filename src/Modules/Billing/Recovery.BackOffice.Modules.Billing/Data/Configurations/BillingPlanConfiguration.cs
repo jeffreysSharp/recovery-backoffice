@@ -12,7 +12,7 @@ public sealed class BillingPlanConfiguration : IEntityTypeConfiguration<BillingP
     public void Configure(EntityTypeBuilder<BillingPlan> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
-        builder.ToTable("Plans");
+        builder.ToTable("Plans", t => t.HasCheckConstraint("CK_Plans_Json", "ISJSON([OverageRates]) = 1"));
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Key).IsRequired().HasMaxLength(64);
         builder.HasIndex(x => x.Key).IsUnique();
@@ -31,7 +31,7 @@ public sealed class BillingPlanConfiguration : IEntityTypeConfiguration<BillingP
             m.Property(p => p.Currency).HasColumnName("AnnualPriceCurrency").HasMaxLength(8);
         });
 
-        // Overage rates map to jsonb so the plan's pricing schedule is a single column.
+        // Overage rates map to JSON text so the plan's pricing schedule is a single column.
         builder.Property<Dictionary<QuotaResource, decimal>>("_overageRates")
             .HasField("_overageRates")
             .UsePropertyAccessMode(PropertyAccessMode.Field)
@@ -41,9 +41,9 @@ public sealed class BillingPlanConfiguration : IEntityTypeConfiguration<BillingP
                     ? new Dictionary<QuotaResource, decimal>()
                     : JsonSerializer.Deserialize<Dictionary<QuotaResource, decimal>>(v, (JsonSerializerOptions?)null)
                         ?? new Dictionary<QuotaResource, decimal>())
-            .HasColumnType("jsonb")
+            .HasColumnType("nvarchar(max)")
             .HasColumnName("OverageRates")
-            .HasDefaultValueSql("'{}'::jsonb")
+            .HasDefaultValueSql("N'{}'")
             .Metadata.SetValueComparer(new ValueComparer<Dictionary<QuotaResource, decimal>>(
                 (a, b) => ReferenceEquals(a, b) || (a != null && b != null && a.SequenceEqual(b)),
                 v => v.Aggregate(0, (h, kv) => HashCode.Combine(h, (int)kv.Key, kv.Value.GetHashCode())),

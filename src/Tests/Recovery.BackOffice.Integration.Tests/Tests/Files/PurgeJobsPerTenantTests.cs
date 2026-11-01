@@ -13,7 +13,7 @@ using Recovery.BackOffice.Integration.Tests.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
+using Microsoft.Data.SqlClient;
 
 namespace Recovery.BackOffice.Integration.Tests.Tests.Files;
 
@@ -125,9 +125,9 @@ public sealed class PurgeJobsPerTenantTests
 
         var defaultConnection = _factory.Services.GetRequiredService<IConfiguration>()["DatabaseOptions:ConnectionString"];
         defaultConnection.ShouldNotBeNullOrWhiteSpace();
-        var dedicatedConnection = new NpgsqlConnectionStringBuilder(defaultConnection)
+        var dedicatedConnection = new SqlConnectionStringBuilder(defaultConnection)
         {
-            Database = $"recovery_{prefix.Replace('-', '_')}_{uniqueId}",
+            InitialCatalog = $"recovery_{prefix.Replace('-', '_')}_{uniqueId}",
         }.ConnectionString;
 
         await CreateTenantAsync(rootClient, sharedTenantId, connectionString: null);

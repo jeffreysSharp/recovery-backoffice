@@ -94,19 +94,9 @@ output "migrator" {
 # Database Outputs
 ################################################################################
 
-output "rds_endpoint" {
-  description = "RDS endpoint."
-  value       = module.rds.endpoint
-}
-
-output "rds_port" {
-  description = "RDS port."
-  value       = module.rds.port
-}
-
-output "rds_secret_arn" {
-  description = "RDS Secrets Manager secret ARN (if manage_master_user_password is true)."
-  value       = module.rds.secret_arn
+output "database_connection_secret_arn" {
+  description = "Externally provisioned SQL Server connection secret."
+  value = var.db_connection_secret_arn
 }
 
 ################################################################################

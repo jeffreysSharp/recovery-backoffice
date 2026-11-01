@@ -129,6 +129,7 @@ test.describe("files — My files / Shared tabs", () => {
     await mockJsonResponse(page, "**/api/v1/files/shared**", []);
 
     await page.goto("/files");
+    await expect(page.getByText(FILE_REPORT.originalFileName).last()).toBeVisible();
     await page.getByRole("tab", { name: /shared in tenant/i }).click();
 
     await expect(page.getByRole("heading", { name: /nothing shared yet/i })).toBeVisible();

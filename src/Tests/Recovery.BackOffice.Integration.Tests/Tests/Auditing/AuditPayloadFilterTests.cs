@@ -11,10 +11,10 @@ using Recovery.BackOffice.Integration.Tests.Infrastructure;
 namespace Recovery.BackOffice.Integration.Tests.Tests.Auditing;
 
 /// <summary>
-/// Proof tests for the jsonb ILIKE regression: <c>EF.Functions.ILike</c> was applied to the
-/// <c>PayloadJson</c> column, which maps to PostgreSQL <c>jsonb</c>. PostgreSQL has no
-/// <c>like_escape(jsonb, unknown)</c>, so every payload-backed filter crashed with HTTP 500
-/// (and the GetAudits OR-search was fully broken because the jsonb leg poisoned the whole OR).
+/// Proof tests for the JSON text LIKE regression: <c>EF.Functions.Like</c> was applied to the
+/// <c>PayloadJson</c> column, which maps to SQL Server <c>JSON text</c>. SQL Server has no
+/// <c>like_escape(JSON text, unknown)</c>, so every payload-backed filter crashed with HTTP 500
+/// (and the GetAudits OR-search was fully broken because the JSON text leg poisoned the whole OR).
 ///
 /// Each test seeds an AuditRecord with a known payload, then drives the real endpoint with a
 /// filter and asserts the row comes back (no 500). All payloads carry a unique correlation id so
@@ -43,7 +43,7 @@ public sealed class AuditPayloadFilterTests
     #region Happy Path
 
     [Fact]
-    public async Task GetSecurityAudits_Should_ReturnMatchingRow_When_FilteredByActionInJsonbPayload()
+    public async Task GetSecurityAudits_Should_ReturnMatchingRow_When_FilteredByActionInJsonPayload()
     {
         // Arrange
         var correlationId = NewCorrelationId();
@@ -65,7 +65,7 @@ public sealed class AuditPayloadFilterTests
     }
 
     [Fact]
-    public async Task GetExceptionAudits_Should_ReturnMatchingRow_When_FilteredByAreaInJsonbPayload()
+    public async Task GetExceptionAudits_Should_ReturnMatchingRow_When_FilteredByAreaInJsonPayload()
     {
         // Arrange
         var correlationId = NewCorrelationId();
@@ -85,7 +85,7 @@ public sealed class AuditPayloadFilterTests
     }
 
     [Fact]
-    public async Task GetExceptionAudits_Should_ReturnMatchingRow_When_FilteredByExceptionTypeInJsonbPayload()
+    public async Task GetExceptionAudits_Should_ReturnMatchingRow_When_FilteredByExceptionTypeInJsonPayload()
     {
         // Arrange
         var correlationId = NewCorrelationId();
@@ -106,7 +106,7 @@ public sealed class AuditPayloadFilterTests
     }
 
     [Fact]
-    public async Task GetExceptionAudits_Should_ReturnMatchingRow_When_FilteredByRouteOrLocationInJsonbPayload()
+    public async Task GetExceptionAudits_Should_ReturnMatchingRow_When_FilteredByRouteOrLocationInJsonPayload()
     {
         // Arrange
         var correlationId = NewCorrelationId();
@@ -127,10 +127,10 @@ public sealed class AuditPayloadFilterTests
     }
 
     [Fact]
-    public async Task GetAudits_Should_ReturnMatchingRow_When_SearchTermOnlyAppearsInsideJsonbPayload()
+    public async Task GetAudits_Should_ReturnMatchingRow_When_SearchTermOnlyAppearsInsideJsonPayload()
     {
-        // Arrange — the search term lives ONLY in the jsonb payload (not Source/UserName),
-        // so it exercises the jsonb leg of the OR that was previously poisoning the query.
+        // Arrange — the search term lives ONLY in the JSON text payload (not Source/UserName),
+        // so it exercises the JSON text leg of the OR that was previously poisoning the query.
         var correlationId = NewCorrelationId();
         var marker = $"needle{Guid.NewGuid():N}";
         var payload = SerializeException(ExceptionArea.Api, "System.Exception", $"/{marker}/endpoint");
@@ -152,7 +152,7 @@ public sealed class AuditPayloadFilterTests
     public async Task GetAudits_Should_DriveSearchOverRealAsyncWrittenAudit_When_LoggingIn()
     {
         // Arrange — full async write path: a login produces a Security audit via the background
-        // channel worker, then GetAudits?search= filters its jsonb payload (end-to-end fix proof).
+        // channel worker, then GetAudits?search= filters its JSON text payload (end-to-end fix proof).
         await _auth.GetRootAdminTokenAsync();
         using var client = await _auth.CreateRootAdminClientAsync();
 
@@ -215,7 +215,7 @@ public sealed class AuditPayloadFilterTests
     }
 
     /// <summary>
-    /// Inserts a single AuditRecord for the root tenant straight into Postgres. The Finbuckle
+    /// Inserts a single AuditRecord for the root tenant straight into SqlServer. The Finbuckle
     /// tenant context is set INLINE in this method (AsyncLocal gotcha: setting it elsewhere does
     /// not flow into the EF call's scope and the tenant filter NREs).
     /// </summary>

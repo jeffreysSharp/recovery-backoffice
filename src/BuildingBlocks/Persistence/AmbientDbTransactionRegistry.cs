@@ -19,9 +19,7 @@ namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 /// permanently empty and the outbox never enlisted.
 /// </para>
 /// <para>
-/// That failure mode is invisible on PostgreSQL: Npgsql associates a command with whatever
-/// transaction is open on its connection, so the outbox row joins the business transaction anyway.
-/// SQL Server does not — <c>SqlCommand.Transaction</c> must be set explicitly or execution throws
+/// SQL Server requires an explicit command transaction — <c>SqlCommand.Transaction</c> must be set explicitly or execution throws
 /// "BeginExecuteReader requires the command to have a transaction…". Guarded by
 /// <c>AmbientDbTransactionRegistryTests</c>.
 /// </para>

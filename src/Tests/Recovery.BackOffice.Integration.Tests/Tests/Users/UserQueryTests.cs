@@ -193,7 +193,7 @@ public sealed class UserQueryTests
     public async Task SearchUsers_Should_Return400_When_PageNumberIsAbsurdOnEmptyResult()
     {
         // Arrange — regression for #1416: an empty result + huge page number overflowed the
-        // OFFSET into a negative value and PostgreSQL failed the request with a 500.
+        // OFFSET into a negative value and SQL Server failed the request with a 500.
         using var adminClient = await _auth.CreateRootAdminClientAsync();
         var noMatch = $"nomatch{Guid.NewGuid():N}";
 

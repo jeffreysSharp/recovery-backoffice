@@ -65,7 +65,7 @@ Avisos oficiais consultados: [Pkcs](https://github.com/advisories/GHSA-846f-f764
 
 ## Infraestrutura trazida pelo template
 
-AppHost orquestra PostgreSQL, Valkey, RustFS, ferramentas auxiliares, migrador, dados demo, API e dois clientes React. Há Hangfire, notificações, billing, chat, arquivos e webhooks. Esses recursos têm custos de operação e dependências; não precisam entrar todos na aplicação final. Terraform fornecido é direcionado a AWS, não plano Azure aprovado.
+AppHost orquestra SQL Server, Valkey, RustFS, ferramentas auxiliares, migrador, dados demo, API e dois clientes React. Há Hangfire, notificações, billing, chat, arquivos e webhooks. Esses recursos têm custos de operação e dependências; não precisam entrar todos na aplicação final. Terraform fornecido é direcionado a AWS, não plano Azure aprovado.
 
 AppHost contém credenciais/dados de demonstração e configuração de email de teste. Não usar em produção nem promover como configuração corporativa. Não houve envio de dados de negócio ou credenciais Recovery a serviços externos nesta avaliação; nenhum serviço da aplicação foi iniciado.
 

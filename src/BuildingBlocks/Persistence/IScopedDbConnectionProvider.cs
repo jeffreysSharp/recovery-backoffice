@@ -7,8 +7,7 @@ namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 /// that scope.
 ///
 /// Required for cross-context transactions: EF Core can enlist a second context in an existing
-/// transaction only when both contexts use the same connection instance, and Npgsql has no
-/// distributed-transaction promotion to fall back on. Without this, the outbox write is always a
+/// transaction only when both contexts share the physical connection. Otherwise the outbox uses a
 /// separate transaction from the business write it is supposed to accompany.
 /// </summary>
 public interface IScopedDbConnectionProvider

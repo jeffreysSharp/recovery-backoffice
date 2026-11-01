@@ -11,7 +11,7 @@ namespace Recovery.BackOffice.Framework.Tests.Persistence;
 /// <see cref="IDbTransactionInterceptor"/> gives every member a default no-op implementation, so a
 /// registry method whose signature does not match the interface still compiles and is simply never
 /// invoked. The registry then stays empty, the outbox never enlists in the business transaction,
-/// and the transactional-outbox guarantee is silently lost — which PostgreSQL masks, because Npgsql
+/// and the transactional-outbox guarantee is silently lost — which SQL Server masks, because SqlServer
 /// associates commands with the connection's open transaction regardless.
 /// </remarks>
 public class AmbientDbTransactionRegistryTests

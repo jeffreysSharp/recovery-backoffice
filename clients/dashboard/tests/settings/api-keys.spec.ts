@@ -34,14 +34,16 @@ test.describe("settings/api-keys — placeholder", () => {
     await expect(page.getByRole("button", { name: /view roadmap/i })).toBeVisible();
   });
 
-  test("'View roadmap' opens the GitHub repo in a new tab", async ({ page, context }) => {
+  test("'View roadmap' opens the project repository in a new tab", async ({ page, context }) => {
+    const repositoryUrl = "https://dev.azure.com/gauss-platform/recovery-backoffice/_git/recovery-backoffice";
+    await context.route(repositoryUrl, (route) => route.fulfill({ status: 200, body: "Project repository" }));
     await page.goto("/settings/api-keys");
 
     // The handler calls window.open(..., "_blank") — capture the popup.
     const popupPromise = context.waitForEvent("page");
     await page.getByRole("button", { name: /view roadmap/i }).click();
     const popup = await popupPromise;
-    expect(popup.url()).toContain("github.com/recovery-backoffice/dotnet-starter-kit");
+    await expect(popup).toHaveURL(repositoryUrl);
     await popup.close();
   });
 });

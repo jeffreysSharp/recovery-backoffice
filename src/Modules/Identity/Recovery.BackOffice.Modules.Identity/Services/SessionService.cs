@@ -147,9 +147,9 @@ public sealed class SessionService : ISessionService
         {
             string term = search.Trim();
             q = q.Where(s =>
-                (s.User != null && s.User.UserName != null && EF.Functions.ILike(s.User.UserName, $"%{term}%"))
-                || (s.User != null && s.User.Email != null && EF.Functions.ILike(s.User.Email, $"%{term}%"))
-                || (s.IpAddress != null && EF.Functions.ILike(s.IpAddress, $"%{term}%")));
+                (s.User != null && s.User.UserName != null && EF.Functions.Like(EF.Functions.Collate(s.User.UserName, "Latin1_General_100_CI_AS"), $"%{term}%"))
+                || (s.User != null && s.User.Email != null && EF.Functions.Like(EF.Functions.Collate(s.User.Email, "Latin1_General_100_CI_AS"), $"%{term}%"))
+                || (s.IpAddress != null && EF.Functions.Like(EF.Functions.Collate(s.IpAddress, "Latin1_General_100_CI_AS"), $"%{term}%")));
         }
 
         long total = await q.LongCountAsync(cancellationToken);

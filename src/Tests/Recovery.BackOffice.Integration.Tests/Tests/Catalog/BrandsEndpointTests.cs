@@ -63,7 +63,7 @@ public sealed class BrandsEndpointTests
     public async Task SearchBrands_Should_ReturnEmptyPage_When_PageNumberIsAbsurdOnEmptyResult()
     {
         // Regression for #1416: the hand-rolled (page - 1) * size overflowed int into a negative
-        // OFFSET, which PostgreSQL rejects — the request failed with a 500 instead of an empty page.
+        // OFFSET, which SQL Server rejects — the request failed with a 500 instead of an empty page.
         using var client = await _auth.CreateRootAdminClientAsync();
         var noMatch = UniqueName("NoMatch");
 

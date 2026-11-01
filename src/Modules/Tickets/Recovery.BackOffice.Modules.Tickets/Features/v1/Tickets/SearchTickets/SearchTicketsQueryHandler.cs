@@ -41,9 +41,9 @@ public sealed class SearchTicketsQueryHandler(TicketsDbContext dbContext)
         {
             string term = query.Search.Trim();
             q = q.Where(t =>
-                EF.Functions.ILike(t.Title, $"%{term}%") ||
-                EF.Functions.ILike(t.Number, $"%{term}%") ||
-                (t.Description != null && EF.Functions.ILike(t.Description, $"%{term}%")));
+                EF.Functions.Like(EF.Functions.Collate(t.Title, "Latin1_General_100_CI_AS"), $"%{term}%") ||
+                EF.Functions.Like(EF.Functions.Collate(t.Number, "Latin1_General_100_CI_AS"), $"%{term}%") ||
+                (t.Description != null && EF.Functions.Like(EF.Functions.Collate(t.Description, "Latin1_General_100_CI_AS"), $"%{term}%")));
         }
 
         q = ApplySort(q, query.SortBy, query.SortDir);

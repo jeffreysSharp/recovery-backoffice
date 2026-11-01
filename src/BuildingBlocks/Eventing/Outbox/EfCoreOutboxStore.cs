@@ -73,9 +73,9 @@ public sealed partial class EfCoreOutboxStore : IOutboxStore
         var now = _timeProvider.GetUtcNow().UtcDateTime;
         var until = now.Add(lease);
 
-        if (!_dbContext.Database.IsNpgsql())
+        if (!_dbContext.Database.IsSqlServer())
         {
-            // No portable SKIP LOCKED outside Postgres. Fall back to an unclaimed read, which is
+            // No portable SKIP LOCKED outside SqlServer. Fall back to an unclaimed read, which is
             // safe only while a single dispatcher instance runs.
             LogClaimUnsupported(_dbContext.Database.ProviderName);
             return await _dbContext.Set<OutboxMessage>()
@@ -88,27 +88,23 @@ public sealed partial class EfCoreOutboxStore : IOutboxStore
                 .ConfigureAwait(false);
         }
 
-        // The inner SELECT ... FOR UPDATE SKIP LOCKED picks rows no other transaction holds and
-        // the outer UPDATE stamps the lease on exactly those, in one statement. Two dispatchers
-        // racing therefore partition the batch instead of both publishing the same message.
-        // The schema name is a compile-time constant; every runtime value is parameterised.
+        // Atomic claim: update locks and READPAST partition work across dispatchers.
+        // READCOMMITTEDLOCK also supports Azure SQL databases with RCSI enabled.
         var sql = $$"""
-            UPDATE "{{EventingConstants.SchemaName}}"."OutboxMessages" AS o
-            SET "ClaimedUntilUtc" = {1}, "ClaimedBy" = {2}
-            FROM (
-                SELECT "Id"
-                FROM "{{EventingConstants.SchemaName}}"."OutboxMessages"
-                WHERE "IsDead" = FALSE
-                  AND "ProcessedOnUtc" IS NULL
-                  AND ("NextRetryAt" IS NULL OR "NextRetryAt" <= {0})
-                  AND ("ClaimedUntilUtc" IS NULL OR "ClaimedUntilUtc" < {0})
-                ORDER BY "CreatedOnUtc"
-                LIMIT {3}
-                FOR UPDATE SKIP LOCKED
-            ) AS c
-            WHERE o."Id" = c."Id"
-            RETURNING o.*
+            ;WITH candidates AS (
+                SELECT TOP ({3}) *
+                FROM [{{EventingConstants.SchemaName}}].[OutboxMessages]
+                    WITH (UPDLOCK, READPAST, READCOMMITTEDLOCK)
+                WHERE [IsDead] = 0 AND [ProcessedOnUtc] IS NULL
+                    AND ([NextRetryAt] IS NULL OR [NextRetryAt] <= {0})
+                    AND ([ClaimedUntilUtc] IS NULL OR [ClaimedUntilUtc] < {0})
+                ORDER BY [CreatedOnUtc], [Id]
+            )
+            UPDATE candidates SET [ClaimedUntilUtc] = {1}, [ClaimedBy] = {2}
+            OUTPUT inserted.*;
             """;
+
+
 
         return await _dbContext.Set<OutboxMessage>()
             .FromSqlRaw(sql, now, until, claimedBy, batchSize)

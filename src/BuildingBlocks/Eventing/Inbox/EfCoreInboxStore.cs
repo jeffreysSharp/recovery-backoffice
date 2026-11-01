@@ -1,5 +1,7 @@
 using Recovery.BackOffice.BuildingBlocks.Eventing.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Recovery.BackOffice.BuildingBlocks.Eventing.Inbox;
 
@@ -23,6 +25,7 @@ public sealed class EfCoreInboxStore : IInboxStore
 
     public async Task<bool> HasProcessedAsync(Guid eventId, string handlerName, CancellationToken ct = default)
     {
+        handlerName = NormalizeHandlerName(handlerName);
         return await _dbContext.Set<InboxMessage>()
             .AnyAsync(i => i.Id == eventId && i.HandlerName == handlerName, ct)
             .ConfigureAwait(false);
@@ -30,6 +33,7 @@ public sealed class EfCoreInboxStore : IInboxStore
 
     public async Task MarkProcessedAsync(Guid eventId, string handlerName, string? tenantId, string eventType, CancellationToken ct = default)
     {
+        handlerName = NormalizeHandlerName(handlerName);
         // Idempotent: skip if already marked (race between direct publish and outbox retry)
         bool alreadyProcessed = await _dbContext.Set<InboxMessage>()
             .AnyAsync(i => i.Id == eventId && i.HandlerName == handlerName, ct)
@@ -57,8 +61,17 @@ public sealed class EfCoreInboxStore : IInboxStore
         }
         catch (DbUpdateException) when (!ct.IsCancellationRequested)
         {
-            // Concurrent insert won the race — treat as already processed.
             _dbContext.ChangeTracker.Clear();
+            // Only a row actually committed by another consumer establishes idempotency.
+            // Length, permission and connectivity failures must reach the outbox retry path.
+            if (!await HasProcessedAsync(eventId, handlerName, ct).ConfigureAwait(false)) throw;
         }
+    }
+
+    private static string NormalizeHandlerName(string handlerName)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(handlerName);
+        return handlerName.Length <= 256 ? handlerName
+            : "sha256:" + Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(handlerName)));
     }
 }

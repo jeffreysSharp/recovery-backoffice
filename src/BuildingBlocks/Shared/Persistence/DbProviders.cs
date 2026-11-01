@@ -5,10 +5,6 @@ namespace Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 /// </summary>
 public static class DbProviders
 {
-    /// <summary>
-    /// PostgreSQL database provider.
-    /// </summary>
-    public const string PostgreSQL = "POSTGRESQL";
 
     /// <summary>
     /// Microsoft SQL Server (MSSQL) database provider.

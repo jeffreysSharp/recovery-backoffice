@@ -36,8 +36,8 @@ public sealed class DiscoverChannelsQueryHandler(
         {
             var term = q.Search.Trim();
             query = query.Where(c =>
-                EF.Functions.ILike(c.Name!, $"%{term}%")
-                || EF.Functions.ILike(c.Slug!, $"%{term}%"));
+                EF.Functions.Like(EF.Functions.Collate(c.Name!, "Latin1_General_100_CI_AS"), $"%{term}%")
+                || EF.Functions.Like(EF.Functions.Collate(c.Slug!, "Latin1_General_100_CI_AS"), $"%{term}%"));
         }
 
         var channels = await query

@@ -17,7 +17,7 @@ namespace Recovery.BackOffice.Integration.Tests.Tests.Multitenancy;
 /// connection string pointed at a port nothing listens on (127.0.0.1:1) is therefore accepted,
 /// persisted on the tenant, and — because <c>BaseDbContext.OnConfiguring</c> routes a tenant
 /// with a non-empty connection string to that DB — the Migrations step's
-/// <c>GetPendingMigrationsAsync</c> throws a real Npgsql connection failure. The
+/// <c>GetPendingMigrationsAsync</c> throws a real SqlServer connection failure. The
 /// <c>TenantProvisioningJob</c> catch block converts that to
 /// <c>MarkFailedAsync(..., Migrations, ...)</c>. No production code or shared test infra is
 /// modified; the failure flows through the exact production pipeline.
@@ -34,7 +34,7 @@ public sealed class TenantProvisioningFailureTests
     // Well-formed (passes ConnectionStringValidator) but unreachable: port 1 refuses
     // connections immediately, and the short timeouts keep the failing job fast.
     private const string UnreachableConnectionString =
-        "Host=127.0.0.1;Port=1;Database=does_not_exist;Username=postgres;Password=x;Timeout=3;Command Timeout=3";
+        "Server=127.0.0.1,1;Database=does_not_exist;User Id=sa;Password=NotARealPassword123!;Connect Timeout=3;TrustServerCertificate=true";
 
     private readonly RecoveryWebApplicationFactory _factory;
     private readonly AuthHelper _auth;
