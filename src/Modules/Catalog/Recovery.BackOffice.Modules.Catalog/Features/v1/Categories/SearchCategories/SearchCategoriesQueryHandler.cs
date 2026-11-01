@@ -30,8 +30,8 @@ public sealed class SearchCategoriesQueryHandler(CatalogDbContext dbContext)
         {
             string term = query.Search.Trim();
             q = q.Where(c =>
-                EF.Functions.ILike(c.Name, $"%{term}%") ||
-                EF.Functions.ILike(c.Slug, $"%{term}%"));
+                EF.Functions.Like(EF.Functions.Collate(c.Name, "Latin1_General_100_CI_AS"), $"%{term}%") ||
+                EF.Functions.Like(EF.Functions.Collate(c.Slug, "Latin1_General_100_CI_AS"), $"%{term}%"));
         }
 
         q = ApplySort(q, query.SortBy, query.SortDir);

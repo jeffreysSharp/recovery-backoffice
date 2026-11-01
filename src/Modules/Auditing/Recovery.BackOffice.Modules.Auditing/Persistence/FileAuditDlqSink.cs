@@ -10,7 +10,7 @@ namespace Recovery.BackOffice.Modules.Auditing.Persistence;
 /// Writes dead-lettered audit envelopes as JSONL to a daily-rotated file
 /// under <c>{ContentRoot}/audit-dlq/audit-dlq-{yyyy-MM-dd}.jsonl</c>.
 ///
-/// File-based deliberately: it has no dependency on Postgres, Redis, or
+/// File-based deliberately: it has no dependency on SqlServer, Redis, or
 /// any other infrastructure that might be the reason the primary sink
 /// failed in the first place. Operators are expected to ship the file
 /// off-host (Filebeat, Vector, etc.) and replay into the warehouse out

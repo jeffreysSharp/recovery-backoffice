@@ -26,7 +26,7 @@ public sealed class AuditRetentionOptions
 
     /// <summary>
     /// Maximum rows deleted per <c>ExecuteDeleteAsync</c> call. Smaller
-    /// batches lower lock pressure on Postgres at the cost of more round
+    /// batches lower lock pressure on SqlServer at the cost of more round
     /// trips. The job loops until it deletes fewer than the batch size.
     /// </summary>
     public int DeleteBatchSize { get; set; } = 5_000;

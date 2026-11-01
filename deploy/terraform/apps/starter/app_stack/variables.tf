@@ -261,114 +261,22 @@ variable "app_s3_lifecycle_rules" {
 # Database Variables
 ################################################################################
 
-variable "db_name" {
-  type        = string
-  description = "Database name."
+variable "db_use_connection_secret" {
+  type = bool
+  description = "Inject an externally managed SQL Server connection string secret."
+  default = true
 }
-
-variable "db_username" {
-  type        = string
-  description = "Database admin username."
+variable "db_connection_secret_arn" {
+  type = string
+  description = "ARN of the existing SQL Server connection string secret."
+  default = null
 }
-
-variable "db_password" {
-  type        = string
-  description = "Database admin password (not used if manage_master_user_password is true)."
-  sensitive   = true
-  default     = null
+variable "db_connection_string" {
+  type = string
+  description = "SQL Server connection string, used only when secret injection is disabled."
+  sensitive = true
+  default = null
 }
-
-variable "db_manage_master_user_password" {
-  type        = bool
-  description = "Let AWS manage the master user password in Secrets Manager."
-  default     = false
-}
-
-variable "db_instance_class" {
-  type        = string
-  description = "RDS instance class. Use Graviton (t4g) for best price-performance."
-  default     = "db.t4g.micro"
-}
-
-variable "db_allocated_storage" {
-  type        = number
-  description = "Allocated storage in GB."
-  default     = 20
-}
-
-variable "db_max_allocated_storage" {
-  type        = number
-  description = "Maximum allocated storage for autoscaling in GB."
-  default     = 100
-}
-
-variable "db_storage_type" {
-  type        = string
-  description = "Storage type (gp2, gp3, io1)."
-  default     = "gp3"
-}
-
-variable "db_engine_version" {
-  type        = string
-  description = "PostgreSQL engine version."
-  default     = "17"
-}
-
-variable "db_multi_az" {
-  type        = bool
-  description = "Enable Multi-AZ deployment."
-  default     = false
-}
-
-variable "db_backup_retention_period" {
-  type        = number
-  description = "Backup retention period in days."
-  default     = 7
-}
-
-variable "db_deletion_protection" {
-  type        = bool
-  description = "Enable deletion protection."
-  default     = false
-}
-
-variable "db_enable_performance_insights" {
-  type        = bool
-  description = "Enable Performance Insights."
-  default     = false
-}
-
-variable "db_enable_enhanced_monitoring" {
-  type        = bool
-  description = "Enable Enhanced Monitoring."
-  default     = false
-}
-
-variable "db_monitoring_interval" {
-  type        = number
-  description = "Enhanced Monitoring interval in seconds."
-  default     = 60
-}
-
-variable "db_create_parameter_group" {
-  type        = bool
-  description = "Create a custom PostgreSQL parameter group with production-tuned settings."
-  default     = false
-}
-
-variable "db_parameters" {
-  type = list(object({
-    name         = string
-    value        = string
-    apply_method = optional(string, "immediate")
-  }))
-  description = "Custom PostgreSQL parameters."
-  default     = []
-}
-
-################################################################################
-# Redis Variables
-################################################################################
 
 variable "redis_node_type" {
   type        = string

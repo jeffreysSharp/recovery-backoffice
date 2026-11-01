@@ -2,12 +2,11 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Npgsql;
 
 namespace Recovery.BackOffice.BuildingBlocks.Persistence;
 
 /// <summary>
-/// Validates database connection strings for supported providers (PostgreSQL, SQL Server).
+/// Validates database connection strings for supported providers (SQL Server, SQL Server).
 /// </summary>
 /// <param name="dbSettings">Database configuration options.</param>
 /// <param name="logger">Logger instance for error tracking.</param>
@@ -27,21 +26,18 @@ public sealed class ConnectionStringValidator(IOptions<DatabaseOptions> dbSettin
         {
             switch (dbProvider?.ToUpperInvariant())
             {
-                case DbProviders.PostgreSQL:
-                    _ = new NpgsqlConnectionStringBuilder(connectionString);
-                    break;
                 case DbProviders.MSSQL:
                     _ = new SqlConnectionStringBuilder(connectionString);
                     break;
                 default:
-                    break;
+                    return false;
             }
 
             return true;
         }
         catch (ArgumentException ex)
         {
-            // Catches invalid connection string format from both NpgsqlConnectionStringBuilder
+            // Catches invalid connection string format from both SqlConnectionStringBuilder
             // and SqlConnectionStringBuilder (both throw ArgumentException for malformed strings).
             _logger.LogError(ex, "Connection String Validation Exception : {Error}", ex.Message);
             return false;

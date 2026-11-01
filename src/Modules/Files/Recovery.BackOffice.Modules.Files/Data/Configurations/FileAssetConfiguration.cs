@@ -42,7 +42,7 @@ public sealed class FileAssetConfiguration : IEntityTypeConfiguration<FileAsset>
         // a subsequent upload that happens to choose the same path (rare, but possible).
         builder.HasIndex(x => x.StorageKey)
             .IsUnique()
-            .HasFilter("\"IsDeleted\" = FALSE")
+            .HasFilter("\"IsDeleted\" = 0")
             .HasDatabaseName("UX_FileAsset_StorageKey");
 
         // Available public files whose key predates the public/ and private/ roots (#1410) — exactly the rows
@@ -51,7 +51,6 @@ public sealed class FileAssetConfiguration : IEntityTypeConfiguration<FileAsset>
         // a root, so once the job has run the index is empty and its per-start scan (whose predicate matches
         // this filter) is a probe of an empty index. Visibility.Public = 0, FileAssetStatus.Available = 1.
         builder.HasIndex(x => x.Id)
-            .HasFilter("\"StorageKey\" NOT LIKE 'public/%' AND \"StorageKey\" NOT LIKE 'private/%' AND \"Visibility\" = 0 AND \"Status\" = 1")
             .HasDatabaseName("IX_FileAsset_LegacyKey");
 
         builder.Ignore(x => x.DomainEvents);

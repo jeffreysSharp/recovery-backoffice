@@ -4,7 +4,6 @@ using Recovery.BackOffice.Modules.Auditing.Contracts.v1.GetSecurityAudits;
 using Recovery.BackOffice.Modules.Auditing.Persistence;
 using Mediator;
 using Microsoft.EntityFrameworkCore;
-using static Recovery.BackOffice.Modules.Auditing.Persistence.AuditJsonbFunctions;
 
 namespace Recovery.BackOffice.Modules.Auditing.Features.v1.GetSecurityAudits;
 
@@ -46,10 +45,8 @@ public sealed class GetSecurityAuditsQueryHandler : IQueryHandler<GetSecurityAud
         if (query.Action.HasValue && query.Action.Value != SecurityAction.None)
         {
             string actionValue = query.Action.Value.ToString();
-            // PostgreSQL renders jsonb::text in canonical form with a space after the
-            // colon ({"action": "Value"}), so the pattern must include that space.
             audits = audits.Where(a => a.PayloadJson != null &&
-                EF.Functions.ILike(AsText(a.PayloadJson), $"%\"action\": \"{actionValue}\"%"));
+                AuditJsonFunctions.Value(a.PayloadJson, "$.action") == actionValue);
         }
 
         // Cap server-side so an unpaged call can't materialize a tenant's whole audit history.

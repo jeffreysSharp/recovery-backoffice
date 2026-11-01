@@ -27,6 +27,7 @@ public class TenantDbContext : EFCoreStoreDbContext<AppTenantInfo>
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
 
+
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TenantDbContext).Assembly);

@@ -140,7 +140,7 @@ public sealed class WebhookSignatureTests
     /// <summary>
     /// Builds a derived factory whose "Webhooks" named HttpClient routes through a recording transport
     /// instead of a real socket. This is a test-only DI override layered over the shared host; it reuses
-    /// the same Postgres container/config (so the seeded root tenant and migrated webhook schema are
+    /// the same SqlServer container/config (so the seeded root tenant and migrated webhook schema are
     /// visible). No production code or seam is touched.
     /// </summary>
     private WebApplicationFactory<Program> CreateCapturingFactory(RequestCapture capture) =>

@@ -4,7 +4,7 @@ using Recovery.BackOffice.BuildingBlocks.Shared.Multitenancy;
 using Recovery.BackOffice.Modules.Multitenancy;
 using Recovery.BackOffice.Modules.Multitenancy.Data;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Testcontainers.PostgreSql;
+using Testcontainers.MsSql;
 
 namespace Recovery.BackOffice.Integration.Tests.Tests.Health;
 
@@ -13,23 +13,21 @@ namespace Recovery.BackOffice.Integration.Tests.Tests.Health;
 /// gate added when API-side auto-migration was removed. Asserts that the check returns
 /// <c>Unhealthy</c> against an unmigrated database and <c>Healthy</c> after the schema is
 /// brought to head (the exact transition <c>Recovery.BackOffice.DbMigrator</c> performs in production).
-/// Uses a real Postgres testcontainer + an in-memory <see cref="IMultiTenantStore{TTenantInfo}"/>
+/// Uses a real SqlServer testcontainer + an in-memory <see cref="IMultiTenantStore{TTenantInfo}"/>
 /// to keep the test independent of the shared <c>RecoveryWebApplicationFactory</c> — avoiding
 /// the global Hangfire state that would otherwise leak across test classes.
 /// </summary>
 public sealed class TenantMigrationsHealthCheckTests : IAsyncLifetime
 {
-    private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder("postgres:17-alpine")
-        .WithDatabase("recovery_migrations_check")
-        .WithUsername("postgres")
-        .WithPassword("integration_test_pwd")
+    private readonly MsSqlContainer _sqlServer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest")
+        .WithPassword("Integration_Test_Only123!")
         .WithAutoRemove(true)
         .WithCleanUp(true)
         .Build();
 
-    public Task InitializeAsync() => _postgres.StartAsync();
+    public async Task InitializeAsync() { await _sqlServer.StartAsync(); await CreateDatabaseAsync(); }
 
-    public Task DisposeAsync() => _postgres.DisposeAsync().AsTask();
+    public Task DisposeAsync() => _sqlServer.DisposeAsync().AsTask();
 
     [Fact]
     public async Task CheckHealthAsync_Should_TransitionFromUnhealthyToHealthy_AsMigrationsApply()
@@ -83,15 +81,15 @@ public sealed class TenantMigrationsHealthCheckTests : IAsyncLifetime
     {
         var connectionString = badConnectionString
             // Reserved discard port — refuses connections immediately.
-            ? "Host=127.0.0.1;Port=1;Database=does_not_exist;Username=postgres;Password=x;Timeout=2;Command Timeout=2"
-            : _postgres.GetConnectionString();
+            ? "Server=127.0.0.1,1;Database=does_not_exist;User Id=sa;Password=NotARealPassword123!;Connect Timeout=2;TrustServerCertificate=true"
+            : GetDatabaseConnectionString();
 
         var services = new ServiceCollection();
         services.AddLogging();
         services.AddSingleton<IMultiTenantStore<AppTenantInfo>>(new SingleTenantStore());
         services.AddScoped<IMultiTenantContextSetter, FakeMultiTenantContextSetter>();
         services.AddDbContext<TenantDbContext>(opts =>
-            opts.UseNpgsql(connectionString, b => b.MigrationsAssembly("Recovery.BackOffice.Migrations.PostgreSQL")));
+            opts.UseSqlServer(connectionString, b => b.MigrationsAssembly("Recovery.BackOffice.Migrations.SqlServer")));
         return services.BuildServiceProvider();
     }
 
@@ -123,5 +121,17 @@ public sealed class TenantMigrationsHealthCheckTests : IAsyncLifetime
     {
         public IMultiTenantContext MultiTenantContext { get; set; } = new MultiTenantContext<AppTenantInfo>(
             new AppTenantInfo("placeholder", "placeholder", string.Empty, "x@x", null));
+    }
+
+    private string GetDatabaseConnectionString() => new Microsoft.Data.SqlClient.SqlConnectionStringBuilder(_sqlServer.GetConnectionString())
+    { InitialCatalog = "RecoveryMigrationsCheck" }.ConnectionString;
+
+    private async Task CreateDatabaseAsync()
+    {
+        await using var connection = new Microsoft.Data.SqlClient.SqlConnection(_sqlServer.GetConnectionString());
+        await connection.OpenAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = "CREATE DATABASE [RecoveryMigrationsCheck]";
+        await command.ExecuteNonQueryAsync();
     }
 }

@@ -30,7 +30,7 @@ test.describe("login — page chrome", () => {
 
   test("renders the Recovery logo lockup with the .NET 10 caption", async ({ page }) => {
     await page.goto("/login");
-    await expect(page.getByRole("img", { name: /recovery-backoffice/i })).toBeVisible();
+    await expect(page.getByRole("img", { name: /Recovery BackOffice/i })).toBeVisible();
     await expect(page.getByText(/\.NET 10 Starter Kit/i)).toBeVisible();
     await expect(page.getByRole("heading", { name: /welcome back/i })).toBeVisible();
     await expect(page.getByText(/sign in to your account/i)).toBeVisible();

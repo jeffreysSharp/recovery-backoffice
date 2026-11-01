@@ -40,9 +40,9 @@ public sealed class SearchProductsQueryHandler(CatalogDbContext dbContext)
         {
             string term = query.Search.Trim();
             q = q.Where(p =>
-                EF.Functions.ILike(p.Name, $"%{term}%") ||
-                EF.Functions.ILike(p.Sku, $"%{term}%") ||
-                EF.Functions.ILike(p.Slug, $"%{term}%"));
+                EF.Functions.Like(EF.Functions.Collate(p.Name, "Latin1_General_100_CI_AS"), $"%{term}%") ||
+                EF.Functions.Like(EF.Functions.Collate(p.Sku, "Latin1_General_100_CI_AS"), $"%{term}%") ||
+                EF.Functions.Like(EF.Functions.Collate(p.Slug, "Latin1_General_100_CI_AS"), $"%{term}%"));
         }
 
         q = ApplySort(q, query.SortBy, query.SortDir);

@@ -54,6 +54,7 @@ public class IdentityDbContext : MultiTenantIdentityDbContext<RecoveryUser,
     {
         ArgumentNullException.ThrowIfNull(builder);
 
+
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(IdentityDbContext).Assembly);
 

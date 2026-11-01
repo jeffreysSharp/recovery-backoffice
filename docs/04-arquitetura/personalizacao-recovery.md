@@ -13,7 +13,7 @@ Foram substituídos nomes de classes e métodos associados ao gerador, metadados
 - Header de identificação da aplicação: `X-Recovery-App`; clientes e backend foram atualizados juntos.
 - Chaves de armazenamento do navegador, cache e identificadores de autenticação foram renomeados. Sessões anteriores devem ser descartadas; autenticar novamente.
 - O prefixo de volumes Docker deriva do novo AppHost. Na próxima execução, o Aspire usará novos nomes e poderá inicializar um novo ambiente de demonstração. Volumes anteriores não foram apagados e seus dados não foram migrados.
-- PostgreSQL e os módulos funcionais existentes foram mantidos. A mudança não implementa as regras de negócio refinadas nem converte o banco para SQL Server.
+- SQL Server e os módulos funcionais existentes foram mantidos. A mudança não implementa as regras de negócio refinadas nem converte o banco para SQL Server.
 - A pasta temporária de download e geração foi removida. A origem continua recuperável pelo commit upstream registrado nos avisos legais e no histórico.
 
 ## Rastreabilidade

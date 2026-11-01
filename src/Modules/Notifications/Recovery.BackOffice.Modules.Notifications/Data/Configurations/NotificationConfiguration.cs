@@ -8,7 +8,7 @@ internal sealed class NotificationConfiguration : IEntityTypeConfiguration<Notif
 {
     public void Configure(EntityTypeBuilder<Notification> builder)
     {
-        builder.ToTable("Notifications");
+        builder.ToTable("Notifications", t => t.HasCheckConstraint("CK_Notifications_Json", "ISJSON([MetadataJson]) = 1"));
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedNever();
 
@@ -18,7 +18,7 @@ internal sealed class NotificationConfiguration : IEntityTypeConfiguration<Notif
         builder.Property(x => x.Body).HasMaxLength(1024);
         builder.Property(x => x.Link).HasMaxLength(512);
         builder.Property(x => x.Source).HasMaxLength(64).IsRequired();
-        builder.Property(x => x.MetadataJson).HasColumnType("jsonb").IsRequired();
+        builder.Property(x => x.MetadataJson).HasColumnType("nvarchar(max)").IsRequired();
         builder.Property(x => x.CreatedAtUtc).IsRequired();
         builder.Property(x => x.ReadAtUtc);
 

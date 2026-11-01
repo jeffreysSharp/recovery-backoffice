@@ -406,81 +406,12 @@ resource "aws_iam_role_policy" "api_task_s3" {
 }
 
 ################################################################################
-# RDS PostgreSQL
+# External SQL Server database
 ################################################################################
 
-module "rds" {
-  source = "../../../modules/rds_postgres"
-
-  name           = "${local.name_prefix}-postgres"
-  vpc_id         = module.network.vpc_id
-  vpc_cidr_block = var.vpc_cidr_block
-  subnet_ids     = module.network.private_subnet_ids
-
-  # Use CIDR block to allow access from private subnets (ECS services)
-  allowed_cidr_blocks = [var.vpc_cidr_block]
-
-  db_name  = var.db_name
-  username = var.db_username
-
-  manage_master_user_password = var.db_manage_master_user_password
-  password                    = var.db_manage_master_user_password ? null : var.db_password
-
-  instance_class        = var.db_instance_class
-  allocated_storage     = var.db_allocated_storage
-  max_allocated_storage = var.db_max_allocated_storage
-  storage_type          = var.db_storage_type
-  engine_version        = var.db_engine_version
-
-  multi_az                  = var.db_multi_az
-  backup_retention_period   = var.db_backup_retention_period
-  deletion_protection       = var.db_deletion_protection
-  skip_final_snapshot       = var.environment == "dev" ? true : false
-  final_snapshot_identifier = var.environment != "dev" ? "${local.name_prefix}-postgres-final" : null
-
-  performance_insights_enabled = var.db_enable_performance_insights
-  monitoring_interval          = var.db_enable_enhanced_monitoring ? var.db_monitoring_interval : 0
-
-  create_parameter_group = var.db_create_parameter_group
-  parameters             = var.db_parameters
-
-  tags = local.common_tags
-}
-
-################################################################################
-# Connection String Secret (for managed password)
-# When using AWS-managed password, we need to create a separate secret that
-# contains the full connection string, constructed using the password from
-# the RDS-managed secret.
-################################################################################
-
-# Read the RDS-managed secret to get the password
-data "aws_secretsmanager_secret_version" "rds_password" {
-  count     = var.db_manage_master_user_password ? 1 : 0
-  secret_id = module.rds.secret_arn
-}
-
-# Create a secret for the full connection string
-resource "aws_secretsmanager_secret" "db_connection_string" {
-  count = var.db_manage_master_user_password ? 1 : 0
-
-  name        = "${var.environment}-db-connection-string"
-  description = "Full PostgreSQL connection string for .NET application"
-
-  tags = local.common_tags
-}
-
-resource "aws_secretsmanager_secret_version" "db_connection_string" {
-  count     = var.db_manage_master_user_password ? 1 : 0
-  secret_id = aws_secretsmanager_secret.db_connection_string[0].id
-
-  secret_string = "Host=${module.rds.endpoint};Port=${module.rds.port};Database=${var.db_name};Username=${var.db_username};Password=${jsondecode(data.aws_secretsmanager_secret_version.rds_password[0].secret_string)["password"]};Pooling=true;SSL Mode=Require;Trust Server Certificate=true;"
-}
-
+# SQL Server is provisioned separately; inject its connection string from Secrets Manager.
 locals {
-  # Connection string for non-managed password (directly in env var)
-  # Only constructed when db_password is provided (i.e., not using managed password)
-  db_connection_string_plain = var.db_manage_master_user_password ? "" : "Host=${module.rds.endpoint};Port=${module.rds.port};Database=${var.db_name};Username=${var.db_username};Password=${var.db_password};Pooling=true;SSL Mode=Require;Trust Server Certificate=true;"
+  db_connection_string_plain = var.db_connection_string
 }
 
 ################################################################################
@@ -647,7 +578,7 @@ module "api_service" {
     },
     # Connection string is injected via env var only when NOT using a managed
     # (Secrets Manager) password; otherwise it arrives via `secrets` below.
-    var.db_manage_master_user_password ? {} : {
+    var.db_use_connection_secret ? {} : {
       DatabaseOptions__ConnectionString = local.db_connection_string_plain
     },
     # CorsOptions__AllowedOrigins__0..N — the React SPA origins plus the app
@@ -661,10 +592,10 @@ module "api_service" {
   # key + Hangfire password always, plus the DB connection string when managed.
   secrets = concat(
     local.app_auth_secrets,
-    var.db_manage_master_user_password ? [
+    var.db_use_connection_secret ? [
       {
         name      = "DatabaseOptions__ConnectionString"
-        valueFrom = aws_secretsmanager_secret.db_connection_string[0].arn
+        valueFrom = var.db_connection_secret_arn
       }
     ] : []
   )
@@ -699,13 +630,13 @@ module "migrator" {
     {
       # Generic-host migrator selects its env from DOTNET_ENVIRONMENT, not ASPNETCORE_ENVIRONMENT.
       DOTNET_ENVIRONMENT                  = local.aspnetcore_environment
-      DatabaseOptions__Provider           = "POSTGRESQL"
-      DatabaseOptions__MigrationsAssembly = "Recovery.BackOffice.Migrations.PostgreSQL"
+      DatabaseOptions__Provider           = "MSSQL"
+      DatabaseOptions__MigrationsAssembly = "Recovery.BackOffice.Migrations.SqlServer"
       HangfireOptions__Username           = var.hangfire_username
     },
     # Plain connection string only when NOT using a managed (Secrets Manager)
     # password; otherwise it arrives via `secrets` below — same as the API.
-    var.db_manage_master_user_password ? {} : {
+    var.db_use_connection_secret ? {} : {
       DatabaseOptions__ConnectionString = local.db_connection_string_plain
     },
     # Seed credentials (when configured) so seeding doesn't depend on the baked
@@ -716,10 +647,10 @@ module "migrator" {
 
   secrets = concat(
     local.app_auth_secrets,
-    var.db_manage_master_user_password ? [
+    var.db_use_connection_secret ? [
       {
         name      = "DatabaseOptions__ConnectionString"
-        valueFrom = aws_secretsmanager_secret.db_connection_string[0].arn
+        valueFrom = var.db_connection_secret_arn
       }
     ] : []
   )
@@ -745,7 +676,7 @@ module "alarms" {
     }
   }
 
-  rds_instance_identifier    = module.rds.identifier
+  rds_instance_identifier    = null
   redis_replication_group_id = module.redis.replication_group_id
   alb_arn_suffix             = module.alb.arn_suffix
 

@@ -10,21 +10,14 @@ var appPrefix = builder.Environment.ApplicationName
     .ToLowerInvariant();
 #pragma warning restore CA1308
 
-// Postgres + pgAdmin sidecar (auto-discovers registered databases); persistent so volumes and saved state survive restarts.
-var postgresServer = builder.AddPostgres("postgres")
-    .WithDataVolume($"{appPrefix}-postgres-data")
-    .WithLifetime(ContainerLifetime.Persistent)
-    .WithPgAdmin(pa => pa
-        .WithHostPort(15050)
-        .WithLifetime(ContainerLifetime.Persistent));
+// SQL Server development database; Azure SQL is configured separately in homologation.
+var sqlServer = builder.AddSqlServer("sqlserver")
+    .WithImageTag("2022-latest")
+    .WithDataVolume($"{appPrefix}-sqlserver-data")
+    .WithLifetime(ContainerLifetime.Persistent);
+var database = sqlServer.AddDatabase("recovery-db");
+var apiSqlConnection = database.Resource.ConnectionStringExpression;
 
-var postgres = postgresServer.AddDatabase("recovery-db");
-
-// Warm pooled-connection floor for the long-running API — Npgsql's default Minimum Pool Size of 0 lets the pool drain to cold, so /health/ready's ~10 concurrent DbContext checks cold-open a cohort at once and intermittently stall the probe; a floor keeps connections warm for reuse.
-var apiPgConnection = ReferenceExpression.Create(
-    $"{postgres.Resource.ConnectionStringExpression};Minimum Pool Size=5");
-
-// Valkey (BSD-3 Redis fork) as a plain container: Aspire 13.4.0 AddRedis() forces TLS-by-default in run mode and never materializes the container, so we drop to plain RESP over TCP. Name stays "redis" so config keys don't churn.
 var redis = builder.AddContainer("redis", "valkey/valkey", "9.1.0")
     .WithEndpoint(targetPort: 6379, scheme: "tcp", name: "tcp")
     .WithVolume($"{appPrefix}-redis-data", "/data")
@@ -85,38 +78,38 @@ var s3ApiEndpoint = rustfs.GetEndpoint("api");
 
 // DB migrator: applies pending migrations + seeds the root admin (admin@root.com), then exits; the API waits for its completion so it never starts against an unmigrated DB. Seed password is a dev-only default.
 var migrator = builder.AddProject<Projects.Recovery_BackOffice_DbMigrator>($"{appPrefix}-db-migrator")
-    .WithReference(postgres)
-    .WaitFor(postgres)
-    .WithEnvironment("DatabaseOptions__Provider", "POSTGRESQL")
-    .WithEnvironment("DatabaseOptions__ConnectionString", postgres.Resource.ConnectionStringExpression)
-    .WithEnvironment("DatabaseOptions__MigrationsAssembly", "Recovery.BackOffice.Migrations.PostgreSQL")
+    .WithReference(database)
+    .WaitFor(database)
+    .WithEnvironment("DatabaseOptions__Provider", "MSSQL")
+    .WithEnvironment("DatabaseOptions__ConnectionString", database.Resource.ConnectionStringExpression)
+    .WithEnvironment("DatabaseOptions__MigrationsAssembly", "Recovery.BackOffice.Migrations.SqlServer")
     .WithEnvironment("Seed__DefaultAdminPassword", "123Pa$$word!")
     .WithArgs("apply", "--seed");
 
 // Demo seeder (dev-only): provisions the acme/globex tenants + demo-login users via seed-demo. DOTNET_ENVIRONMENT=Development is required (console host ignores ASPNETCORE_ENVIRONMENT) or seed-demo refuses to run.
 var demoSeeder = builder.AddProject<Projects.Recovery_BackOffice_DbMigrator>($"{appPrefix}-demo-seeder")
-    .WithReference(postgres)
-    .WaitFor(postgres)
+    .WithReference(database)
+    .WaitFor(database)
     .WaitForCompletion(migrator)
     .WithEnvironment("DOTNET_ENVIRONMENT", "Development")
-    .WithEnvironment("DatabaseOptions__Provider", "POSTGRESQL")
-    .WithEnvironment("DatabaseOptions__ConnectionString", postgres.Resource.ConnectionStringExpression)
-    .WithEnvironment("DatabaseOptions__MigrationsAssembly", "Recovery.BackOffice.Migrations.PostgreSQL")
+    .WithEnvironment("DatabaseOptions__Provider", "MSSQL")
+    .WithEnvironment("DatabaseOptions__ConnectionString", database.Resource.ConnectionStringExpression)
+    .WithEnvironment("DatabaseOptions__MigrationsAssembly", "Recovery.BackOffice.Migrations.SqlServer")
     .WithEnvironment("Seed__DemoPassword", "Password123!")
     .WithArgs("seed-demo");
 
 // API Service
 var api = builder.AddProject<Projects.Recovery_BackOffice_Api>($"{appPrefix}-api")
-    .WithReference(postgres)
-    .WaitFor(postgres)
+    .WithReference(database)
+    .WaitFor(database)
     .WaitFor(redis)
     .WaitForCompletion(s3Init)
     .WaitForCompletion(migrator)
     .WaitForCompletion(demoSeeder)
     .WithExternalHttpEndpoints()
-    .WithEnvironment("DatabaseOptions__Provider", "POSTGRESQL")
-    .WithEnvironment("DatabaseOptions__ConnectionString", apiPgConnection)
-    .WithEnvironment("DatabaseOptions__MigrationsAssembly", "Recovery.BackOffice.Migrations.PostgreSQL")
+    .WithEnvironment("DatabaseOptions__Provider", "MSSQL")
+    .WithEnvironment("DatabaseOptions__ConnectionString", apiSqlConnection)
+    .WithEnvironment("DatabaseOptions__MigrationsAssembly", "Recovery.BackOffice.Migrations.SqlServer")
     .WithEnvironment("CachingOptions__Redis", redisConnectionString)
     .WithEnvironment("CachingOptions__EnableSsl", "false")
     // Hangfire dashboard (/jobs) creds — [Required], Password [MinLength(12)], ValidateOnStart; API won't boot without them. Dev-only, mirrors appsettings.Development.json.

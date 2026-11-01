@@ -46,7 +46,7 @@ public sealed class AuditExceptionAndFilterTests
         using var client = await _auth.CreateRootAdminClientAsync();
         await TriggerApiExceptionAsync(client);
 
-        // Act — Api-area filter exercises the payload ILIKE branch.
+        // Act — Api-area filter exercises the payload LIKE branch.
         var rows = await PollExceptionsAsync(client, $"area={ExceptionArea.Api}",
             r => r.EventType == AuditEventType.Exception);
 
@@ -77,7 +77,7 @@ public sealed class AuditExceptionAndFilterTests
         using var client = await _auth.CreateRootAdminClientAsync();
         await TriggerApiExceptionAsync(client);
 
-        // Act — exercises the exceptionType payload ILIKE branch.
+        // Act — exercises the exceptionType payload LIKE branch.
         var rows = await PollExceptionsAsync(client, "exceptionType=System.Collections.Generic.KeyNotFoundException",
             r => r.EventType == AuditEventType.Exception);
 
@@ -159,7 +159,7 @@ public sealed class AuditExceptionAndFilterTests
         await _auth.GetRootAdminTokenAsync();
         using var client = await _auth.CreateRootAdminClientAsync();
 
-        // Act — exercises the action payload ILIKE branch.
+        // Act — exercises the action payload LIKE branch.
         var rows = await PollSecurityAsync(client, $"action={SecurityAction.TokenIssued}",
             r => r.EventType == AuditEventType.Security);
 
@@ -273,7 +273,7 @@ public sealed class AuditExceptionAndFilterTests
         using var client = await _auth.CreateRootAdminClientAsync();
         await AuditTestHelper.GenerateActivityAuditAsync(client);
 
-        // Act — search hits the UserName/Source/PayloadJson ILIKE branch.
+        // Act — search hits the UserName/Source/PayloadJson LIKE branch.
         var page = await AuditTestHelper.GetAuditsPageAsync(
             client, extraQuery: $"search={Uri.EscapeDataString("audits")}");
 

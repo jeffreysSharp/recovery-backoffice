@@ -255,11 +255,11 @@ public sealed class StorageVisibilityRootTests
         var asset = await SeedLegacyAssetAsync(TestConstants.RootTenantId, "MyFiles", null, Visibility.Public);
         var connectionString = _factory.Services.GetRequiredService<Microsoft.Extensions.Configuration.IConfiguration>()["DatabaseOptions:ConnectionString"];
 
-        await using var connection = new Npgsql.NpgsqlConnection(connectionString);
+        await using var connection = new Microsoft.Data.SqlClient.SqlConnection(connectionString);
         await connection.OpenAsync();
         await using var transaction = await connection.BeginTransactionAsync();
-        await using (var lockRow = new Npgsql.NpgsqlCommand(
-            """SELECT 1 FROM files."FileAssets" WHERE "Id" = @id FOR UPDATE""", connection, transaction))
+        await using (var lockRow = new Microsoft.Data.SqlClient.SqlCommand(
+            """SELECT 1 FROM files."FileAssets" WITH (UPDLOCK, ROWLOCK) WHERE "Id" = @id""", connection, (Microsoft.Data.SqlClient.SqlTransaction)transaction))
         {
             lockRow.Parameters.AddWithValue("id", asset.Id);
             await lockRow.ExecuteScalarAsync();
@@ -268,8 +268,8 @@ public sealed class StorageVisibilityRootTests
         // Act — the job starts while the row is held; the other writer makes the file private and commits.
         var run = RunMigrationJobAsync();
         await Task.Delay(TimeSpan.FromSeconds(2));
-        await using (var makePrivate = new Npgsql.NpgsqlCommand(
-            """UPDATE files."FileAssets" SET "Visibility" = 1 WHERE "Id" = @id""", connection, transaction))
+        await using (var makePrivate = new Microsoft.Data.SqlClient.SqlCommand(
+            """UPDATE files."FileAssets" SET "Visibility" = 1 WHERE "Id" = @id""", connection, (Microsoft.Data.SqlClient.SqlTransaction)transaction))
         {
             makePrivate.Parameters.AddWithValue("id", asset.Id);
             await makePrivate.ExecuteNonQueryAsync();

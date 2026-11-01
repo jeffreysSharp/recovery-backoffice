@@ -47,7 +47,7 @@ public sealed class ListMyChannelsQueryHandler(
                     Unread = db.Messages.Count(msg =>
                         msg.ChannelId == c.Id
                         && msg.DeletedAtUtc == null
-                        && (m.LastReadMessageId == null || msg.Id.CompareTo(m.LastReadMessageId.Value) > 0)),
+                        && (m.LastReadMessageId == null || msg.Id.ToString().CompareTo(m.LastReadMessageId.Value.ToString()) > 0)),
                 })
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);

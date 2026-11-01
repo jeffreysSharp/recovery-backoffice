@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Npgsql;
+
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -85,7 +85,6 @@ public static class Extensions
                     .SetResourceBuilder(resourceBuilder)
                     .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
-                    .AddNpgsqlInstrumentation()
                     .AddRuntimeInstrumentation();
 
                 // Apply histogram buckets for HTTP server duration
@@ -146,7 +145,6 @@ public static class Extensions
                         instrumentation.EnrichWithHttpResponse = EnrichWithHttpResponse;
                     })
                     .AddHttpClientInstrumentation()
-                    .AddNpgsql()
                     .AddEntityFrameworkCoreInstrumentation()
                     .AddRedisInstrumentation(redis =>
                     {

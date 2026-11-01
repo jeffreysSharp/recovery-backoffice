@@ -53,7 +53,7 @@ public sealed class TenantMigrationsTests
         root.ShouldNotBeNull("root tenant must appear in the migration report");
         root.Error.ShouldBeNull();
         root.Provider.ShouldNotBeNullOrEmpty();
-        root.Provider.ShouldContain("Npgsql");
+        root.Provider.ShouldContain("SqlServer");
         root.HasPendingMigrations.ShouldBeFalse();
         root.LastAppliedMigration.ShouldNotBeNullOrEmpty();
         root.PendingMigrations.ShouldBeEmpty();

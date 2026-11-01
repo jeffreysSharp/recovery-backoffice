@@ -38,7 +38,7 @@
     <ProjectReference Include="..\..\Modules\Auditing\Recovery.BackOffice.Modules.Auditing\Recovery.BackOffice.Modules.Auditing.csproj" />
     <ProjectReference Include="..\..\Modules\Identity\Recovery.BackOffice.Modules.Identity\Recovery.BackOffice.Modules.Identity.csproj" />
     <ProjectReference Include="..\..\Modules\Multitenancy\Recovery.BackOffice.Modules.Multitenancy\Recovery.BackOffice.Modules.Multitenancy.csproj" />
-    <ProjectReference Include="..\Recovery.BackOffice.Migrations.PostgreSQL\Recovery.BackOffice.Migrations.PostgreSQL.csproj" />
+    <ProjectReference Include="..\Recovery.BackOffice.Migrations.SqlServer\Recovery.BackOffice.Migrations.SqlServer.csproj" />
     <ProjectReference Include="..\..\Modules\Webhooks\Recovery.BackOffice.Modules.Webhooks\Recovery.BackOffice.Modules.Webhooks.csproj" />
     <ProjectReference Include="..\..\Modules\Billing\Recovery.BackOffice.Modules.Billing\Recovery.BackOffice.Modules.Billing.csproj" />
     <ProjectReference Include="..\..\Modules\Billing\Recovery.BackOffice.Modules.Billing.Contracts\Recovery.BackOffice.Modules.Billing.Contracts.csproj" />

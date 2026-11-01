@@ -90,7 +90,7 @@ function iconForCheck(name: string): React.ComponentType<{ className?: string }>
   if (k === "self") return ShieldCheck;
   if (k === "redis") return Zap;
   if (k === "hangfire") return Timer;
-  if (k.includes("postgres") || k.includes("db") || k.endsWith("-db")) return Database;
+  if (k.includes("sqlserver") || k.includes("db") || k.endsWith("-db")) return Database;
   if (k.includes("storage") || k.includes("disk")) return HardDrive;
   if (k.includes("http") || k.includes("api") || k.includes("webhook")) return Globe;
   return Flame;

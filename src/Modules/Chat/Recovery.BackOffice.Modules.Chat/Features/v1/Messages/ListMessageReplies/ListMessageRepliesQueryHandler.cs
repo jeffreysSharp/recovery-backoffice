@@ -43,11 +43,11 @@ public sealed class ListMessageRepliesQueryHandler(
 
         if (query.Before is { } beforeId)
         {
-            q = q.Where(m => m.Id.CompareTo(beforeId) < 0);
+            q = q.Where(m => m.Id.ToString().CompareTo(beforeId.ToString()) < 0);
         }
 
         var rows = await q
-            .OrderByDescending(m => m.Id)
+            .OrderByDescending(m => m.Id.ToString())
             .Take(query.PageSize)
             .Include(m => m.Attachments)
             .Include(m => m.Mentions)

@@ -128,7 +128,7 @@ public sealed partial class MigrateLegacyPublicFileKeysJob(
     }
 
     // These four predicates are the filter of IX_FileAsset_LegacyKey (Visibility = 0, Status = 1), so
-    // PostgreSQL can answer this from that (normally empty) partial index. Soft-deleted files are included, since a
+    // SQL Server can answer this from that (normally empty) partial index. Soft-deleted files are included, since a
     // restore must bring back a working public URL; the tenant filter stays on. Pending uploads are left
     // to FinalizeUpload, which relocates them when they complete.
     private Task<List<Guid>> LegacyPublicIdsAsync(FilesDbContext db, Guid? lastId, CancellationToken ct)
@@ -136,8 +136,8 @@ public sealed partial class MigrateLegacyPublicFileKeysJob(
         var query = db.FileAssets
             .IgnoreQueryFilters([QueryFilters.SoftDelete])
             .AsNoTracking()
-            .Where(f => !EF.Functions.Like(f.StorageKey, StorageVisibilityRoot.Public + "%")
-                && !EF.Functions.Like(f.StorageKey, StorageVisibilityRoot.Private + "%")
+            .Where(f => !EF.Functions.Like(EF.Functions.Collate(f.StorageKey, "Latin1_General_100_CI_AS"), StorageVisibilityRoot.Public + "%")
+                && !EF.Functions.Like(EF.Functions.Collate(f.StorageKey, "Latin1_General_100_CI_AS"), StorageVisibilityRoot.Private + "%")
                 && f.Visibility == Visibility.Public
                 && f.Status == FileAssetStatus.Available);
 

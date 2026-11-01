@@ -94,6 +94,12 @@ public sealed class TenantService : ITenantService
 
     public async Task MigrateTenantAsync(AppTenantInfo tenant, CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(tenant);
+        if (!string.IsNullOrWhiteSpace(tenant.ConnectionString))
+        {
+            await SqlServerDatabaseProvisioner.EnsureExistsAsync(tenant.ConnectionString, cancellationToken).ConfigureAwait(false);
+        }
+
         using var scope = _serviceProvider.CreateScope();
 
         scope.ServiceProvider.GetRequiredService<IMultiTenantContextSetter>()

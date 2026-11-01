@@ -76,27 +76,8 @@ frontend_cloudfront_price_class = "PriceClass_200"
 # Database
 ################################################################################
 
-db_name                        = "recoverydb"
-db_username                    = "recoveryadmin"
-db_manage_master_user_password = true
-db_instance_class              = "db.t4g.medium"
-db_allocated_storage           = 50
-db_max_allocated_storage       = 200
-db_multi_az                    = true
-db_backup_retention_period     = 30
-db_deletion_protection         = true
-db_enable_performance_insights = true
-db_enable_enhanced_monitoring  = true
-
-# Production-tuned PostgreSQL parameters
-db_create_parameter_group = true
-db_parameters = [
-  { name = "log_min_duration_statement", value = "1000", apply_method = "immediate" },
-  { name = "shared_preload_libraries", value = "pg_stat_statements", apply_method = "pending-reboot" },
-  { name = "pg_stat_statements.track", value = "all", apply_method = "immediate" },
-  { name = "log_connections", value = "1", apply_method = "immediate" },
-  { name = "log_disconnections", value = "1", apply_method = "immediate" }
-]
+# SQL Server is provisioned separately. Supply an existing connection secret in private tfvars.
+db_use_connection_secret = true
 
 ################################################################################
 # Redis

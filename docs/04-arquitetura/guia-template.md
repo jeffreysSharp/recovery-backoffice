@@ -49,5 +49,3 @@ As portas e serviços estão no README gerado. Não reutilizar as credenciais de
 Em 2026-10-31, admin em `http://localhost:5173`, dashboard em `http://localhost:5174` e API pronta em `http://localhost:5030/health/ready` responderam 200. Login demo do tenant `acme` com `admin@acme.com` e senha demo `Password123!` funcionou pelo proxy do dashboard; tokens não foram exibidos. Login root com o padrão do AppHost retornou 401; não foram redefinidas credenciais preexistentes.
 
 Aspire iniciou migrador, seeder e API, mas falhou ao lançar os processos React neste Windows. Frontends foram iniciados separadamente com `npm.cmd run dev`, usando `VITE_API_BASE_URL=http://localhost:5030`. Para reproduzir, abrir dois consoles nas pastas correspondentes e executar esses comandos.
-
-Portas auxiliares foram ajustadas somente na cópia: pgAdmin 15050, RedisInsight 15540, RustFS 19000/19001, para evitar conflitos com serviços já existentes. Nada foi removido dos containers antigos.

@@ -8,10 +8,10 @@ namespace Recovery.BackOffice.BuildingBlocks.Shared.Persistence;
 public sealed class DatabaseOptions : IValidatableObject
 {
     /// <summary>
-    /// The database provider to use. Valid values are <see cref="DbProviders.PostgreSQL"/> or <see cref="DbProviders.MSSQL"/>.
-    /// Defaults to PostgreSQL.
+    /// The database provider to use. Valid values are <see cref="DbProviders.MSSQL"/>.
+    /// Defaults to SQL Server.
     /// </summary>
-    public string Provider { get; set; } = DbProviders.PostgreSQL;
+    public string Provider { get; set; } = DbProviders.MSSQL;
 
     /// <summary>
     /// The connection string used by EF Core DbContexts and related services.

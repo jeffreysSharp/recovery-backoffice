@@ -10,7 +10,7 @@ namespace Recovery.BackOffice.Integration.Tests.Tests.Eventing;
 /// <summary>
 /// Covers audit finding REL-02: a failed outbox message was retried every dispatch cycle with no
 /// backoff, then dead-lettered with no way to recover it. Exercises the real
-/// <see cref="EfCoreOutboxStore"/> over Postgres.
+/// <see cref="EfCoreOutboxStore"/> over SqlServer.
 /// </summary>
 [Collection(RecoveryCollectionDefinition.Name)]
 public sealed class OutboxRetryTests

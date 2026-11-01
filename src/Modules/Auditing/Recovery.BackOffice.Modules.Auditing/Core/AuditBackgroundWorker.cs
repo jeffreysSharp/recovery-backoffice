@@ -135,7 +135,7 @@ public sealed class AuditBackgroundWorker : BackgroundService
     /// <summary>
     /// Attempts to flush <paramref name="batch"/> via the primary sink with
     /// bounded exponential backoff. On exhaustion, hands the batch to the
-    /// dead-letter sink so events survive a Postgres outage. Always clears
+    /// dead-letter sink so events survive a SqlServer outage. Always clears
     /// <paramref name="batch"/> before returning so the caller can re-fill.
     /// </summary>
     private async Task FlushAsync(List<AuditEnvelope> batch, CancellationToken ct)

@@ -60,15 +60,16 @@ public sealed class OutboxAtomicityTests
         var brand = Brand.Create($"atomicity-{Guid.CreateVersion7():N}", null, null);
         var eventId = Guid.CreateVersion7();
 
-        await using (var transaction = await catalog.Database.BeginTransactionAsync())
+        await catalog.Database.CreateExecutionStrategy().ExecuteAsync(async () =>
         {
+            await using var transaction = await catalog.Database.BeginTransactionAsync();
             catalog.Brands.Add(brand);
             await catalog.SaveChangesAsync();
 
             await store.AddAsync(NewEvent(eventId));
 
             await transaction.RollbackAsync();
-        }
+        });
 
         await AssertOutboxRowAsync(eventId, shouldExist: false,
             "the outbox row must not survive a rolled-back business transaction");
@@ -89,15 +90,16 @@ public sealed class OutboxAtomicityTests
         var brand = Brand.Create($"atomicity-{Guid.CreateVersion7():N}", null, null);
         var eventId = Guid.CreateVersion7();
 
-        await using (var transaction = await catalog.Database.BeginTransactionAsync())
+        await catalog.Database.CreateExecutionStrategy().ExecuteAsync(async () =>
         {
+            await using var transaction = await catalog.Database.BeginTransactionAsync();
             catalog.Brands.Add(brand);
             await catalog.SaveChangesAsync();
 
             await store.AddAsync(NewEvent(eventId));
 
             await transaction.CommitAsync();
-        }
+        });
 
         await AssertOutboxRowAsync(eventId, shouldExist: true,
             "enlisting must not swallow the write — a committed transaction keeps both rows");
@@ -133,11 +135,12 @@ public sealed class OutboxAtomicityTests
         var store = scope.ServiceProvider.GetRequiredService<IOutboxStore>();
 
         var insideId = Guid.CreateVersion7();
-        await using (var transaction = await catalog.Database.BeginTransactionAsync())
+        await catalog.Database.CreateExecutionStrategy().ExecuteAsync(async () =>
         {
+            await using var transaction = await catalog.Database.BeginTransactionAsync();
             await store.AddAsync(NewEvent(insideId));
             await transaction.RollbackAsync();
-        }
+        });
 
         // The eventing context is still holding the transaction it joined; a naive implementation
         // would now fail or silently write into a completed transaction.

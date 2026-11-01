@@ -214,7 +214,7 @@ export function CommandPaletteDialog({
             label: "Health",
             hint: "Readiness probe & dependencies",
             Icon: HeartPulse,
-            keywords: ["status", "uptime", "system", "ready", "redis", "postgres"],
+            keywords: ["status", "uptime", "system", "ready", "redis", "sqlserver"],
             perform: go("/system/health"),
           },
           {

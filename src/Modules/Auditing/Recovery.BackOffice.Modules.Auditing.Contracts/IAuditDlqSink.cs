@@ -4,7 +4,7 @@ namespace Recovery.BackOffice.Modules.Auditing.Contracts;
 /// Fallback destination for audit batches that the primary sink could not
 /// persist. Implementations must be reliable and self-contained — the DLQ
 /// is the last line of defence, so it cannot share infrastructure with the
-/// primary sink (e.g. don't send the SQL DLQ to the same Postgres that
+/// primary sink (e.g. don't send the SQL DLQ to the same SqlServer that
 /// just failed). Recommended targets: local JSONL file with daily rotation,
 /// or a queue with at-least-once delivery.
 /// </summary>

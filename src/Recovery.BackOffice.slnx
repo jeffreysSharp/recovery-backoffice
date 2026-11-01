@@ -61,7 +61,7 @@
     <Project Path="Host/Recovery.BackOffice.AppHost/Recovery.BackOffice.AppHost.csproj" Id="86bd02ee-f1b5-472c-b5bd-bc607fe084de" />
   </Folder>
   <Folder Name="/Host/Migrations/">
-    <Project Path="Host/Recovery.BackOffice.Migrations.PostgreSQL/Recovery.BackOffice.Migrations.PostgreSQL.csproj" Id="2c21903e-5dfa-47e0-82d9-1a0bd627fcbd" />
+    <Project Path="Host/Recovery.BackOffice.Migrations.SqlServer/Recovery.BackOffice.Migrations.SqlServer.csproj" Id="2c21903e-5dfa-47e0-82d9-1a0bd627fcbd" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="Tests/Recovery.BackOffice.Architecture.Tests/Recovery.BackOffice.Architecture.Tests.csproj" />

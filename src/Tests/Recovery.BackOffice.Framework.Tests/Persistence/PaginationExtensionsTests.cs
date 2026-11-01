@@ -129,7 +129,7 @@ public sealed class PaginationExtensionsTests
     public async Task ToPagedResponseAsync_Should_ReturnEmptyFirstPage_When_NoItemsAndPageNumberIsIntMax()
     {
         // Arrange — regression for #1416: an empty set skipped the clamp, so (int.MaxValue - 1) * 100
-        // overflowed into a negative OFFSET that PostgreSQL rejects with a 500.
+        // overflowed into a negative OFFSET that SQL Server rejects with a 500.
         var query = new PagedQuery { PageNumber = int.MaxValue, PageSize = 100 };
 
         // Act

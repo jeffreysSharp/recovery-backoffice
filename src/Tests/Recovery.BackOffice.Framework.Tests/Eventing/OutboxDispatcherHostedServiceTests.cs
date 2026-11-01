@@ -14,7 +14,7 @@ namespace Recovery.BackOffice.Framework.Tests.Eventing;
 public class OutboxDispatcherHostedServiceTests
 {
     private static readonly EventingDrainTarget Default = new(null, null);
-    private static readonly EventingDrainTarget Acme = new("acme", "Host=acme;Database=acme;Username=u;Password=p");
+    private static readonly EventingDrainTarget Acme = new("acme", "Server=acme;Database=acme;User Id=u;Password=p");
 
     [Fact]
     public async Task Drains_Once_Per_Target()

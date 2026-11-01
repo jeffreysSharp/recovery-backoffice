@@ -170,13 +170,13 @@ await host.StartAsync().ConfigureAwait(false);
 try
 {
     // ── Step 0 — wait for the database to come up ────────────────────────
-    // Postgres may still be initialising on cold-start; exp. backoff (≤2 min), then TimeoutException + exit 1.
+    // SqlServer may still be initialising on cold-start; exp. backoff (≤2 min), then TimeoutException + exit 1.
     var connectionString = host.Services.GetRequiredService<IConfiguration>()["DatabaseOptions:ConnectionString"]
         ?? throw new InvalidOperationException("DatabaseOptions:ConnectionString is not configured.");
-    await Console.Out.WriteLineAsync("[migrator] waiting for postgres…").ConfigureAwait(false);
-    await PostgresMigratorLock.WaitForDatabaseAsync(connectionString, logger, CancellationToken.None)
+    await Console.Out.WriteLineAsync("[migrator] waiting for SQL Server…").ConfigureAwait(false);
+    await SqlServerMigratorLock.WaitForDatabaseAsync(connectionString, logger, CancellationToken.None)
         .ConfigureAwait(false);
-    await Console.Out.WriteLineAsync("[migrator] postgres ready").ConfigureAwait(false);
+    await Console.Out.WriteLineAsync("[migrator] SQL Server ready").ConfigureAwait(false);
 
     // Log the connected role + database so a misconfigured low-priv connection string surfaces now,
     // not as "permission denied for schema public" during MigrateAsync.
@@ -185,7 +185,7 @@ try
     // ── Step 0b — acquire the advisory lock ──────────────────────────────
     // Session-level lock: concurrent runs block here; auto-releases on connection close (no orphan on crash).
     await Console.Out.WriteLineAsync("[migrator] acquiring advisory lock…").ConfigureAwait(false);
-    await using var migratorLock = await PostgresMigratorLock
+    await using var migratorLock = await SqlServerMigratorLock
         .AcquireAsync(connectionString, logger, CancellationToken.None)
         .ConfigureAwait(false);
     await Console.Out.WriteLineAsync("[migrator] advisory lock acquired").ConfigureAwait(false);
@@ -338,10 +338,10 @@ static async Task LogConnectionIdentityAsync(string connectionString)
     // Best-effort identity probe — never fail the migrator over a logging step.
     try
     {
-        await using var conn = new Npgsql.NpgsqlConnection(connectionString);
+        await using var conn = new Microsoft.Data.SqlClient.SqlConnection(connectionString);
         await conn.OpenAsync().ConfigureAwait(false);
         await using var cmd = conn.CreateCommand();
-        cmd.CommandText = "SELECT current_user, current_database()";
+        cmd.CommandText = "SELECT CURRENT_USER, DB_NAME()";
         await using var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
         if (await reader.ReadAsync().ConfigureAwait(false))
         {
