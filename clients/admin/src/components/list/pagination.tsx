@@ -13,6 +13,7 @@ type PaginationProps = {
   onNext: () => void;
   /** Optional left label override, e.g. "audit events". Default: "items". */
   noun?: string;
+  locale?: "pt-BR";
 };
 
 /**
@@ -31,20 +32,21 @@ export function Pagination({
   onPrev,
   onNext,
   noun = "items",
+  locale,
 }: PaginationProps) {
   const p = String(page).padStart(2, "0");
   const tp = String(Math.max(totalPages, 1)).padStart(2, "0");
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
       <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.18em] text-[var(--color-muted-foreground)]">
-        Showing {shown} of {totalCount} {noun} · folio {p} / {tp}
+        {locale === "pt-BR" ? "Exibindo" : "Showing"} {shown} {locale === "pt-BR" ? "de" : "of"} {totalCount} {noun} · {locale === "pt-BR" ? "página" : "folio"} {p} / {tp}
       </span>
       <div className="flex items-center gap-2">
         <Button variant="outline" size="sm" disabled={!hasPrev || fetching} onClick={onPrev}>
-          <ChevronLeft className="mr-1 h-3.5 w-3.5" /> Previous
+          <ChevronLeft className="mr-1 h-3.5 w-3.5" /> {locale === "pt-BR" ? "Anterior" : "Previous"}
         </Button>
         <Button variant="outline" size="sm" disabled={!hasNext || fetching} onClick={onNext}>
-          Next <ChevronRight className="ml-1 h-3.5 w-3.5" />
+          {locale === "pt-BR" ? "Próxima" : "Next"} <ChevronRight className="ml-1 h-3.5 w-3.5" />
         </Button>
       </div>
     </div>

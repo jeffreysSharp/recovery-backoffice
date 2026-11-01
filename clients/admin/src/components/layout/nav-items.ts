@@ -1,3 +1,4 @@
+import { CountriesPermissions } from "@/lib/permissions";
 import {
   Activity,
   Building2,
@@ -49,6 +50,7 @@ export const topNavBottom: NavSpec[] = [
 // ─── Section accordions ──────────────────────────────────────────────────────
 
 export const sections: NavSection[] = [
+  { id: "catalog", caption: "Cadastros", icon: Building2, items: [{to:"/countries",label:"Países",icon:Building2,perms:[CountriesPermissions.View]}] },
   {
     id: "multitenancy",
     caption: "Agencies",
@@ -162,6 +164,7 @@ export type NavItem = NavSpec & { matchPrefix?: string };
 
 /** @deprecated Flat list kept only for call-sites still importing NAV_ITEMS. */
 export const NAV_ITEMS: NavItem[] = [
+  {to:"/countries",label:"Países",icon:Building2,matchPrefix:"/countries",perms:[CountriesPermissions.View]},
   { to: "/", label: "Overview", icon: LayoutDashboard },
   {
     to: "/tenants",

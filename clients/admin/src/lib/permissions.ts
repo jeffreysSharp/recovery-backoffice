@@ -98,6 +98,16 @@ export type PermissionGroup = {
 
 export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
   {
+    category: "Países",
+    blurb: "Catálogo global de países.",
+    entries: [
+      { name: "Permissions.Catalog.Countries.View", description: "Consultar Países", basic: true },
+      { name: "Permissions.Catalog.Countries.Create", description: "Criar Países", root: true },
+      { name: "Permissions.Catalog.Countries.Update", description: "Editar Países", root: true },
+      { name: "Permissions.Catalog.Countries.Delete", description: "Excluir Países", root: true },
+    ],
+  },
+  {
     category: "Agencies",
     blurb: "Provision and operate agencies. Reserved for the root-agency operator.",
     entries: [
@@ -188,3 +198,5 @@ export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
 export const ALL_PERMISSION_NAMES: readonly string[] = PERMISSION_CATALOG.flatMap((g) =>
   g.entries.map((e) => e.name),
 );
+
+export const CountriesPermissions = Object.freeze({ View: "Permissions.Catalog.Countries.View", Create: "Permissions.Catalog.Countries.Create", Update: "Permissions.Catalog.Countries.Update", Delete: "Permissions.Catalog.Countries.Delete" } as const);

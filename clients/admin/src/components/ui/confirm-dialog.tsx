@@ -27,6 +27,7 @@ export function ConfirmDialog({
   onConfirm,
   destructive = false,
   pending = false,
+  pendingLabel = "Working…",
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -37,6 +38,7 @@ export function ConfirmDialog({
   onConfirm: () => void;
   destructive?: boolean;
   pending?: boolean;
+  pendingLabel?: string;
 }) {
   return (
     <Dialog open={open} onOpenChange={(o) => (pending ? undefined : onOpenChange(o))}>
@@ -72,7 +74,7 @@ export function ConfirmDialog({
             onClick={onConfirm}
             disabled={pending}
           >
-            {pending ? "Working…" : confirmLabel}
+            {pending ? pendingLabel : confirmLabel}
           </Button>
         </DialogFooter>
       </DialogContent>

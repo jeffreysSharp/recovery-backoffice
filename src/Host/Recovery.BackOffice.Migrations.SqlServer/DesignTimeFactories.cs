@@ -18,7 +18,7 @@ internal static class DesignTimeContext
             ?? @"Server=.\SQLEXPRESS;Database=RecoveryBackOfficeLocal;Integrated Security=true;TrustServerCertificate=true";
         var options = new DbContextOptionsBuilder<T>().UseSqlServer(connection,
             sql => sql.MigrationsAssembly(typeof(DesignTimeContext).Assembly.GetName().Name)).Options;
-        if (typeof(T).Name is "TenantDbContext" or "BillingDbContext")
+        if (typeof(T).Name is "TenantDbContext" or "BillingDbContext" or "CountriesDbContext")
             return (T)Activator.CreateInstance(typeof(T), options)!;
         return (T)Activator.CreateInstance(typeof(T), new TenantAccessor(), options,
             Options.Create(new DatabaseOptions { Provider = DbProviders.MSSQL, ConnectionString = connection,
@@ -94,4 +94,9 @@ public sealed class FilesDesignFactory : IDesignTimeDbContextFactory<Recovery.Ba
 public sealed class WebhookDesignFactory : IDesignTimeDbContextFactory<Recovery.BackOffice.Modules.Webhooks.Data.WebhookDbContext>
 {
     public Recovery.BackOffice.Modules.Webhooks.Data.WebhookDbContext CreateDbContext(string[] args) => DesignTimeContext.Create<Recovery.BackOffice.Modules.Webhooks.Data.WebhookDbContext>();
+}
+
+public sealed class CountriesDesignFactory : IDesignTimeDbContextFactory<Recovery.BackOffice.Modules.Catalog.Data.CountriesDbContext>
+{
+    public Recovery.BackOffice.Modules.Catalog.Data.CountriesDbContext CreateDbContext(string[] args) => DesignTimeContext.Create<Recovery.BackOffice.Modules.Catalog.Data.CountriesDbContext>();
 }

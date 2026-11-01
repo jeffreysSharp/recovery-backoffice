@@ -27,7 +27,8 @@ public sealed class CatalogDbContext : BaseDbContext
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly,
+            type => type != typeof(Configurations.CountryConfiguration));
         // base.OnModelCreating runs LAST so BaseDbContext's auto-apply sees
         // fully-configured entities (including HasMany child types like ProductImage).
         base.OnModelCreating(modelBuilder);
