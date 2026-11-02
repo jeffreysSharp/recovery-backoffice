@@ -98,6 +98,16 @@ export type PermissionGroup = {
 
 export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
   {
+    category: "Tipos de Agência",
+    blurb: "Catálogo global de tipos de agência.",
+    entries: [
+      { name: "Permissions.Catalog.AgencyTypes.View", description: "Consultar Tipos de Agência", basic: true },
+      { name: "Permissions.Catalog.AgencyTypes.Create", description: "Criar Tipos de Agência", root: true },
+      { name: "Permissions.Catalog.AgencyTypes.Update", description: "Editar Tipos de Agência", root: true },
+      { name: "Permissions.Catalog.AgencyTypes.Delete", description: "Excluir Tipos de Agência", root: true },
+    ],
+  },
+  {
     category: "Cidades",
     blurb: "Catálogo global de cidades por estado e país.",
     entries: [
@@ -222,3 +232,4 @@ export const ALL_PERMISSION_NAMES: readonly string[] = PERMISSION_CATALOG.flatMa
 export const CountriesPermissions = Object.freeze({ View: "Permissions.Catalog.Countries.View", Create: "Permissions.Catalog.Countries.Create", Update: "Permissions.Catalog.Countries.Update", Delete: "Permissions.Catalog.Countries.Delete" } as const);
 export const StatesPermissions = Object.freeze({ View: "Permissions.Catalog.States.View", Create: "Permissions.Catalog.States.Create", Update: "Permissions.Catalog.States.Update", Delete: "Permissions.Catalog.States.Delete" } as const);
 export const CitiesPermissions = Object.freeze({ View: "Permissions.Catalog.Cities.View", Create: "Permissions.Catalog.Cities.Create", Update: "Permissions.Catalog.Cities.Update", Delete: "Permissions.Catalog.Cities.Delete" } as const);
+export const AgencyTypesPermissions = Object.freeze({ View: "Permissions.Catalog.AgencyTypes.View", Create: "Permissions.Catalog.AgencyTypes.Create", Update: "Permissions.Catalog.AgencyTypes.Update", Delete: "Permissions.Catalog.AgencyTypes.Delete" } as const);

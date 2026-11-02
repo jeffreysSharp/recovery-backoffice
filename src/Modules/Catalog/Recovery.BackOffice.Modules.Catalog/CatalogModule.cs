@@ -1,4 +1,9 @@
 using Asp.Versioning;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.AgencyTypes.CreateAgencyType;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.AgencyTypes.UpdateAgencyType;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.AgencyTypes.DeleteAgencyType;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.AgencyTypes.GetAgencyTypeById;
+using Recovery.BackOffice.Modules.Catalog.Features.v1.AgencyTypes.SearchAgencyTypes;
 using Recovery.BackOffice.Modules.Catalog.Features.v1.Cities.CreateCity;
 using Recovery.BackOffice.Modules.Catalog.Features.v1.Cities.UpdateCity;
 using Recovery.BackOffice.Modules.Catalog.Features.v1.Cities.DeleteCity;
@@ -74,6 +79,7 @@ public sealed class CatalogModule : IModule
         builder.Services.AddScoped<IDbInitializer, CountriesDbInitializer>();
         builder.Services.AddScoped<IDbInitializer, StatesDbInitializer>();
         builder.Services.AddScoped<IDbInitializer, CitiesDbInitializer>();
+        builder.Services.AddScoped<IDbInitializer, AgencyTypesDbInitializer>();
         builder.Services.AddScoped<IDbInitializer, CatalogDbInitializer>();
 
         // OwnerType=Product policy for Files module attachments (product images).
@@ -119,6 +125,11 @@ public sealed class CatalogModule : IModule
         group.MapDeleteCityEndpoint();
         group.MapGetCityByIdEndpoint();
         group.MapSearchCitiesEndpoint();
+        group.MapCreateAgencyTypeEndpoint();
+        group.MapUpdateAgencyTypeEndpoint();
+        group.MapDeleteAgencyTypeEndpoint();
+        group.MapGetAgencyTypeByIdEndpoint();
+        group.MapSearchAgencyTypesEndpoint();
         group.MapUpdateCountryEndpoint();
         group.MapDeleteCountryEndpoint();
         group.MapGetCountryByIdEndpoint();
