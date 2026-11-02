@@ -27,7 +27,7 @@ export class ApiRequestError extends Error {
 }
 
 /**
- * True when an error is the API's "tenant has been deactivated" 403. The
+ * True when an error is the API's "agency has been deactivated" 403. The
  * deactivated-tenant guard (MultitenancyModule) rejects *every* request once a
  * tenant is switched off, so this can surface from any query/mutation while a
  * user is mid-session. There is no machine-readable code on the ProblemDetails,
@@ -38,7 +38,7 @@ export class ApiRequestError extends Error {
 export function isTenantDeactivatedError(error: unknown): boolean {
   if (!(error instanceof ApiRequestError) || error.status !== 403) return false;
   const detail = error.problem?.detail ?? error.message ?? "";
-  return detail.toLowerCase().includes("tenant has been deactivated");
+  return /\b(?:agency|tenant) has been deactivated\b/i.test(detail);
 }
 
 /**

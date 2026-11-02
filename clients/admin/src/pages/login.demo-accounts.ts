@@ -30,6 +30,6 @@ export const ADMIN_DEMO_ACCOUNTS: DemoAccount[] = [
     tenant: "root",
     label: "SuperAdmin",
     initials: "SA",
-    persona: "Platform operator · cross-tenant control",
+    persona: "Platform operator · cross-agency control",
   },
 ];

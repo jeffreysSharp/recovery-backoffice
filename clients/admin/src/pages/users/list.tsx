@@ -104,7 +104,7 @@ export function UsersListPage() {
         total={data?.totalCount ?? null}
         unit="account"
         description={data
-          ? `${data.totalCount} ${data.totalCount === 1 ? "account" : "accounts"} on this tenant.`
+          ? `${data.totalCount} ${data.totalCount === 1 ? "account" : "accounts"} on this agency.`
           : "Loading the roster…"}
       >
         <Button
@@ -187,7 +187,7 @@ export function UsersListPage() {
           <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
             {searchActive
               ? "Adjust filters or invite a new user."
-              : "Register the first member to seed this tenant."}
+              : "Register the first member to seed this agency."}
           </p>
           {searchActive && (
             <Button

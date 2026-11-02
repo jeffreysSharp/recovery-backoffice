@@ -183,7 +183,9 @@ function CheckRow({ entry }: { entry: HealthEntry }) {
     <>
       <StatusDot status={entry.status} />
       <div className="min-w-0">
-        <div className="truncate font-mono text-[13px] font-medium">{entry.name}</div>
+        <div className="truncate font-mono text-[13px] font-medium">
+          {entry.name === "db:tenants-migrations" ? "Agency migrations" : entry.name}
+        </div>
         {entry.description && (
           <div className="mt-0.5 truncate text-xs text-[var(--color-muted-foreground)]">
             {entry.description}

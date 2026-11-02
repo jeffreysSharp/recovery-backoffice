@@ -23,7 +23,7 @@ public sealed class GetMyTopupRequestsQueryHandler(
 
         // BillingDbContext is not tenant-filtered; resolve caller's own tenant and scope strictly to it.
         var tenantId = tenantAccessor.MultiTenantContext?.TenantInfo?.Id
-            ?? throw new UnauthorizedException("Tenant context is required.");
+            ?? throw new UnauthorizedException("Agency context is required.");
 
         var q = dbContext.TopupRequests.AsNoTracking()
             .Where(r => r.TenantId == tenantId);

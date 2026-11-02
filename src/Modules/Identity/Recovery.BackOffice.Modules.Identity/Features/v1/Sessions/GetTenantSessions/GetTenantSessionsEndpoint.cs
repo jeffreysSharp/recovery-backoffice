@@ -33,8 +33,8 @@ public static class GetTenantSessionsEndpoint
                     return TypedResults.Ok(await mediator.Send(query, ct));
                 })
             .WithName("GetTenantSessions")
-            .WithSummary("List all sessions in the current tenant (Admin)")
-            .WithDescription("Returns paged sessions across the tenant, filterable by active state and a free-text search across user name, email, and IP address.")
+            .WithSummary("List all sessions in the current agency (Admin)")
+            .WithDescription("Returns paged sessions across the agency, filterable by active state and a free-text search across user name, email, and IP address.")
             .RequirePermission(IdentityPermissions.Sessions.ViewAll)
             .Produces<PagedResponse<UserSessionDto>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)

@@ -40,7 +40,7 @@ internal sealed class UserStatusService(
     {
         if (string.IsNullOrWhiteSpace(multiTenantContextAccessor?.MultiTenantContext?.TenantInfo?.Id))
         {
-            throw new UnauthorizedException("invalid tenant");
+            throw new UnauthorizedException("invalid agency");
         }
     }
 
@@ -107,7 +107,7 @@ internal sealed class UserStatusService(
         if (!activeAdmins.Any(u => u.IsActive))
         {
             await AuditPolicyFailureAsync(context, "NoActiveAdmins", cancellationToken);
-            throw new CustomException("Tenant must have at least one active administrator.", Array.Empty<string>(), HttpStatusCode.BadRequest);
+            throw new CustomException("Agency must have at least one active administrator.", Array.Empty<string>(), HttpStatusCode.BadRequest);
         }
     }
 

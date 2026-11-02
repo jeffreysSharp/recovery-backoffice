@@ -96,7 +96,7 @@ internal sealed class UserRoleService(
         // The root tenant's seed admin is the framework's last-resort recovery account.
         if (IsRootTenantAdmin(user))
         {
-            throw new ForbiddenException("The root tenant administrator cannot be demoted.");
+            throw new ForbiddenException("The root agency administrator cannot be demoted.");
         }
 
         // After this removal, at least one admin must remain in the tenant — matches
@@ -116,7 +116,7 @@ internal sealed class UserRoleService(
         if (adminCount <= 1)
         {
             throw new CustomException(
-                "Tenant must retain at least one administrator.",
+                "Agency must retain at least one administrator.",
                 Array.Empty<string>(),
                 HttpStatusCode.BadRequest);
         }

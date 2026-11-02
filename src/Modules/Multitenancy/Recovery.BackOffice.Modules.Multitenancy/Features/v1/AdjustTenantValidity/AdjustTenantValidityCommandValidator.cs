@@ -14,7 +14,7 @@ public sealed class AdjustTenantValidityCommandValidator : AbstractValidator<Adj
         // Activate/Deactivate guards that already refuse the root tenant).
         RuleFor(t => t.TenantId)
             .Must(id => !string.Equals(id, MultitenancyConstants.Root.Id, StringComparison.Ordinal))
-            .WithMessage("The root operator tenant's validity cannot be adjusted.");
+            .WithMessage("The root operator agency's validity cannot be adjusted.");
 
         RuleFor(t => t.ValidUpto)
             .Must(d => d != default)

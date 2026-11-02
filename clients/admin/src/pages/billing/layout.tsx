@@ -22,7 +22,7 @@ export function BillingLayout() {
         icon={CreditCard}
         tone="saffron"
         title="Billing"
-        description="Manage plans, subscriptions, and invoices across every tenant on this instance."
+        description="Manage plans, subscriptions, and invoices across every agency on this instance."
       />
 
       <nav

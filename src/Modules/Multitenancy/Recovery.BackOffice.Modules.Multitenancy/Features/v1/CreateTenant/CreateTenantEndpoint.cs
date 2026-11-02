@@ -25,10 +25,10 @@ public static class CreateTenantEndpoint
                 return TypedResults.Created($"/api/v1/multitenancy/tenants/{result.Id}", result);
             })
             .WithName("CreateTenant")
-            .WithSummary("Create tenant")
+            .WithSummary("Create agency")
             .RequirePermission(MultitenancyPermissions.Tenants.Create)
             .WithIdempotency()
-            .WithDescription("Create a new tenant.")
+            .WithDescription("Create a new agency.")
             .Produces<CreateTenantCommandResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden)

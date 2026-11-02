@@ -54,7 +54,7 @@ test.describe("users directory list", () => {
       timeout: 10_000,
     });
     // Account count line.
-    await expect(main.getByText(/2 accounts on this tenant\./i)).toBeVisible();
+    await expect(main.getByText(/2 accounts on this agency\./i)).toBeVisible();
     // A row from the mock. The name renders in both the mobile card and the
     // desktop row (responsive duplication) — scope to the desktop row's
     // username chip (`@bob.patel`, desktop-only) and the row buttons' names.
@@ -82,7 +82,7 @@ test.describe("users directory list", () => {
     // "seed this tenant" prompt (the "adjust filters" copy only renders when a
     // search/filter is active).
     await expect(
-      main.getByText("Register the first member to seed this tenant."),
+      main.getByText("Register the first member to seed this agency."),
     ).toBeVisible();
   });
 

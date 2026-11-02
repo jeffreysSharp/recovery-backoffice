@@ -91,7 +91,7 @@ test.describe("files — list render", () => {
     ).toBeVisible();
   });
 
-  test("shows the empty state when the tenant has no files", async ({ page }) => {
+  test("shows the empty state when the agency has no files", async ({ page }) => {
     await mockJsonResponse(page, "**/api/v1/files/mine**", []);
 
     await page.goto("/files");
@@ -115,12 +115,12 @@ test.describe("files — My files / Shared tabs", () => {
     // My files row is visible first.
     await expect(page.getByText("quarterly-report.pdf").last()).toBeVisible();
 
-    await page.getByRole("tab", { name: /shared in tenant/i }).click();
+    await page.getByRole("tab", { name: /shared in agency/i }).click();
 
     await expect(page.getByText("team-handbook.pdf").last()).toBeVisible();
     // The shared tab is now selected.
     await expect(
-      page.getByRole("tab", { name: /shared in tenant/i }),
+      page.getByRole("tab", { name: /shared in agency/i }),
     ).toHaveAttribute("aria-selected", "true");
   });
 
@@ -130,7 +130,7 @@ test.describe("files — My files / Shared tabs", () => {
 
     await page.goto("/files");
     await expect(page.getByText(FILE_REPORT.originalFileName).last()).toBeVisible();
-    await page.getByRole("tab", { name: /shared in tenant/i }).click();
+    await page.getByRole("tab", { name: /shared in agency/i }).click();
 
     await expect(page.getByRole("heading", { name: /nothing shared yet/i })).toBeVisible();
     await expect(

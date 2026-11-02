@@ -20,7 +20,7 @@ public static class GetAuditSummaryEndpoint
                     TypedResults.Ok(await mediator.Send(query, cancellationToken)))
             .WithName("GetAuditSummary")
             .WithSummary("Get audit summary")
-            .WithDescription("Retrieve aggregate counts of audit events by type, severity, source, and tenant.")
+            .WithDescription("Retrieve aggregate counts of audit events by type, severity, source, and agency.")
             .RequirePermission(AuditingPermissions.AuditTrails.View)
             .Produces<AuditSummaryAggregateDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)

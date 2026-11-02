@@ -32,7 +32,7 @@ test.beforeEach(async ({ page }) => {
   );
 });
 
-test.describe("create tenant — plan selector", () => {
+test.describe("create agency — plan selector", () => {
   test("shows the plan select, preselects the trial plan, and posts planKey", async ({ page }) => {
     await mockPlans(page);
     await page.route("**/api/v1/tenants/", async (route) => {
@@ -69,7 +69,7 @@ test.describe("create tenant — plan selector", () => {
     );
 
     await page.goto("/tenants");
-    await page.getByRole("button", { name: "New tenant", exact: true }).click();
+    await page.getByRole("button", { name: "New agency", exact: true }).click();
 
     const dialog = page.getByRole("dialog");
     const planSelect = dialog.locator("#ct-plan");
@@ -93,14 +93,14 @@ test.describe("create tenant — plan selector", () => {
       (r) => r.url().endsWith("/api/v1/tenants/") && r.method() === "POST",
       { timeout: 5_000 },
     );
-    await dialog.getByRole("button", { name: "Create tenant", exact: true }).click();
+    await dialog.getByRole("button", { name: "Create agency", exact: true }).click();
     const req = await reqPromise;
 
     expect(JSON.parse(req.postData() ?? "{}")).toMatchObject({ id: "acme-corp", planKey: "pro" });
   });
 });
 
-test.describe("tenant detail — renew", () => {
+test.describe("agency detail — renew", () => {
   test("shows plan + grace badge and renews via the dialog", async ({ page }) => {
     await mockPlans(page);
     await page.route("**/api/v1/tenants/acme-corp/status", (route) =>
@@ -168,7 +168,7 @@ test.describe("tenant detail — renew", () => {
   });
 });
 
-test.describe("tenant detail — adjust validity", () => {
+test.describe("agency detail — adjust validity", () => {
   test("posts the expected body to /adjust-validity", async ({ page }) => {
     await mockPlans(page);
     await page.route("**/api/v1/tenants/acme-corp/status", (route) =>

@@ -191,7 +191,7 @@ export function MyFilesPage() {
         title="Files"
         total={allFiles.length}
         unit="file"
-        description="Drop images, documents, or archives. Uploads are private to you by default; flip a file to public from its preview to make it visible to the rest of the tenant under Shared."
+        description="Drop images, documents, or archives. Uploads are private to you by default; flip a file to public from its preview to make it visible to the rest of the agency under Shared."
       />
 
       {/* Tab strip */}
@@ -217,7 +217,7 @@ export function MyFilesPage() {
             clearFilters();
           }}
           icon={Share2}
-          label="Shared in tenant"
+          label="Shared in agency"
           count={sharedFilesQuery.data?.length}
         />
       </div>
@@ -285,7 +285,7 @@ export function MyFilesPage() {
           <EntityEmpty
             icon={Share2}
             title="Nothing shared yet"
-            body="When a teammate flips one of their files to public, it shows up here for everyone in the tenant."
+            body="When a teammate flips one of their files to public, it shows up here for everyone in the agency."
             action={
               <Button
                 variant="outline"

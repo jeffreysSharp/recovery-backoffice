@@ -34,7 +34,7 @@ public static class SqlServerDatabaseProvisioner
         if (Convert.ToInt32(await edition.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false),
                 System.Globalization.CultureInfo.InvariantCulture) == 5)
         {
-            throw new InvalidOperationException("Provision the Azure SQL database before provisioning the tenant.");
+            throw new InvalidOperationException("Provision the Azure SQL database before provisioning the agency.");
         }
 
         await using var command = master.CreateCommand();

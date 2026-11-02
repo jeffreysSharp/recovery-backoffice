@@ -74,7 +74,7 @@ public sealed partial class MigrateLegacyPublicFileKeysJob(
         {
             // Surfaces to Hangfire so it retries with backoff; everything that did move stays moved.
             throw new InvalidOperationException(
-                $"Legacy public-key migration left {failed} file(s) or tenant(s) unmigrated; see the preceding errors.");
+                $"Legacy public-key migration left files or agencies unmigrated; failures: {failed}. See the preceding errors.");
         }
     }
 
@@ -177,14 +177,14 @@ public sealed partial class MigrateLegacyPublicFileKeysJob(
     }
 
     [LoggerMessage(Level = LogLevel.Information,
-        Message = "[Files] moved {Count} legacy public file(s) under public/ across {TenantCount} tenant(s)")]
+        Message = "[Files] moved {Count} legacy public file(s) under public/ across agencies (count: {TenantCount})")]
     private static partial void LogMigrated(ILogger logger, int count, int tenantCount);
 
     [LoggerMessage(Level = LogLevel.Error,
-        Message = "[Files] legacy public-key migration failed for tenant {TenantId}; the job is retried")]
+        Message = "[Files] legacy public-key migration failed for agency {TenantId}; the job is retried")]
     private static partial void LogTenantFailed(ILogger logger, Exception exception, string? tenantId);
 
     [LoggerMessage(Level = LogLevel.Error,
-        Message = "[Files] could not move legacy public file {FileAssetId} (tenant {TenantId}); the job is retried")]
+        Message = "[Files] could not move legacy public file {FileAssetId} (agency {TenantId}); the job is retried")]
     private static partial void LogFileFailed(ILogger logger, Exception exception, Guid fileAssetId, string? tenantId);
 }

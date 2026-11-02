@@ -54,10 +54,11 @@ export function TenantsListPage() {
         title="Registry"
         tone="info"
         total={data?.totalCount ?? null}
-        unit="tenant"
+        unit="agency"
+        unitPlural="agencies"
         description={
           data
-            ? `${data.totalCount} ${data.totalCount === 1 ? "tenant" : "tenants"} registered on this instance.`
+            ? `${data.totalCount} ${data.totalCount === 1 ? "agency" : "agencies"} registered on this instance.`
             : "Loading the registry…"
         }
       >
@@ -66,7 +67,7 @@ export function TenantsListPage() {
             onClick={() => setCreateOpen(true)}
             className="h-9 flex-1 gap-1.5 rounded-lg px-4 text-[13px] font-semibold sm:flex-none"
           >
-            <Plus className="size-4" /> New tenant
+            <Plus className="size-4" /> New agency
           </Button>
         )}
       </EntityPageHeader>
@@ -76,7 +77,7 @@ export function TenantsListPage() {
           message={
             query.error instanceof ApiRequestError
               ? query.error.problem?.detail ?? query.error.message
-              : "Failed to load tenants."
+              : "Failed to load agencies."
           }
         />
       )}
@@ -92,9 +93,9 @@ export function TenantsListPage() {
 
       {!query.isLoading && items.length === 0 && !query.isError && (
         <div className="py-16 text-center">
-          <p className="font-display text-2xl text-[var(--color-foreground)]">No tenants yet.</p>
+          <p className="font-display text-2xl text-[var(--color-foreground)]">No agencies yet.</p>
           <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
-            Provision the first tenant to get started.
+            Provision the first agency to get started.
           </p>
         </div>
       )}
@@ -102,7 +103,7 @@ export function TenantsListPage() {
       {items.length > 0 && (
         <div>
           <p className="mb-3 text-[12px] font-medium text-[var(--color-muted-foreground)]">
-            {data?.totalCount ?? 0} tenant{(data?.totalCount ?? 0) !== 1 ? "s" : ""} registered
+            {data?.totalCount ?? 0} agency{(data?.totalCount ?? 0) !== 1 ? "s" : ""} registered
           </p>
 
           {/* Mobile card list */}
@@ -122,7 +123,7 @@ export function TenantsListPage() {
               className={`grid items-center gap-3 border-b border-[var(--color-border)] bg-[var(--color-muted)]/40 px-4 py-2.5 ${DESKTOP_COLS}`}
             >
               <span className="text-[11.5px] font-semibold uppercase tracking-wider text-[var(--color-muted-foreground)]">
-                Tenant
+                Agency
               </span>
               <span className="hidden text-[11.5px] font-semibold uppercase tracking-wider text-[var(--color-muted-foreground)] lg:block">
                 Admin email
@@ -205,7 +206,7 @@ function TenantMobileCard({ tenant, onClick }: { tenant: TenantDto; onClick: () 
       <button
         type="button"
         onClick={onClick}
-        aria-label={`Open tenant ${tenant.name}`}
+        aria-label={`Open agency ${tenant.name}`}
         className={cn(
           "group w-full overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4 text-left shadow-xs",
           "transition-colors hover:border-[var(--color-border-strong)] hover:bg-[var(--color-accent)]",

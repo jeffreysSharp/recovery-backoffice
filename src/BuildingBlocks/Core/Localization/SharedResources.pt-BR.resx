@@ -95,10 +95,10 @@
     <value>Nenhum usuário autenticado.</value>
   </data>
   <data name="Error.InvalidTenant" xml:space="preserve">
-    <value>Tenant inválido ou ausente.</value>
+    <value>Agência inválida ou ausente.</value>
   </data>
   <data name="Error.TenantContextRequired" xml:space="preserve">
-    <value>O contexto do tenant é obrigatório.</value>
+    <value>O contexto da agência é obrigatório.</value>
   </data>
   <data name="Error.Unexpected" xml:space="preserve">
     <value>Ocorreu um erro inesperado</value>
@@ -110,7 +110,7 @@
     <value>Limite de aplicação</value>
   </data>
   <data name="Error.AppBoundary.Detail" xml:space="preserve">
-    <value>Contas de superadministrador devem usar o aplicativo de administração. Entre por lá, não pelo painel da organização.</value>
+    <value>Contas de superadministrador devem usar o aplicativo de administração. Entre por lá, não pelo painel da agência.</value>
   </data>
   <data name="Error.AuthenticationFailed" xml:space="preserve">
     <value>Falha na autenticação.</value>
@@ -197,7 +197,7 @@
     <value>O código de confirmação é obrigatório.</value>
   </data>
   <data name="Validation.TenantRequired" xml:space="preserve">
-    <value>A organização é obrigatória.</value>
+    <value>A agência é obrigatória.</value>
   </data>
   <data name="Validation.CurrentPasswordRequired" xml:space="preserve">
     <value>A senha atual é obrigatória.</value>

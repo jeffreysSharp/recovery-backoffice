@@ -1,3 +1,4 @@
+import { CountriesPermissions, StatesPermissions, CitiesPermissions, AgencyTypesPermissions } from "@/lib/permissions";
 import {
   Activity,
   Building2,
@@ -49,14 +50,15 @@ export const topNavBottom: NavSpec[] = [
 // ─── Section accordions ──────────────────────────────────────────────────────
 
 export const sections: NavSection[] = [
+  { id: "catalog", caption: "Cadastros", icon: Building2, items: [{to:"/countries",label:"Países",icon:Building2,perms:[CountriesPermissions.View]}, {to:"/states",label:"Estados",icon:Building2,perms:[StatesPermissions.View]}, {to:"/cities",label:"Cidades",icon:Building2,perms:[CitiesPermissions.View]}, {to:"/agency-types",label:"Tipos de Agência",icon:Building2,perms:[AgencyTypesPermissions.View]}] },
   {
     id: "multitenancy",
-    caption: "Tenants",
+    caption: "Agencies",
     icon: Building2,
     items: [
       {
         to: "/tenants",
-        label: "Tenants",
+        label: "Agencies",
         icon: Building2,
         perms: [MultitenancyPermissions.Tenants.View],
       },
@@ -162,10 +164,14 @@ export type NavItem = NavSpec & { matchPrefix?: string };
 
 /** @deprecated Flat list kept only for call-sites still importing NAV_ITEMS. */
 export const NAV_ITEMS: NavItem[] = [
+  {to:"/countries",label:"Países",icon:Building2,matchPrefix:"/countries",perms:[CountriesPermissions.View]},
+  {to:"/states",label:"Estados",icon:Building2,matchPrefix:"/states",perms:[StatesPermissions.View]},
+  {to:"/cities",label:"Cidades",icon:Building2,matchPrefix:"/cities",perms:[CitiesPermissions.View]},
+  {to:"/agency-types",label:"Tipos de Agência",icon:Building2,matchPrefix:"/agency-types",perms:[AgencyTypesPermissions.View]},
   { to: "/", label: "Overview", icon: LayoutDashboard },
   {
     to: "/tenants",
-    label: "Tenants",
+    label: "Agencies",
     icon: Building2,
     matchPrefix: "/tenants",
     perms: [MultitenancyPermissions.Tenants.View],

@@ -8,14 +8,14 @@ test.describe("admin forgot-password", () => {
     await expect(page.getByRole("heading", { name: /reset your password/i })).toBeVisible();
     await expect(page.getByText(/dispatch a one-time link/i)).toBeVisible();
     await expect(page.getByLabel("Email")).toBeVisible();
-    await expect(page.getByLabel("Tenant")).toBeVisible();
+    await expect(page.getByLabel("Agency")).toBeVisible();
     await expect(page.getByRole("button", { name: /send reset link/i })).toBeVisible();
   });
 
-  test("posts email + tenant header to /forgot-password", async ({ page }) => {
+  test("posts email + agency header to /forgot-password", async ({ page }) => {
     await page.goto("/forgot-password");
     await page.getByLabel("Email").fill("operator@root.example");
-    await page.getByLabel("Tenant").fill("root");
+    await page.getByLabel("Agency").fill("root");
 
     const reqPromise = page.waitForRequest(
       (r) =>
@@ -37,7 +37,7 @@ test.describe("admin forgot-password", () => {
 
     await page.goto("/forgot-password");
     await page.getByLabel("Email").fill("alice@acme.com");
-    await page.getByLabel("Tenant").fill("acme");
+    await page.getByLabel("Agency").fill("acme");
     await page.getByRole("button", { name: /send reset link/i }).click();
 
     await expect(page.getByRole("heading", { name: /check your inbox/i })).toBeVisible();
@@ -48,16 +48,16 @@ test.describe("admin forgot-password", () => {
 
   test("surfaces server errors inline", async ({ page }) => {
     await mockProblemDetails(page, "**/api/v1/identity/forgot-password", 500, {
-      title: "Tenant resolution failed",
-      detail: "No tenant matching the supplied identifier.",
+      title: "Agency resolution failed",
+      detail: "No agency matching the supplied identifier.",
     });
 
     await page.goto("/forgot-password");
     await page.getByLabel("Email").fill("a@b.com");
-    await page.getByLabel("Tenant").fill("does-not-exist");
+    await page.getByLabel("Agency").fill("does-not-exist");
     await page.getByRole("button", { name: /send reset link/i }).click();
 
-    await expect(page.getByRole("alert")).toContainText(/no tenant matching/i);
+    await expect(page.getByRole("alert")).toContainText(/no agency matching/i);
     await expect(page.getByRole("heading", { name: /check your inbox/i })).not.toBeVisible();
   });
 });

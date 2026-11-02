@@ -17,7 +17,7 @@ public static class CreateTopupRequestEndpoint
                 async (CreateTopupRequestCommand command, IMediator mediator, CancellationToken ct) =>
                     Results.Ok(await mediator.Send(command, ct)))
             .WithName("CreateTopupRequest")
-            .WithSummary("Submit a wallet top-up request for the current tenant")
+            .WithSummary("Submit a wallet top-up request for the current agency")
             .RequirePermission(BillingPermissions.View)
             .WithIdempotency();
     }

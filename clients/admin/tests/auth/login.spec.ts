@@ -31,7 +31,7 @@ test.describe("admin login", () => {
 
     // Form fields (plain labels). Password is exact — a "Show password"
     // toggle button shares the substring otherwise.
-    await expect(page.getByLabel("Tenant")).toBeVisible();
+    await expect(page.getByLabel("Agency")).toBeVisible();
     await expect(page.getByLabel("Email")).toBeVisible();
     await expect(page.getByLabel("Password", { exact: true })).toBeVisible();
 
@@ -40,7 +40,7 @@ test.describe("admin login", () => {
     await expect(page.getByRole("link", { name: "Forgot?" })).toBeVisible();
   });
 
-  test("manual sign-in posts to token/issue with the admin app + tenant headers", async ({
+  test("manual sign-in posts to token/issue with the admin app + agency headers", async ({
     page,
   }) => {
     await mockJsonResponse(page, "**/api/v1/identity/token/issue", TOKEN_RESPONSE);
@@ -48,7 +48,7 @@ test.describe("admin login", () => {
     await page.goto("/login");
 
     // Tenant pre-fills from env.defaultTenant ("root"); set email + password.
-    await page.getByLabel("Tenant").fill("root");
+    await page.getByLabel("Agency").fill("root");
     await page.getByLabel("Email").fill("operator@root.example");
     await page.getByLabel("Password", { exact: true }).fill("Sup3rSecret!");
 
@@ -76,7 +76,7 @@ test.describe("admin login", () => {
     });
 
     await page.goto("/login");
-    await page.getByLabel("Tenant").fill("root");
+    await page.getByLabel("Agency").fill("root");
     await page.getByLabel("Email").fill("operator@root.example");
     await page.getByLabel("Password", { exact: true }).fill("wrong-password");
     await page.getByRole("button", { name: "Sign in", exact: true }).click();

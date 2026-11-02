@@ -10,16 +10,16 @@ test.describe("forgot-password page", () => {
     // + form scaffolding only.
     await expect(page.getByRole("heading", { name: /reset your password/i })).toBeVisible();
     await expect(page.getByLabel("Email")).toBeVisible();
-    await expect(page.getByLabel("Tenant")).toBeVisible();
+    await expect(page.getByLabel("Agency")).toBeVisible();
     await expect(page.getByRole("button", { name: /send reset link/i })).toBeVisible();
   });
 
-  test("posts to /forgot-password with the tenant header on submit", async ({ page }) => {
+  test("posts to /forgot-password with the agency header on submit", async ({ page }) => {
     const captured = captureRequest(page, "**/api/v1/identity/forgot-password");
 
     await page.goto("/forgot-password");
     await page.getByLabel("Email").fill("alice@acme.com");
-    await page.getByLabel("Tenant").fill("acme");
+    await page.getByLabel("Agency").fill("acme");
     await page.getByRole("button", { name: /send reset link/i }).click();
 
     const { body, headers } = await captured.value();
@@ -33,7 +33,7 @@ test.describe("forgot-password page", () => {
 
     await page.goto("/forgot-password");
     await page.getByLabel("Email").fill("bob@globex.com");
-    await page.getByLabel("Tenant").fill("globex");
+    await page.getByLabel("Agency").fill("globex");
     await page.getByRole("button", { name: /send reset link/i }).click();
 
     // Success heading + echoed email/tenant in the confirmation copy.
@@ -42,28 +42,28 @@ test.describe("forgot-password page", () => {
     // visible body text instead.
     await expect(page.getByRole("heading", { name: /check your inbox/i })).toBeVisible();
     await expect(page.getByText(/bob@globex\.com/)).toBeVisible();
-    await expect(page.getByText(/in tenant globex/i)).toBeVisible();
+    await expect(page.getByText(/in agency globex/i)).toBeVisible();
 
     // "Try a different address" affordance lets the user retry without
     // a page reload — important when they typo their email.
     await expect(page.getByRole("button", { name: /try a different address/i })).toBeVisible();
   });
 
-  test("surfaces server errors (5xx / tenant-not-resolvable) on the form", async ({ page }) => {
+  test("surfaces server errors (5xx / agency-not-resolvable) on the form", async ({ page }) => {
     await mockProblemDetails(page, "**/api/v1/identity/forgot-password", 500, {
-      title: "Tenant resolution failed",
-      detail: "No tenant matching the supplied identifier.",
+      title: "Agency resolution failed",
+      detail: "No agency matching the supplied identifier.",
     });
 
     await page.goto("/forgot-password");
     await page.getByLabel("Email").fill("alice@acme.com");
-    await page.getByLabel("Tenant").fill("does-not-exist");
+    await page.getByLabel("Agency").fill("does-not-exist");
     await page.getByRole("button", { name: /send reset link/i }).click();
 
     // Error band is rendered (role=alert) with the server's detail surfaced.
     const alert = page.getByRole("alert");
     await expect(alert).toBeVisible();
-    await expect(alert).toContainText(/no tenant matching/i);
+    await expect(alert).toContainText(/no agency matching/i);
 
     // Still on the form, not the success state.
     await expect(page.getByRole("heading", { name: /check your inbox/i })).not.toBeVisible();

@@ -6,14 +6,14 @@ const VALID_LINK =
   "/reset-password?token=ABC123def&email=alice@acme.com&tenant=acme";
 
 test.describe("reset-password page", () => {
-  test("guards against malformed links (missing token/email/tenant)", async ({ page }) => {
+  test("guards against malformed links (missing token/email/agency)", async ({ page }) => {
     await page.goto("/reset-password");
     await expect(page.getByRole("heading", { name: /this link is incomplete/i })).toBeVisible();
     // Should offer a recovery path, not a dead-end.
     await expect(page.getByRole("link", { name: /request a new link/i })).toBeVisible();
   });
 
-  test("renders the form when token + email + tenant are present", async ({ page }) => {
+  test("renders the form when token + email + agency are present", async ({ page }) => {
     await page.goto(VALID_LINK);
 
     // The redesigned AuthShell drops the editorial eyebrow — assert on

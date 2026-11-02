@@ -107,7 +107,7 @@ export function FilePreviewDialog({ fileAssetId, initial, onClose, onDeleted }: 
       metaQuery.refetch();
       toast.success(
         dto.visibility === Visibility.Public
-          ? "File is now public to your tenant"
+          ? "File is now public to your agency"
           : "File is now private",
       );
     },
@@ -430,7 +430,7 @@ function MetadataPanel({
           </dd>
           <p className="mt-0.5 text-[11px] text-[var(--color-muted-foreground)]">
             {isPublic
-              ? "Everyone in your tenant can find this file under Shared."
+              ? "Everyone in your agency can find this file under Shared."
               : "Only you can preview or download this file."}
           </p>
         </div>

@@ -4,6 +4,38 @@ namespace Recovery.BackOffice.Modules.Catalog.Contracts.Authorization;
 
 public static class CatalogPermissions
 {
+    public static class AgencyTypes
+    {
+        public const string Resource = "Catalog.AgencyTypes";
+        public const string View = $"Permissions.{Resource}.View";
+        public const string Create = $"Permissions.{Resource}.Create";
+        public const string Update = $"Permissions.{Resource}.Update";
+        public const string Delete = $"Permissions.{Resource}.Delete";
+    }
+    public static class Cities
+    {
+        public const string Resource = "Catalog.Cities";
+        public const string View = $"Permissions.{Resource}.View";
+        public const string Create = $"Permissions.{Resource}.Create";
+        public const string Update = $"Permissions.{Resource}.Update";
+        public const string Delete = $"Permissions.{Resource}.Delete";
+    }
+    public static class States
+    {
+        public const string Resource = "Catalog.States";
+        public const string View = $"Permissions.{Resource}.View";
+        public const string Create = $"Permissions.{Resource}.Create";
+        public const string Update = $"Permissions.{Resource}.Update";
+        public const string Delete = $"Permissions.{Resource}.Delete";
+    }
+    public static class Countries
+    {
+        public const string Resource = "Catalog.Countries";
+        public const string View = $"Permissions.{Resource}.View";
+        public const string Create = $"Permissions.{Resource}.Create";
+        public const string Update = $"Permissions.{Resource}.Update";
+        public const string Delete = $"Permissions.{Resource}.Delete";
+    }
     public static class Brands
     {
         public const string Resource = "Catalog.Brands";
@@ -37,6 +69,22 @@ public static class CatalogPermissions
 
     public static IReadOnlyList<RecoveryPermission> All { get; } =
     [
+        new("Consultar Tipos de Agência", ActionConstants.View, AgencyTypes.Resource, IsBasic: true),
+        new("Criar Tipos de Agência", ActionConstants.Create, AgencyTypes.Resource, IsRoot: true),
+        new("Editar Tipos de Agência", ActionConstants.Update, AgencyTypes.Resource, IsRoot: true),
+        new("Excluir Tipos de Agência", ActionConstants.Delete, AgencyTypes.Resource, IsRoot: true),
+        new("Consultar Cidades", ActionConstants.View, Cities.Resource, IsBasic: true),
+        new("Criar Cidades", ActionConstants.Create, Cities.Resource, IsRoot: true),
+        new("Editar Cidades", ActionConstants.Update, Cities.Resource, IsRoot: true),
+        new("Excluir Cidades", ActionConstants.Delete, Cities.Resource, IsRoot: true),
+        new("Consultar Estados", ActionConstants.View, States.Resource, IsBasic: true),
+        new("Criar Estados", ActionConstants.Create, States.Resource, IsRoot: true),
+        new("Editar Estados", ActionConstants.Update, States.Resource, IsRoot: true),
+        new("Excluir Estados", ActionConstants.Delete, States.Resource, IsRoot: true),
+        new("Consultar Países", ActionConstants.View, Countries.Resource, IsBasic: true),
+        new("Criar Países", ActionConstants.Create, Countries.Resource, IsRoot: true),
+        new("Editar Países", ActionConstants.Update, Countries.Resource, IsRoot: true),
+        new("Excluir Países", ActionConstants.Delete, Countries.Resource, IsRoot: true),
         new("View Brands",    ActionConstants.View,   Brands.Resource, IsBasic: true),
         new("Create Brands",  ActionConstants.Create, Brands.Resource),
         new("Update Brands",  ActionConstants.Update, Brands.Resource),

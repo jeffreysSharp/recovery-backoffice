@@ -42,18 +42,18 @@ public static class SystemPermissions
         new("View Dashboard", ActionConstants.View, Dashboard.Resource, IsBasic: true),
 
         // Platform · cross-tenant — SuperAdmin only.
-        new("View All Tenants",          ActionConstants.View,   Platform.Tenants,       IsRoot: true),
-        new("Create Tenants",            ActionConstants.Create, Platform.Tenants,       IsRoot: true),
-        new("Update Tenants",            ActionConstants.Update, Platform.Tenants,       IsRoot: true),
-        new("Suspend Tenants",           "Suspend",              Platform.Tenants,       IsRoot: true),
-        new("Delete Tenants",            ActionConstants.Delete, Platform.Tenants,       IsRoot: true),
+        new("View All Agencies",          ActionConstants.View,   Platform.Tenants,       IsRoot: true),
+        new("Create Agencies",            ActionConstants.Create, Platform.Tenants,       IsRoot: true),
+        new("Update Agencies",            ActionConstants.Update, Platform.Tenants,       IsRoot: true),
+        new("Suspend Agencies",           "Suspend",              Platform.Tenants,       IsRoot: true),
+        new("Delete Agencies",            ActionConstants.Delete, Platform.Tenants,       IsRoot: true),
 
         new("Manage Plans",              "Manage",               Platform.Plans,         IsRoot: true),
         new("Manage Subscriptions",      "Manage",               Platform.Subscriptions, IsRoot: true),
         new("Admin All Invoices",        "Admin",                Platform.Invoices,      IsRoot: true),
         new("Admin All Webhooks",        "Admin",                Platform.Webhooks,      IsRoot: true),
 
-        new("View Cross-Tenant Audits",  "ViewAll",              Platform.Audits,        IsRoot: true),
-        new("Cross-Tenant Impersonate",  "Impersonate",          Platform.Users,         IsRoot: true),
+        new("View Cross-Agency Audits",  "ViewAll",              Platform.Audits,        IsRoot: true),
+        new("Cross-Agency Impersonate",  "Impersonate",          Platform.Users,         IsRoot: true),
     ];
 }

@@ -117,7 +117,7 @@ export function LoginPage() {
               htmlFor="tenant"
               className="block text-[11.5px] font-semibold uppercase tracking-wider text-[var(--color-muted-foreground)]"
             >
-              Tenant
+              Agency
             </Label>
             <Input
               id="tenant"

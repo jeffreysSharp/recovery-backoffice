@@ -21,7 +21,7 @@ public sealed class GetMyInvoicesQueryHandler(
         ArgumentNullException.ThrowIfNull(query);
 
         var tenantId = tenantAccessor.MultiTenantContext?.TenantInfo?.Id
-            ?? throw new UnauthorizedException("Tenant context is required.");
+            ?? throw new UnauthorizedException("Agency context is required.");
 
         var q = dbContext.Invoices.AsNoTracking()
             .Include(i => i.LineItems)

@@ -27,8 +27,8 @@ public static class GetMyTenantStatusEndpoint
                 return Results.Ok(status);
             })
             .WithName("GetMyTenantStatus")
-            .WithSummary("Get the calling tenant's status")
-            .WithDescription("Returns plan, validity, and expiry/grace state for the authenticated tenant — used by the tenant dashboard to show plan info and expiry warnings.")
+            .WithSummary("Get the calling agency's status")
+            .WithDescription("Returns plan, validity, and expiry/grace state for the authenticated agency — used by the agency dashboard to show plan info and expiry warnings.")
             .RequireAuthorization()
             .Produces<TenantStatusDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized);

@@ -129,7 +129,7 @@ function PreviewRail({
   planLabel: string | null;
   email: string;
 }) {
-  const displayName = name.trim() || "New tenant";
+  const displayName = name.trim() || "New agency";
   const displaySlug = slug || "tenant-id";
 
   return (
@@ -189,7 +189,7 @@ function PreviewRail({
       </div>
 
       <p className="relative mt-auto hidden pt-6 text-[11px] leading-relaxed text-[var(--color-muted-foreground)]/75 sm:block">
-        Provisioning runs in the background. You can track progress on the tenant&apos;s detail page.
+        Provisioning runs in the background. You can track progress on the agency&apos;s detail page.
       </p>
     </aside>
   );
@@ -297,7 +297,7 @@ export function CreateTenantDialog({
         planKey: values.planKey?.trim() ? values.planKey : null,
       }),
     onSuccess: (result) => {
-      toast.success(`Tenant ${result.id} created`, {
+      toast.success(`Agency ${result.id} created`, {
         description:
           "Provisioning runs in the background. Track progress on the detail page.",
       });
@@ -367,11 +367,11 @@ export function CreateTenantDialog({
             {/* Header (leave room for the close affordance, top-right) */}
             <div className="flex flex-col gap-1 px-6 pb-2 pt-6 pr-12">
               <div className="flex items-center gap-2">
-                <DialogTitle className="text-[16px]">New tenant</DialogTitle>
+                <DialogTitle className="text-[16px]">New agency</DialogTitle>
                 <Sparkles className="size-3.5 text-[var(--color-primary)] opacity-70" aria-hidden />
               </div>
               <DialogDescription>
-                Provision a tenant and its seed admin. The identifier is the URL-safe slug used in
+                Provision an agency and its seed admin. The identifier is the URL-safe slug used in
                 routing and JWT claims.
               </DialogDescription>
             </div>
@@ -497,8 +497,8 @@ export function CreateTenantDialog({
                 label="Billing plan"
                 hint={
                   plansQuery.isError
-                    ? "Could not load plans — the tenant will fall back to the default plan."
-                    : "Sets the first invoice and how long the tenant stays valid. Defaults to the trial plan."
+                    ? "Could not load plans — the agency will fall back to the default plan."
+                    : "Sets the first invoice and how long the agency stays valid. Defaults to the trial plan."
                 }
                 error={errors.planKey?.message}
               >
@@ -600,7 +600,7 @@ export function CreateTenantDialog({
                     <span>Provisioning…</span>
                   </>
                 ) : (
-                  "Create tenant"
+                  "Create agency"
                 )}
               </Button>
             </DialogFooter>

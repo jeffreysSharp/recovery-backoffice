@@ -276,7 +276,7 @@ function PasswordCard() {
         <CardHeader>
           <CardTitle>Password</CardTitle>
           <CardDescription>
-            Used to sign in to this tenant. Choose a strong, unique password.
+            Used to sign in to this agency. Choose a strong, unique password.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex items-center justify-between gap-4 px-6 pb-5 pt-1">

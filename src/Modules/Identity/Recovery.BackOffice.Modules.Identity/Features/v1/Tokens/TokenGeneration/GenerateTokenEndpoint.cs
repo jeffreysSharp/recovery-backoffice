@@ -42,7 +42,7 @@ public static class GenerateTokenEndpoint
                     return TypedResults.Problem(
                         statusCode: StatusCodes.Status403Forbidden,
                         title: "App boundary",
-                        detail: "SuperAdmin accounts must use the admin app. Sign in there instead of the tenant dashboard.");
+                        detail: "SuperAdmin accounts must use the admin app. Sign in there instead of the agency dashboard.");
                 }
 
                 var token = await mediator.Send(command, ct);

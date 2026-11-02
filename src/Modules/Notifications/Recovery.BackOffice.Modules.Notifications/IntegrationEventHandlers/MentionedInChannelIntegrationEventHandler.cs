@@ -37,9 +37,9 @@ public sealed class MentionedInChannelIntegrationEventHandler(
         if (!string.Equals(ambientTenantId, @event.TenantId, StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
-                $"Tenant context mismatch handling {nameof(MentionedInChannelIntegrationEvent)}: ambient " +
+                $"Agency context mismatch handling {nameof(MentionedInChannelIntegrationEvent)}: ambient " +
                 $"'{ambientTenantId ?? "(none)"}' != event '{@event.TenantId ?? "(none)"}'. The publisher must " +
-                "establish the tenant's Finbuckle context before publishing (see eventing rules).");
+                "establish the agency's Finbuckle context before publishing (see eventing rules).");
         }
 
         var notification = Notification.Create(

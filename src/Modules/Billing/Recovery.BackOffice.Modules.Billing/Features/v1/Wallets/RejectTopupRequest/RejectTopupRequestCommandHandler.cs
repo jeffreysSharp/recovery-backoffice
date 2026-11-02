@@ -20,7 +20,7 @@ public sealed class RejectTopupRequestCommandHandler(
         ArgumentNullException.ThrowIfNull(command);
 
         var callerTenantId = tenantAccessor.MultiTenantContext?.TenantInfo?.Id
-            ?? throw new UnauthorizedException("Tenant context is required.");
+            ?? throw new UnauthorizedException("Agency context is required.");
         var isRoot = callerTenantId == MultitenancyConstants.Root.Id;
 
         var request = await db.TopupRequests
@@ -30,7 +30,7 @@ public sealed class RejectTopupRequestCommandHandler(
 
         if (!isRoot && request.TenantId != callerTenantId)
         {
-            throw new UnauthorizedException("You can only reject top-up requests for your own tenant.");
+            throw new UnauthorizedException("You can only reject top-up requests for your own agency.");
         }
 
         if (request.Status != TopupRequestStatus.Pending)

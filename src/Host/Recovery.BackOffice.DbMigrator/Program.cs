@@ -202,7 +202,7 @@ try
         {
             await Console.Out.WriteLineAsync(string.Create(
                 CultureInfo.InvariantCulture,
-                $"[tenant-catalog] {pending.Count} pending migration(s)"))
+                $"[agency-catalog] {pending.Count} pending migration(s)"))
                 .ConfigureAwait(false);
             foreach (var name in pending)
             {
@@ -213,14 +213,14 @@ try
         {
             await Console.Out.WriteLineAsync(string.Create(
                 CultureInfo.InvariantCulture,
-                $"[tenant-catalog] applying {pending.Count} migration(s)…"))
+                $"[agency-catalog] applying {pending.Count} migration(s)…"))
                 .ConfigureAwait(false);
             await tenantDb.Database.MigrateAsync(CancellationToken.None).ConfigureAwait(false);
-            await Console.Out.WriteLineAsync("[tenant-catalog] done").ConfigureAwait(false);
+            await Console.Out.WriteLineAsync("[agency-catalog] done").ConfigureAwait(false);
         }
         else
         {
-            await Console.Out.WriteLineAsync("[tenant-catalog] already at head").ConfigureAwait(false);
+            await Console.Out.WriteLineAsync("[agency-catalog] already at head").ConfigureAwait(false);
         }
 
         // Seed the root tenant the first time the catalog comes up so the
@@ -239,7 +239,7 @@ try
             rootTenant.SetValidity(TimeProvider.System.GetUtcNow().UtcDateTime.AddYears(1));
             await tenantDb.TenantInfo.AddAsync(rootTenant, CancellationToken.None).ConfigureAwait(false);
             await tenantDb.SaveChangesAsync(CancellationToken.None).ConfigureAwait(false);
-            await Console.Out.WriteLineAsync("[tenant-catalog] seeded root tenant").ConfigureAwait(false);
+            await Console.Out.WriteLineAsync("[agency-catalog] seeded root agency").ConfigureAwait(false);
         }
     }
 
@@ -257,7 +257,7 @@ try
 
         if (tenants.Count == 0)
         {
-            await Console.Out.WriteLineAsync($"[migrator] no tenants matched {cli.Tenant ?? "(all)"}")
+            await Console.Out.WriteLineAsync($"[migrator] no agencies matched {cli.Tenant ?? "(all)"}")
                 .ConfigureAwait(false);
         }
 
@@ -266,7 +266,7 @@ try
             if (cli.Command == "list-pending")
             {
                 await Console.Out.WriteLineAsync(
-                    $"[{tenant.Id}] migrations are evaluated per-tenant by each module's IDbInitializer")
+                    $"[{tenant.Id}] migrations are evaluated per-agency by each module's IDbInitializer")
                     .ConfigureAwait(false);
                 continue;
             }

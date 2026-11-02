@@ -15,6 +15,6 @@ public static class ListSharedFilesEndpoint
                 async (int? page, int? pageSize, IMediator mediator, CancellationToken cancellationToken) =>
                     Results.Ok(await mediator.Send(new ListSharedFilesQuery(page ?? 1, pageSize ?? 20), cancellationToken)))
             .WithName("ListSharedFiles")
-            .WithSummary("List Public files in this tenant (the 'Shared' view)")
+            .WithSummary("List Public files in this agency (the 'Shared' view)")
             .RequirePermission(FilesPermissions.Upload);
 }

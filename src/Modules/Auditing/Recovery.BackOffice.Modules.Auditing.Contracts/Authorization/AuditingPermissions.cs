@@ -18,6 +18,6 @@ public static class AuditingPermissions
     public static IReadOnlyList<RecoveryPermission> All { get; } =
     [
         new("View Audit Trails", ActionConstants.View, AuditTrails.Resource, IsBasic: true),
-        new("View Audit Trails Across Tenants", "ViewCrossTenant", AuditTrails.Resource, IsRoot: true),
+        new("View Audit Trails Across Agencies", "ViewCrossTenant", AuditTrails.Resource, IsRoot: true),
     ];
 }

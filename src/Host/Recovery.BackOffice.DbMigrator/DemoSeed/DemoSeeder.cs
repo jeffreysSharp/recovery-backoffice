@@ -106,7 +106,7 @@ internal sealed class DemoSeeder
     /// the same <see cref="ITenantService"/> migrate + seed path the runtime
     /// uses. The provisioning service inside the migrator falls back to inline
     /// execution because Hangfire isn't running here — we get a synchronous
-    /// "tenant is ready" before this method returns.
+    /// "agency is ready" before this method returns.
     /// </summary>
     private async Task EnsureDemoTenantsExistAsync(CancellationToken cancellationToken)
     {
@@ -830,8 +830,8 @@ internal sealed class DemoSeeder
             Resolve: true,
             ResolutionNote: "Bumped to 2026 and added a year() helper so we don't have to chase it again."),
 
-        new("Email notifications missing tenant logo",
-            "Notification emails render the default placeholder instead of the tenant brand mark.",
+        new("Email notifications missing agency logo",
+            "Notification emails render the default placeholder instead of the agency brand mark.",
             TicketPriority.Medium,
             uid("erin@acme.com"),
             uid("manager@acme.com"),
@@ -855,7 +855,7 @@ internal sealed class DemoSeeder
     private static IReadOnlyList<TicketScenario> GlobexTicketScenarios(Func<string, Guid?> uid) =>
     [
         new("Need help wiring our Salesforce integration",
-            "We're trying to set up the inbound webhook but it keeps returning 401. Maybe a tenant header thing?",
+            "We're trying to set up the inbound webhook but it keeps returning 401. Maybe a 'tenant' header thing?",
             TicketPriority.Medium,
             uid("dave@globex.com"),
             null,

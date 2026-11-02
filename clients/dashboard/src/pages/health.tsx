@@ -543,9 +543,9 @@ function DependencyRow({
         <div className="min-w-0 flex-1">
           <h3
             className="truncate font-display text-[14px] font-semibold tracking-tight text-[var(--color-foreground)]"
-            title={entry.name}
+            title={entry.name === "db:tenants-migrations" ? "Agency migrations" : entry.name}
           >
-            {entry.name}
+            {entry.name === "db:tenants-migrations" ? "Agency migrations" : entry.name}
           </h3>
           {entry.description ? (
             <p className="mt-0.5 truncate text-[11.5px] text-[var(--color-muted-foreground)]">

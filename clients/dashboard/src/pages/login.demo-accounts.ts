@@ -75,7 +75,7 @@ export const DEMO_ACCOUNT_GROUPS: Array<{
   {
     tenant: "root",
     tenantLabel: "Root",
-    blurb: "platform owner · super-tenant",
+    blurb: "platform owner · super-agency",
     accounts: [
       {
         email: "admin@root.com",
@@ -85,7 +85,7 @@ export const DEMO_ACCOUNT_GROUPS: Array<{
         firstName: "Root",
         lastName: "Admin",
         tier: "tenant-admin",
-        persona: "Platform owner — manages tenants, all permissions",
+        persona: "Platform owner — manages agencies, all permissions",
       },
     ],
   },
@@ -94,7 +94,7 @@ export const DEMO_ACCOUNT_GROUPS: Array<{
     tenantLabel: "Acme Corp",
     blurb: "operations · populated catalog",
     accounts: [
-      acme("admin@acme.com", "Acme", "Admin", "tenant-admin", "Tenant administrator — full access"),
+      acme("admin@acme.com", "Acme", "Admin", "tenant-admin", "Agency administrator — full access"),
       acme("manager@acme.com", "Maya", "Lin", "manager", "Catalog + tickets, read-only users"),
       acme("support@acme.com", "Sam", "Rivera", "support", "Tickets only — support agent"),
       acme("alice@acme.com", "Alice", "Nguyen", "basic", "Default member"),
@@ -106,14 +106,14 @@ export const DEMO_ACCOUNT_GROUPS: Array<{
     tenantLabel: "Globex",
     blurb: "onboarding · sparse data",
     accounts: [
-      globex("admin@globex.com", "Globex", "Admin", "tenant-admin", "Tenant administrator — full access"),
+      globex("admin@globex.com", "Globex", "Admin", "tenant-admin", "Agency administrator — full access"),
       globex("dave@globex.com", "Dave", "Hartwell", "basic", "Default member"),
     ],
   },
 ];
 
 export const TIER_LABEL: Record<DemoTier, string> = {
-  "tenant-admin": "Tenant Admin",
+  "tenant-admin": "Agency Admin",
   manager: "Manager",
   support: "Support",
   basic: "Basic",

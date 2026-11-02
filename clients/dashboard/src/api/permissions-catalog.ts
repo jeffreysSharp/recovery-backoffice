@@ -12,6 +12,11 @@ import type { PermissionCatalogEntryDto } from "@/api/identity";
  */
 export type PermissionDescriptor = PermissionCatalogEntryDto;
 
+/** Display wording only; resource values remain unchanged for permission grants. */
+export function permissionResourceLabel(resource: string): string {
+  return resource.replace(/\bTenants\b/g, "Agencies");
+}
+
 export type PermissionGroup = {
   resource: string;
   permissions: PermissionDescriptor[];

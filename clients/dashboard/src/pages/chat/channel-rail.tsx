@@ -388,7 +388,7 @@ function CreateChannelDialog({
         <DialogHeader>
           <DialogTitle>Create a channel</DialogTitle>
           <DialogDescription>
-            Channels are where teams talk. Anyone in your tenant can join public channels.
+            Channels are where teams talk. Anyone in your agency can join public channels.
           </DialogDescription>
         </DialogHeader>
         <DialogBody>
@@ -524,7 +524,7 @@ function NewDmDialog({
         <DialogHeader>
           <DialogTitle>New direct message</DialogTitle>
           <DialogDescription>
-            Find someone in your tenant and we&apos;ll open a DM with them.
+            Find someone in your agency and we&apos;ll open a DM with them.
             Existing DMs are reused — you won&apos;t create duplicates.
           </DialogDescription>
         </DialogHeader>
@@ -558,7 +558,7 @@ function NewDmDialog({
                   label={
                     debounced.length >= 2
                       ? `No one matches "${debounced}".`
-                      : "No teammates in your tenant yet."
+                      : "No teammates in your agency yet."
                   }
                 />
               ) : (

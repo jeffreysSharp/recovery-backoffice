@@ -56,7 +56,7 @@ public sealed class TenantService : ITenantService
 
         if (tenant.IsActive)
         {
-            throw new CustomException($"tenant {id} is already activated");
+            throw new CustomException($"agency {id} is already activated");
         }
 
         await _provisioningService.EnsureCanActivateAsync(id, cancellationToken).ConfigureAwait(false);
@@ -66,7 +66,7 @@ public sealed class TenantService : ITenantService
         await _tenantStore.UpdateAsync(tenant).ConfigureAwait(false);
         await RefreshTenantCacheAsync(tenant).ConfigureAwait(false);
 
-        return $"tenant {id} is now activated";
+        return $"agency {id} is now activated";
     }
 
     public async Task<string> CreateAsync(string id,
@@ -129,24 +129,24 @@ public sealed class TenantService : ITenantService
         var tenant = await GetTenantInfoAsync(id, cancellationToken).ConfigureAwait(false);
         if (!tenant.IsActive)
         {
-            throw new CustomException($"tenant {id} is already deactivated");
+            throw new CustomException($"agency {id} is already deactivated");
         }
 
         int tenantCount = (await _tenantStore.GetAllAsync().ConfigureAwait(false)).Count(t => t.IsActive);
         if (tenantCount <= 1)
         {
-            throw new CustomException("At least one active tenant is required.");
+            throw new CustomException("At least one active agency is required.");
         }
 
         if (tenant.Id.Equals(MultitenancyConstants.Root.Id, StringComparison.OrdinalIgnoreCase))
         {
-            throw new CustomException("The root tenant cannot be deactivated.");
+            throw new CustomException("The root agency cannot be deactivated.");
         }
 
         tenant.Deactivate();
         await _tenantStore.UpdateAsync(tenant).ConfigureAwait(false);
         await RefreshTenantCacheAsync(tenant).ConfigureAwait(false);
-        return $"tenant {id} is now deactivated";
+        return $"agency {id} is now deactivated";
     }
 
     public async Task<bool> ExistsWithIdAsync(string id, CancellationToken cancellationToken = default) =>
@@ -253,7 +253,7 @@ public sealed class TenantService : ITenantService
 
     private async Task<AppTenantInfo> GetTenantInfoAsync(string id, CancellationToken cancellationToken = default) =>
         await _tenantStore.GetAsync(id).ConfigureAwait(false)
-            ?? throw new NotFoundException($"{typeof(AppTenantInfo).Name} {id} Not Found.");
+            ?? throw new NotFoundException($"Agency {id} not found.");
 
     // Finbuckle resolves via the distributed-cache store first (60-min TTL) while the injected store only
     // writes EF, so push the new state into the cache store too — otherwise flips lag until cache expiry.

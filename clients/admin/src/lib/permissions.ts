@@ -98,18 +98,58 @@ export type PermissionGroup = {
 
 export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
   {
-    category: "Tenants",
-    blurb: "Provision and operate tenants. Reserved for the root-tenant operator.",
+    category: "Tipos de Agência",
+    blurb: "Catálogo global de tipos de agência.",
     entries: [
-      { name: MultitenancyPermissions.Tenants.View, description: "View tenants", root: true },
-      { name: MultitenancyPermissions.Tenants.Create, description: "Create tenants", root: true },
-      { name: MultitenancyPermissions.Tenants.Update, description: "Update tenants", root: true },
-      { name: MultitenancyPermissions.Tenants.UpgradeSubscription, description: "Upgrade tenant subscription", root: true },
+      { name: "Permissions.Catalog.AgencyTypes.View", description: "Consultar Tipos de Agência", basic: true },
+      { name: "Permissions.Catalog.AgencyTypes.Create", description: "Criar Tipos de Agência", root: true },
+      { name: "Permissions.Catalog.AgencyTypes.Update", description: "Editar Tipos de Agência", root: true },
+      { name: "Permissions.Catalog.AgencyTypes.Delete", description: "Excluir Tipos de Agência", root: true },
+    ],
+  },
+  {
+    category: "Cidades",
+    blurb: "Catálogo global de cidades por estado e país.",
+    entries: [
+      { name: "Permissions.Catalog.Cities.View", description: "Consultar Cidades", basic: true },
+      { name: "Permissions.Catalog.Cities.Create", description: "Criar Cidades", root: true },
+      { name: "Permissions.Catalog.Cities.Update", description: "Editar Cidades", root: true },
+      { name: "Permissions.Catalog.Cities.Delete", description: "Excluir Cidades", root: true },
+    ],
+  },
+  {
+    category: "Estados",
+    blurb: "Catálogo global de estados e subdivisões por país.",
+    entries: [
+      { name: "Permissions.Catalog.States.View", description: "Consultar Estados", basic: true },
+      { name: "Permissions.Catalog.States.Create", description: "Criar Estados", root: true },
+      { name: "Permissions.Catalog.States.Update", description: "Editar Estados", root: true },
+      { name: "Permissions.Catalog.States.Delete", description: "Excluir Estados", root: true },
+    ],
+  },
+  {
+    category: "Países",
+    blurb: "Catálogo global de países.",
+    entries: [
+      { name: "Permissions.Catalog.Countries.View", description: "Consultar Países", basic: true },
+      { name: "Permissions.Catalog.Countries.Create", description: "Criar Países", root: true },
+      { name: "Permissions.Catalog.Countries.Update", description: "Editar Países", root: true },
+      { name: "Permissions.Catalog.Countries.Delete", description: "Excluir Países", root: true },
+    ],
+  },
+  {
+    category: "Agencies",
+    blurb: "Provision and operate agencies. Reserved for the root-agency operator.",
+    entries: [
+      { name: MultitenancyPermissions.Tenants.View, description: "View agencies", root: true },
+      { name: MultitenancyPermissions.Tenants.Create, description: "Create agencies", root: true },
+      { name: MultitenancyPermissions.Tenants.Update, description: "Update agencies", root: true },
+      { name: MultitenancyPermissions.Tenants.UpgradeSubscription, description: "Upgrade agency subscription", root: true },
     ],
   },
   {
     category: "Users",
-    blurb: "Manage tenant user accounts and their assigned roles.",
+    blurb: "Manage agency user accounts and their assigned roles.",
     entries: [
       { name: IdentityPermissions.Users.View, description: "View users", basic: true },
       { name: IdentityPermissions.Users.Search, description: "Search users" },
@@ -141,13 +181,13 @@ export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
     entries: [
       { name: IdentityPermissions.Sessions.View, description: "View my sessions", basic: true },
       { name: IdentityPermissions.Sessions.Revoke, description: "Revoke my sessions", basic: true },
-      { name: IdentityPermissions.Sessions.ViewAll, description: "View all tenant sessions" },
+      { name: IdentityPermissions.Sessions.ViewAll, description: "View all agency sessions" },
       { name: IdentityPermissions.Sessions.RevokeAll, description: "Revoke any session" },
     ],
   },
   {
     category: "Billing",
-    blurb: "Inspect and manage tenant subscriptions and invoices.",
+    blurb: "Inspect and manage agency subscriptions and invoices.",
     entries: [
       { name: BillingPermissions.View, description: "View billing", basic: true },
       { name: BillingPermissions.Manage, description: "Manage billing — plans, subscriptions, invoices" },
@@ -160,7 +200,7 @@ export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
       { name: AuditingPermissions.AuditTrails.View, description: "View audit trails", basic: true },
       {
         name: AuditingPermissions.AuditTrails.ViewCrossTenant,
-        description: "View audit trails across tenants",
+        description: "View audit trails across agencies",
         root: true,
       },
     ],
@@ -188,3 +228,8 @@ export const PERMISSION_CATALOG: readonly PermissionGroup[] = [
 export const ALL_PERMISSION_NAMES: readonly string[] = PERMISSION_CATALOG.flatMap((g) =>
   g.entries.map((e) => e.name),
 );
+
+export const CountriesPermissions = Object.freeze({ View: "Permissions.Catalog.Countries.View", Create: "Permissions.Catalog.Countries.Create", Update: "Permissions.Catalog.Countries.Update", Delete: "Permissions.Catalog.Countries.Delete" } as const);
+export const StatesPermissions = Object.freeze({ View: "Permissions.Catalog.States.View", Create: "Permissions.Catalog.States.Create", Update: "Permissions.Catalog.States.Update", Delete: "Permissions.Catalog.States.Delete" } as const);
+export const CitiesPermissions = Object.freeze({ View: "Permissions.Catalog.Cities.View", Create: "Permissions.Catalog.Cities.Create", Update: "Permissions.Catalog.Cities.Update", Delete: "Permissions.Catalog.Cities.Delete" } as const);
+export const AgencyTypesPermissions = Object.freeze({ View: "Permissions.Catalog.AgencyTypes.View", Create: "Permissions.Catalog.AgencyTypes.Create", Update: "Permissions.Catalog.AgencyTypes.Update", Delete: "Permissions.Catalog.AgencyTypes.Delete" } as const);

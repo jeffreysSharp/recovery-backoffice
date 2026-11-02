@@ -272,7 +272,7 @@ function ContextGrid({ event }: { event: AuditDetailDto }) {
   const tiles: Array<{ label: string; value: React.ReactNode; mono?: boolean }> = [
     { label: "Occurred at", value: formatTimestamp(event.occurredAtUtc), mono: true },
     { label: "Received at", value: formatTimestamp(event.receivedAtUtc), mono: true },
-    { label: "Tenant", value: event.tenantId ?? "—", mono: true },
+    { label: "Agency", value: event.tenantId ?? "—", mono: true },
     { label: "User", value: userLine, mono: true },
     { label: "Source", value: event.source ?? "—", mono: true },
     { label: "Tags", value: tags },

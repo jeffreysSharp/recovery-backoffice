@@ -29,7 +29,7 @@ export function ForbiddenView({ missing }: ForbiddenViewProps) {
           You don&apos;t hold the permissions to view this surface.
         </h2>
         <p className="mt-2 text-sm text-[var(--color-muted-foreground)] leading-relaxed">
-          Ask a root-tenant operator to grant the permissions below to a role you hold.
+          Ask a root-agency operator to grant the permissions below to a role you hold.
         </p>
 
         {missing && missing.length > 0 && (

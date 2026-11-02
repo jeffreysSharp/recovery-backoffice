@@ -128,7 +128,7 @@ export function AdjustValidityDialog({
             <DialogTitle className="text-[16px]">Adjust validity</DialogTitle>
           </div>
           <DialogDescription className="mt-1">
-            Set this tenant's expiry date directly — an operator override with{" "}
+            Set this agency's expiry date directly — an operator override with{" "}
             <strong className="text-[var(--color-foreground)]">no invoice</strong>. Use for comps or
             corrections; renewals that should bill belong in Renew. Currently valid until{" "}
             {formatDate(validUpto)}.

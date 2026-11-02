@@ -21,7 +21,7 @@ public sealed class AssignSubscriptionCommandHandler(
         // Only root may target an arbitrary tenant; a tenant caller is pinned to its own, so it can't
         // (re)assign or cancel another tenant's subscription via a foreign tenant id in the body.
         var callerTenantId = tenantAccessor.MultiTenantContext?.TenantInfo?.Id
-            ?? throw new UnauthorizedException("Tenant context is required.");
+            ?? throw new UnauthorizedException("Agency context is required.");
         var isRoot = callerTenantId == MultitenancyConstants.Root.Id;
         var targetTenantId = isRoot ? command.TenantId : callerTenantId;
 

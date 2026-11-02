@@ -153,7 +153,7 @@ test.describe("overview (/)", () => {
     }
   });
 
-  test("Valid-for card reflects an in-grace tenant", async ({ page }) => {
+  test("Valid-for card reflects an in-grace agency", async ({ page }) => {
     await mockJsonResponse(page, "**/api/v1/tenants/me/status**", {
       id: "acme",
       name: "Acme Corp",
@@ -172,7 +172,7 @@ test.describe("overview (/)", () => {
     await expect(page.getByText(/grace ends/i)).toBeVisible();
   });
 
-  test("Valid-for card reflects an expired tenant", async ({ page }) => {
+  test("Valid-for card reflects an expired agency", async ({ page }) => {
     await mockJsonResponse(page, "**/api/v1/tenants/me/status**", {
       id: "acme",
       name: "Acme Corp",

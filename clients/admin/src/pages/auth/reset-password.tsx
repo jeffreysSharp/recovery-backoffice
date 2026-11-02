@@ -149,7 +149,7 @@ export function ResetPasswordPage() {
                     The link is missing one of{" "}
                     <span className="text-[var(--color-foreground)]">token</span>,{" "}
                     <span className="text-[var(--color-foreground)]">email</span>, or{" "}
-                    <span className="text-[var(--color-foreground)]">tenant</span>. Some email
+                    <span className="text-[var(--color-foreground)]">agency</span>. Some email
                     clients clip long URLs — try copy-pasting the full link from the original
                     email into your browser's address bar, or request a new one.
                   </p>

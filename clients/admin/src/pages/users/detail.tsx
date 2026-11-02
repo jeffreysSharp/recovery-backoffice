@@ -305,7 +305,7 @@ function RolesEditor({
         </p>
       ) : roles.length === 0 ? (
         <p className="text-sm text-[var(--color-muted-foreground)]">
-          No roles defined for this tenant.
+          No roles defined for this agency.
         </p>
       ) : (
         <ul className="divide-y divide-[var(--color-border)]">

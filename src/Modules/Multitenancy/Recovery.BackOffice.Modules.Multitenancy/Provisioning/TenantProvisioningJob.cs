@@ -34,7 +34,7 @@ public sealed class TenantProvisioningJob
     public async Task RunAsync(string tenantId, string correlationId, CancellationToken cancellationToken = default)
     {
         var tenant = await _tenantStore.GetAsync(tenantId).ConfigureAwait(false)
-            ?? throw new NotFoundException($"Tenant {tenantId} not found during provisioning.");
+            ?? throw new NotFoundException($"Agency {tenantId} not found during provisioning.");
 
         var currentStep = TenantProvisioningStepName.Database;
         try

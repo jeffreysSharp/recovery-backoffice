@@ -901,7 +901,7 @@ function FirstRunPanel({
           Welcome to {tenantName}
         </h2>
         <p className="mt-1 max-w-xl text-[12.5px] leading-relaxed text-muted-foreground">
-          Your tenant is provisioned and ready. Here's where most teams start.
+          Your agency is provisioned and ready. Here's where most teams start.
         </p>
 
         <ul className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
@@ -1046,7 +1046,7 @@ export function OverviewPage() {
   const firstName = (user?.name ?? user?.email?.split("@")[0] ?? "operator")
     .toString()
     .split(" ")[0];
-  const tenantLabel = user?.tenant ?? "your tenant";
+  const tenantLabel = user?.tenant ?? "your agency";
 
   // ── Stat values ───────────────────────────────────────────────────────
   const planValue = subscription.isLoading ? (

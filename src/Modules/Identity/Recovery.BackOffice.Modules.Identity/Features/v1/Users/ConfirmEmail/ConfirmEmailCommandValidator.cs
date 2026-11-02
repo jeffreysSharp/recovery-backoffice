@@ -14,6 +14,6 @@ public sealed class ConfirmEmailCommandValidator : AbstractValidator<ConfirmEmai
             .NotEmpty().WithMessage("Confirmation code is required.");
 
         RuleFor(x => x.Tenant)
-            .NotEmpty().WithMessage("Tenant is required.");
+            .NotEmpty().WithMessage("Agency is required.");
     }
 }

@@ -31,7 +31,7 @@ public sealed class RevokeImpersonationGrantCommandHandler(
 
         var callerUserId = currentUser.GetUserId().ToString();
         var callerTenantId = currentUser.GetTenant()
-            ?? throw new UnauthorizedException("missing tenant context");
+            ?? throw new UnauthorizedException("missing agency context");
         var isRoot = string.Equals(callerTenantId, MultitenancyConstants.Root.Id, StringComparison.Ordinal);
 
         // Enforce visibility before revoking: tenant admins may only revoke grants in their own

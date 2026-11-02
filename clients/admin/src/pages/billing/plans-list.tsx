@@ -104,7 +104,7 @@ export function PlansListPage() {
       <SettingsSection
         icon={Tag}
         title="All plans"
-        description="Pricing schedule used by tenant subscriptions and invoice generation."
+        description="Pricing schedule used by agency subscriptions and invoice generation."
         footer={
           canManageBilling ? (
             <Button onClick={openCreate}>
@@ -130,7 +130,7 @@ export function PlansListPage() {
           </ul>
         ) : plans.length === 0 ? (
           <div className="py-10 text-center text-sm text-[var(--color-muted-foreground)]">
-            No plans yet. Create your first plan to start charging tenants.
+            No plans yet. Create your first plan to start charging agencies.
           </div>
         ) : (
           <ul className="-mx-5 border-t border-[var(--color-border)]">

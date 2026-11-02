@@ -27,7 +27,7 @@ export function NotificationsSettings() {
           <p className="mb-6 max-w-[380px] text-[13px] text-[var(--color-muted-foreground)]">
             In-app notifications are already delivered to your bell — open it from
             the top bar to see them. Granular per-event email opt-ins are on the
-            v1.1 roadmap. In the meantime, your tenant admin can disable email
+            v1.1 roadmap. In the meantime, your agency admin can disable email
             delivery globally.
           </p>
           <Button

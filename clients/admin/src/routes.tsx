@@ -1,3 +1,4 @@
+import { CountriesPermissions, StatesPermissions, CitiesPermissions, AgencyTypesPermissions } from "@/lib/permissions";
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { AppShell } from "@/components/layout/app-shell";
@@ -27,6 +28,10 @@ const lazyNamed = <T extends string>(
     return { default: mod[named] as React.ComponentType };
   });
 
+const CountriesPage = lazyNamed(() => import("@/pages/countries/list"), "CountriesPage");
+const StatesPage = lazyNamed(() => import("@/pages/states/list"), "StatesPage");
+const CitiesPage = lazyNamed(() => import("@/pages/cities/list"), "CitiesPage");
+const AgencyTypesPage = lazyNamed(() => import("@/pages/agency-types/list"), "AgencyTypesPage");
 const TenantsListPage = lazyNamed(() => import("@/pages/tenants/list"), "TenantsListPage");
 const TenantDetailPage = lazyNamed(() => import("@/pages/tenants/detail"), "TenantDetailPage");
 const UsersListPage = lazyNamed(() => import("@/pages/users/list"), "UsersListPage");
@@ -80,6 +85,10 @@ export const router = createBrowserRouter([
         errorElement: <RouteError />,
         children: [
           { index: true, element: <DashboardPage /> },
+          { path: "countries", element: <RouteGuard perms={[CountriesPermissions.View]}><CountriesPage /></RouteGuard> },
+          { path: "states", element: <RouteGuard perms={[StatesPermissions.View]}><StatesPage /></RouteGuard> },
+          { path: "cities", element: <RouteGuard perms={[CitiesPermissions.View]}><CitiesPage /></RouteGuard> },
+          { path: "agency-types", element: <RouteGuard perms={[AgencyTypesPermissions.View]}><AgencyTypesPage /></RouteGuard> },
 
           // Tenants — root-only
           {

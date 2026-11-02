@@ -116,7 +116,7 @@
     <value>Concessão de personificação não encontrada.</value>
   </data>
   <data name="Identity.CrossTenantImpersonationRestricted" xml:space="preserve">
-    <value>A personificação entre tenants é restrita a operadores da plataforma.</value>
+    <value>A personificação entre agências é restrita a operadores da plataforma.</value>
   </data>
   <data name="Identity.CannotImpersonateYourself" xml:space="preserve">
     <value>Não é possível personificar a si mesmo.</value>
@@ -170,10 +170,10 @@
     <value>E-mail não confirmado.</value>
   </data>
   <data name="Identity.TenantDeactivated" xml:space="preserve">
-    <value>O tenant {0} está desativado.</value>
+    <value>A agência {0} está desativada.</value>
   </data>
   <data name="Identity.TenantValidityExpired" xml:space="preserve">
-    <value>A validade do tenant {0} expirou.</value>
+    <value>A validade da agência {0} expirou.</value>
   </data>
   <data name="Identity.ErrorResettingPassword" xml:space="preserve">
     <value>Erro ao redefinir a senha.</value>
@@ -227,10 +227,10 @@
     <value>Administradores não podem remover a própria função de administrador.</value>
   </data>
   <data name="Identity.RootAdminCannotBeDemoted" xml:space="preserve">
-    <value>O administrador do tenant raiz não pode ser rebaixado.</value>
+    <value>O administrador da agência raiz não pode ser rebaixado.</value>
   </data>
   <data name="Identity.TenantMustRetainOneAdmin" xml:space="preserve">
-    <value>O tenant deve manter pelo menos um administrador.</value>
+    <value>A agência deve manter pelo menos um administrador.</value>
   </data>
   <data name="Identity.OnlyAdminsCanChangeStatus" xml:space="preserve">
     <value>Apenas administradores podem alterar o status do usuário.</value>
@@ -242,7 +242,7 @@
     <value>Administradores não podem ser desativados.</value>
   </data>
   <data name="Identity.TenantMustHaveActiveAdmin" xml:space="preserve">
-    <value>O tenant deve ter pelo menos um administrador ativo.</value>
+    <value>A agência deve ter pelo menos um administrador ativo.</value>
   </data>
   <data name="Identity.ToggleStatusFailed" xml:space="preserve">
     <value>Falha ao alternar o status.</value>

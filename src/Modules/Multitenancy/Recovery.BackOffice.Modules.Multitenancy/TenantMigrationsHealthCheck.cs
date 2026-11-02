@@ -87,7 +87,7 @@ public sealed class TenantMigrationsHealthCheck : IHealthCheck
             return HealthCheckResult.Unhealthy(description, data: details);
         }
 
-        return HealthCheckResult.Healthy("All tenants are at the head migration.", details);
+        return HealthCheckResult.Healthy("All agencies are at the head migration.", details);
     }
 
     private static string BuildUnhealthyDescription(List<string> pending, List<string> errored)
@@ -95,13 +95,13 @@ public sealed class TenantMigrationsHealthCheck : IHealthCheck
         var parts = new List<string>(2);
         if (pending.Count > 0)
         {
-            parts.Add($"pending migrations for tenant(s): {string.Join(", ", pending)}");
+            parts.Add($"pending migrations for agencies: {string.Join(", ", pending)}");
         }
         if (errored.Count > 0)
         {
-            parts.Add($"error probing tenant(s): {string.Join(", ", errored)}");
+            parts.Add($"error probing agencies: {string.Join(", ", errored)}");
         }
-        return "Tenant schema is not at head — " + string.Join("; ", parts) +
+        return "Agency schema is not at head — " + string.Join("; ", parts) +
                ". Run Recovery.BackOffice.DbMigrator to apply pending migrations.";
     }
 }

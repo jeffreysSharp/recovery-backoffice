@@ -59,7 +59,7 @@ public sealed class StartImpersonationCommandHandler
 
         var actorUserId = _currentUser.GetUserId().ToString();
         var actorTenantId = _currentUser.GetTenant()
-            ?? throw new UnauthorizedException("missing tenant context")
+            ?? throw new UnauthorizedException("missing agency context")
             {
                 MessageKey = "Error.InvalidTenant",
             };
@@ -70,7 +70,7 @@ public sealed class StartImpersonationCommandHandler
         if (!string.Equals(actorTenantId, MultitenancyConstants.Root.Id, StringComparison.Ordinal)
             && !string.Equals(actorTenantId, request.TargetTenantId, StringComparison.Ordinal))
         {
-            throw new ForbiddenException("cross-tenant impersonation is restricted to platform operators")
+            throw new ForbiddenException("cross-agency impersonation is restricted to platform operators")
             {
                 MessageKey = "Identity.CrossTenantImpersonationRestricted",
                 ResourceSource = typeof(IdentityResources),

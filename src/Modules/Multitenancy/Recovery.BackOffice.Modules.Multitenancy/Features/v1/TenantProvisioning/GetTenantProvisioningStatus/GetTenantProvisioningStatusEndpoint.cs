@@ -21,9 +21,9 @@ public static class GetTenantProvisioningStatusEndpoint
             CancellationToken cancellationToken) =>
             TypedResults.Ok(await mediator.Send(new GetTenantProvisioningStatusQuery(tenantId), cancellationToken)))
             .WithName("GetTenantProvisioningStatus")
-            .WithSummary("Get tenant provisioning status")
+            .WithSummary("Get agency provisioning status")
             .RequirePermission(MultitenancyPermissions.Tenants.View)
-            .WithDescription("Get latest provisioning status for a tenant.")
+            .WithDescription("Get latest provisioning status for an agency.")
             .Produces<TenantProvisioningStatusDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status403Forbidden)

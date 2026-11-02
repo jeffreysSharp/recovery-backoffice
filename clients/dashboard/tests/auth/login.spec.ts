@@ -36,9 +36,9 @@ test.describe("login — page chrome", () => {
     await expect(page.getByText(/sign in to your account/i)).toBeVisible();
   });
 
-  test("renders the tenant + email + password fields", async ({ page }) => {
+  test("renders the agency + email + password fields", async ({ page }) => {
     await page.goto("/login");
-    await expect(page.getByLabel("Tenant")).toBeVisible();
+    await expect(page.getByLabel("Agency")).toBeVisible();
     await expect(page.getByLabel("Email")).toBeVisible();
     await expect(page.getByLabel("Password", { exact: true })).toBeVisible();
     await expect(page.getByRole("link", { name: /forgot/i })).toHaveAttribute("href", "/forgot-password");
@@ -54,7 +54,7 @@ test.describe("login — page chrome", () => {
     await expect(pwd).toHaveAttribute("type", "password");
   });
 
-  test("submit is disabled until tenant + email + password are filled", async ({ page }) => {
+  test("submit is disabled until agency + email + password are filled", async ({ page }) => {
     await page.goto("/login");
     const submit = page.getByRole("button", { name: /^sign in$/i });
     // Tenant defaults to "root"; fill the rest to enable.
@@ -71,9 +71,9 @@ test.describe("login — manual sign in", () => {
     await mockJsonResponse(page, "**/api/v1/identity/token/issue", TOKEN_RESPONSE);
   });
 
-  test("POSTs credentials with the tenant header", async ({ page }) => {
+  test("POSTs credentials with the agency header", async ({ page }) => {
     await page.goto("/login");
-    await page.getByLabel("Tenant").fill("acme");
+    await page.getByLabel("Agency").fill("acme");
     await page.getByLabel("Email").fill("alice@acme.com");
     await page.getByLabel("Password", { exact: true }).fill("Password123!");
 
@@ -112,7 +112,7 @@ test.describe("login — demo account picker", () => {
     await expect(page.getByRole("button", { name: /sign in with a demo account/i })).toHaveCount(0);
   });
 
-  test("opens the 'Step into any role' dialog and lists demo tenants", async ({ page }) => {
+  test("opens the 'Step into any role' dialog and lists demo agencies", async ({ page }) => {
     await setConfig(page, true);
     await page.goto("/login");
     await page.getByRole("button", { name: /sign in with a demo account/i }).click();
@@ -121,18 +121,18 @@ test.describe("login — demo account picker", () => {
     await expect(dialog.getByRole("heading", { name: /step into any role/i })).toBeVisible();
     await expect(dialog.getByText(/live demo/i)).toBeVisible();
     // Tenant rail — scope to the nav so we don't collide with user rows.
-    const rail = dialog.getByRole("navigation", { name: /demo tenants/i });
+    const rail = dialog.getByRole("navigation", { name: /demo agencies/i });
     await expect(rail.getByRole("button", { name: /root/i })).toBeVisible();
     await expect(rail.getByRole("button", { name: /acme corp/i })).toBeVisible();
     await expect(rail.getByRole("button", { name: /globex/i })).toBeVisible();
   });
 
-  test("switching tenant swaps the user list", async ({ page }) => {
+  test("switching agency swaps the user list", async ({ page }) => {
     await setConfig(page, true);
     await page.goto("/login");
     await page.getByRole("button", { name: /sign in with a demo account/i }).click();
     const dialog = page.getByRole("dialog");
-    const rail = dialog.getByRole("navigation", { name: /demo tenants/i });
+    const rail = dialog.getByRole("navigation", { name: /demo agencies/i });
 
     // Root is active first → its single admin shows.
     await expect(dialog.getByText("admin@root.com")).toBeVisible();
@@ -140,13 +140,13 @@ test.describe("login — demo account picker", () => {
     await expect(dialog.getByText("admin@acme.com")).toBeVisible();
   });
 
-  test("tapping a demo user signs in instantly with that account's tenant", async ({ page }) => {
+  test("tapping a demo user signs in instantly with that account's agency", async ({ page }) => {
     await setConfig(page, true);
     await mockJsonResponse(page, "**/api/v1/identity/token/issue", TOKEN_RESPONSE);
     await page.goto("/login");
     await page.getByRole("button", { name: /sign in with a demo account/i }).click();
     const dialog = page.getByRole("dialog");
-    const rail = dialog.getByRole("navigation", { name: /demo tenants/i });
+    const rail = dialog.getByRole("navigation", { name: /demo agencies/i });
 
     await rail.getByRole("button", { name: /acme corp/i }).click();
 

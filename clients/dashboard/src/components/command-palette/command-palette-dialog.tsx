@@ -106,7 +106,7 @@ export function CommandPaletteDialog({
           {
             id: "nav-overview",
             label: "Overview",
-            hint: "Tenant telemetry & usage",
+            hint: "Agency telemetry & usage",
             Icon: LayoutDashboard,
             keywords: ["home", "dashboard"],
             perform: go("/"),
